@@ -9,6 +9,10 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20",
     "pg": "^8.8.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.2",
+    "react-scripts": "^5.0.1",
     "serve-favicon": "^2.5.0"
   },
   "scripts": {
@@ -18,5 +22,17 @@
     "start:dev": "nodemon server.js",
     "client:build": "react-scripts build",
     "client:start": "react-scripts start"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
