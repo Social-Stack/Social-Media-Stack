@@ -12,10 +12,10 @@
     "serve-favicon": "^2.5.0"
   },
   "scripts": {
+    "start:dev": "nodemon server.js",
     "start": "node server.js",
     "seed:dev": "nodemon ./db/seed.js",
     "seed": "node ./db/seed.js",
-    "start:dev": "nodemon server.js",
     "client:build": "react-scripts build",
     "client:start": "react-scripts start"
   }
