@@ -172,19 +172,19 @@ const createInitialPosts = async () => {
       userId: 1,
       text: "This is the first post in social stack!",
       isPublic: true,
-      timestamp: "2022-10-25 10:46:00+00:00",
+      time: "2022-10-25 10:46:00+00:00",
     };
 
     const seedPost2 = {
       userId: 2,
       text: "Hey checkout this code!!!",
-      timestamp: "2022-10-25 10:46:00+00:00",
+      time: "2022-10-25 10:46:00+00:00",
     };
 
     const seedPost3 = {
       userId: 3,
       text: "Please hire us!",
-      timestamp: "2022-10-25 10:46:00+00:00",
+      time: "2022-10-25 10:46:00+00:00",
     };
 
     console.log(
