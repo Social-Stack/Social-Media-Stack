@@ -1,7 +1,7 @@
 const client = require("./client");
 const chalk = require("chalk");
 
-const { createUser, createPost } = require("./");
+const { createUser, createPost, createMessage } = require("./");
 
 const createTables = async () => {
   console.log(chalk.green("BUILDING TABLES..."));
@@ -256,31 +256,9 @@ const createInitialFriendsList = async () => {
   console.log(chalk.green("CREATING INITIAL FREINDSLIST..."));
 
   try {
-    const seedFriendsList1 = {
-      userId: 1,
-      friendId: 2,
-    };
-
-    const seedFriendsList2 = {
-      userId: 2,
-      friendId: 1,
-    };
-
-    const seedFriendsList3 = {
-      userId: 2,
-      friendId: 3,
-    };
-    console.log(
-      chalk.blueBright(
-        "SEEDING FRIENDSLIST...",
-        seedFriendsList1,
-        seedFriendsList2,
-        seedFriendsList3
-      )
-    );
-    const friendsList1 = await createFriendsList(seedFriendsList1);
-    const friendsList2 = await createFriendsList(seedFriendsList2);
-    const friendsList3 = await createFriendsList(seedFriendsList3);
+    const friendsList1 = await addFriend(1, 2);
+    const friendsList2 = await addFriend(1, 3);
+    const friendsList3 = await addFriend(2, 3);
 
     console.log(
       chalk.yellowBright(
@@ -306,7 +284,7 @@ const rebuildDB = async () => {
     await createTables();
     await createInitialUsers();
     await createInitialPosts();
-    // await createInitialMessages();
+    await createInitialMessages();
     // await createInitialFriendsList();
   } catch (error) {
     console.error(chalk.red("error rebuilding the db!", error));
