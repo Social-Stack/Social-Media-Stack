@@ -4,8 +4,6 @@ const {
   createUser,
 } = require("./");
 
-client.connect();
-
 
 const createTables = async() => {
   console.log(chalk.green("BUILDING TABLES..."))
@@ -167,6 +165,8 @@ const createInitialusers = async() => {
 
 const rebuildDB = async () => {
   try {
+      client.connect();
+    
       await dropTables();
       await createTables();
       await createInitialusers();
