@@ -22,7 +22,7 @@
     "seed": "node ./db/seed.js",
     "client:build": "react-scripts build",
     "client:start": "react-scripts start",
-    "test": "jest",
+    "test": "jest --runInBand",
     "test:watch": "jest --runInBand --watchAll"
   },
   "devDependencies": {
@@ -32,7 +32,8 @@
     "verbose": true,
     "globalSetup": "./tests/setup.js",
     "globalTeardown": "./tests/tearDown.js",
-    "collectCoverage": false
+    "collectCoverage": false,
+    "forceExit": true
   },
   "browserslist": {
     "production": [
