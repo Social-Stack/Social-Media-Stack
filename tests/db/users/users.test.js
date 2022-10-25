@@ -5,8 +5,8 @@ const {
   getUserById,
   getUserByEmail,
   authenticateUser 
-} = require("../db");
-const client = require("../db/client");
+} = require("../../../db");
+const client = require("../../../db/client");
 const bcrypt = require("bcrypt");
 
 const fakeUserData = {
@@ -18,7 +18,7 @@ const fakeUserData = {
 }
 
 describe("DB Users", () =>{
-  client.connect()
+
 
   describe("createUser", () => {
     
@@ -92,5 +92,9 @@ describe("DB Users", () =>{
 
       expect(user.picUrl).toBe("https://upload.wikimedia.org/wikipedia/en/5/51/Theon_Greyjoy-Alfie_Allen.jpg")
     })
+  })
+
+  describe("updateUser", () => {
+
   })
 })
