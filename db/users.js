@@ -10,7 +10,6 @@ const createUser = async({
   picUrl = "https://i.ibb.co/ZJjmKmj/person-icon-red-3.png",
   isAdmin = false
 }) => {
-  console.log("FIELDS", firstname, lastname, email, username, password, picUrl, isAdmin)
   try {
     const SALT_COUNT = 10;
     const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
