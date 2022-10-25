@@ -15,8 +15,8 @@ const createTables = async() => {
         await createTableFriendsLists();
 
     console.log(chalk.green("FINISHED BUILDING TABLES"))
-    } catch (error){
-      console.log(chalk.red("ERROR BUILDING TABLES!"))
+    } catch (error) {
+      console.error(chalk.red("ERROR BUILDING TABLES!", error))
       throw error;
     }
 }
@@ -32,8 +32,8 @@ const dropTables = async() => {
         DROP TABLE IF EXISTS users;
         `);
     console.log(chalk.green("FINISHED DROPPING TABLES"))
-    } catch (error){
-      console.error(chalk.red("ERROR DROPPING TABLES!"))
+    } catch (error) {
+      console.error(chalk.red("ERROR DROPPING TABLES!", error))
       throw error;
     }
 }
@@ -64,7 +64,7 @@ const createTablePosts = async() => {
                id SERIAL PRIMARY KEY,
                "userId" INTEGER REFERENCES users(id),
                text VARCHAR(255) NOT NULL,
-               time TIMESTAMPTZ NOT NULL,
+               time TIMESTAMPTZ NOT NULL
             );
         `);
     } catch (error) {
@@ -91,8 +91,8 @@ const createTableMessages = async() => {
         await client.query(`
             CREATE TABLE messages(
                 id SERIAL PRIMARY KEY,
-                "sendingUserId" REFERENCES users(id),
-                "recipientUserId" REFERENCES users(id),
+                "sendingUserId" INTEGER REFERENCES users(id),
+                "recipientUserId" INTEGER REFERENCES users(id),
                 time TIMESTAMPTZ NOT NULL,
                 text VARCHAR(255) NOT NULL
             );
@@ -106,9 +106,9 @@ const createTableFriendsLists = async() => {
     try {
         await client.query(`
             CREATE TABLE friendslists(
-                "userId" REFERENCES users(id),
-                "friendId" REFERENCES users(id),
-                CONSTRAINT UC_friendslists ("userId", "friendId")
+                "userId" INTEGER REFERENCES users(id),
+                "friendId" INTEGER REFERENCES users(id),
+                UNIQUE ("userId", "friendId")
             );
         `);
     } catch (error) {
@@ -125,28 +125,28 @@ const createInitialusers = async() => {
       {
         firstname: "Al",
         lastname: "Bert",
-        email: "Al.Bert@gmail.com",
         username: "albert",
         password: "bertie99",
+        email: "Al.Bert@gmail.com",
         picUrl: "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTc5ODc5NjY5ODU0NjQzMzIy/gettyimages-3091504.jpg",
-        isadmin: true,
+        isAdmin: true,
     }
     const sandraSeed = 
       {
         firstname: "San",
         lastname: "Dra",
-        email: "San.Dra@gmail.com",
         username: "sandra",
         password: "sandra123",
+        email: "San.Dra@gmail.com",
         picUrl: "https://images.hellomagazine.com/imagenes/celebrities/20220804147350/sandra-bullock-rare-admission-partner-bryan-randall-kids/0-717-450/sandra-bullock-bryan-randall-relationship-t.jpg",
     }
     const glamgalSeed =
       {
         firstname: "Glam",
         lastname: "Gal",
-        email: "Glam.Gal@gmail.com",
         username: "glamgal",
         password: "glamgal123",
+        email: "Glam.Gal@gmail.com",
         picUrl: "https://pbs.twimg.com/profile_images/569955623136022528/F9qYeDFk_400x400.png",
     }
     console.log(chalk.blueBright("SEEDING USERS... ", albertSeed, sandraSeed, glamgalSeed));
@@ -164,15 +164,15 @@ const createInitialusers = async() => {
 }
 
 const rebuildDB = async () => {
-  try {
+    try {
       client.connect();
-    
+
       await dropTables();
       await createTables();
       await createInitialusers();
       
     } catch (error) {
-      console.error(chalk.red("error rebuilding the db!"));
+      console.error(chalk.red("error rebuilding the db!", error));
       throw error;
     }
   };
