@@ -1,7 +1,7 @@
 const { Client } = require("pg");
 
 const connectionString =
-  process.env.DATABASE_URL || "https://localhost:5432/stack-social";
+  process.env.DATABASE_URL || "http://localhost:5432/stack-social";
 
 const client = new Client({
   connectionString,

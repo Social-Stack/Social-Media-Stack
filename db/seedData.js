@@ -164,7 +164,9 @@ const createInitialusers = async() => {
 }
 
 const rebuildDB = async () => {
-    try {
+  try {
+      client.connect();
+    
       await dropTables();
       await createTables();
       await createInitialusers();
