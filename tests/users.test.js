@@ -6,20 +6,21 @@ const {
   getUserByEmail,
   authenticateUser 
 } = require("../db");
-const client = require("../db");
+const client = require("../db/client");
 const bcrypt = require("bcrypt");
 
+const fakeUserData = {
+  firstname: "Jon",
+  lastname: "Snow",
+  username: "WardenOfTheNorth",
+  password: "dragonRider",
+  email: "J.Snow@gmail.com"
+}
 
 describe("DB Users", () =>{
+  client.connect()
 
   describe("createUser", () => {
-    const fakeUserData = {
-      firstname: "Jon",
-      lastname: "Snow",
-      username: "WardenOfTheNorth",
-      password: "dragonRider",
-      email: "J.Snow@gmail.com"
-    }
     
     it("Creates & returns the user", async() => {
       const _user = await createUser(fakeUserData);
@@ -34,10 +35,12 @@ describe("DB Users", () =>{
         rows: [user],
       } = await client.query(
         `
-        SELECT * FROM users,
-        WHERE email = ${fakeUserData.email};
+        SELECT * 
+        FROM users
+        WHERE email = '${fakeUserData.email}';
         `
       );
+      console.log("USER", user)
 
       const passwordsMatch = await bcrypt.compare(
         fakeUserData.password,
@@ -48,7 +51,7 @@ describe("DB Users", () =>{
     })
 
     it("Defaults isAdmin to false when not provided a value", async() => {
-      const user = getUserByEmail(fakeUserData.email);
+      const user = await getUserByEmail(fakeUserData.email);
 
       expect(user.isAdmin).toBe(false);
     })
@@ -62,14 +65,14 @@ describe("DB Users", () =>{
         email: "T.Lannister@gmail.com",
         isAdmin: true
       }
-      const _admin = createUser(fakeAdminData);
-      const admin = getUserById(_admin.id);
+      const _admin = await createUser(fakeAdminData);
+      const admin = await getUserById(_admin.id);
 
       expect(admin.isAdmin).toBe(true);
     })
 
     it("Defaults picUrl to placeholder when not provided a value", async() => {
-      const user = getUserByEmail(fakeUserData.email);
+      const user = await getUserByEmail(fakeUserData.email);
 
       expect(user.picUrl).toBe("https://i.ibb.co/ZJjmKmj/person-icon-red-3.png");
     })

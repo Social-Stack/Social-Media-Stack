@@ -2,6 +2,7 @@ const client = require("./client");
 const chalk = require("chalk");
 const {
   createUser,
+  getUserByEmail
 } = require("./");
 
 
@@ -170,6 +171,7 @@ const rebuildDB = async () => {
       await dropTables();
       await createTables();
       await createInitialusers();
+      console.log("TEST", await getUserByEmail("Glam.Gal@gmail.com"));
       
     } catch (error) {
       console.error(chalk.red("error rebuilding the db!", error));
