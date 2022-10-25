@@ -3,4 +3,5 @@ module.exports = {
   ...require("./users"),
   ...require("./posts"),
   ...require("./messages"),
+  ...require("./friendsLists"),
 };

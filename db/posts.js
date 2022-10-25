@@ -1,6 +1,6 @@
 const client = require("./client");
 
-const createPost = async ({ id, text, time, isPublic }) => {
+const createPost = async ({ userId, text, time, isPublic = false }) => {
   try {
     const {
       rows: [post],
@@ -10,7 +10,7 @@ const createPost = async ({ id, text, time, isPublic }) => {
         VALUES ($1, $2, $3, $4)
         RETURNING *;
         `,
-      [id, text, time, isPublic]
+      [userId, text, time, isPublic]
     );
     console.log(post);
     return post;
