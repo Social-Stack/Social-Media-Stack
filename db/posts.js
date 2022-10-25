@@ -1,77 +1,89 @@
 const client = require("./client");
 
-const createPost = async({ id, text, timestamp, isPublic }) => {
-    try{
-        const {rows: [post]} = await client.query(`
+const createPost = async ({ id, text, time, isPublic }) => {
+  try {
+    const {
+      rows: [post],
+    } = await client.query(
+      `
         INSERT INTO posts ("userId", text, time, "isPublic")
         VALUES ($1, $2, $3, $4)
         RETURNING *;
-        `, [id, text, timestamp, isPublic]);
-        console.log(post);
-        return post;
-    } catch (error) {
+        `,
+      [id, text, time, isPublic]
+    );
+    console.log(post);
+    return post;
+  } catch (error) {
     console.error(error);
     throw error;
   }
-}
-const getPostsByUserId = async(id) => {
-  try{
+};
+const getPostsByUserId = async (id) => {
+  try {
     const { rows: posts } = await client.query(`
     SELECT *
     FROM posts
     WHERE "userId" = ${id};
     `);
-    return posts
+    return posts;
   } catch (error) {
-  console.error(error);
-  throw error;
+    console.error(error);
+    throw error;
   }
-}
-const getPostById = async(id) => {
-  try{
-    const { rows: [post] } = await client.query(`
+};
+const getPostById = async (id) => {
+  try {
+    const {
+      rows: [post],
+    } = await client.query(`
     SELECT *
     FROM posts
     WHERE "id" = ${id};
     `);
-    return post
+    return post;
   } catch (error) {
-  console.error(error);
-  throw error;
+    console.error(error);
+    throw error;
   }
-}
-const getAllPublicPosts = async() => {
-  try{
+};
+const getAllPublicPosts = async () => {
+  try {
     const { rows: posts } = await client.query(`
     SELECT *
     FROM posts
     WHERE "isPublic" = true;
     `);
-    return posts
+    return posts;
   } catch (error) {
-  console.error(error);
-  throw error;
+    console.error(error);
+    throw error;
   }
-}
-const editPostById = async(id, text) => {
-  try{
-    const { rows: [post] } = await client.query(`
+};
+const editPostById = async (id, text) => {
+  try {
+    const {
+      rows: [post],
+    } = await client.query(
+      `
     UPDATE posts
     SET text = $1
     WHERE id = $2
     RETURNING *;
-    `,[text, id]);
-    return post
+    `,
+      [text, id]
+    );
+    return post;
   } catch (error) {
-  console.error(error);
-  throw error;
+    console.error(error);
+    throw error;
   }
-}
+};
 
 module.exports = {
-    createPost,
-    getPostsByUserId,
-    getPostById,
-    getAllPublicPosts,
-    editPostById
-  }
+  createPost,
+  getPostsByUserId,
+  getPostById,
+  getAllPublicPosts,
+  editPostById,
+};
