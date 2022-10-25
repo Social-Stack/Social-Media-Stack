@@ -299,4 +299,6 @@ const rebuildDB = async () => {
 
 module.exports = {
   rebuildDB,
+  createTables,
+  dropTables
 };
