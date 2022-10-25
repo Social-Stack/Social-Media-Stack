@@ -1,7 +1,12 @@
 const client = require("./client");
 const chalk = require("chalk");
 
-const { createUser, createPost, createMessage, addFriends } = require("./");
+const { 
+  createUser, 
+  createPost, 
+  createMessage,
+  getUserByEmail 
+} = require("./");
 
 const createTables = async () => {
   console.log(chalk.green("BUILDING TABLES..."));

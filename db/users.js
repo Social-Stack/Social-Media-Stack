@@ -10,7 +10,6 @@ const createUser = async({
   picUrl = "https://i.ibb.co/ZJjmKmj/person-icon-red-3.png",
   isAdmin = false
 }) => {
-  console.log("FIELDS", firstname, lastname, email, username, password, picUrl, isAdmin)
   try {
     const SALT_COUNT = 10;
     const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
@@ -26,7 +25,6 @@ const createUser = async({
       `,
       [firstname, lastname, username, hashedPassword, email, picUrl, isAdmin]
     );
-
     return user;
   } catch (error) {
     console.error(error);
@@ -76,7 +74,7 @@ const getUserByUsername = async (username) => {
       `
         SELECT *
         FROM users
-        WHERE username = "${username}";
+        WHERE username = '${username}';
       `
     );
     
@@ -109,6 +107,7 @@ const getUserById = async (id) => {
 }
 
 const getUserByEmail = async (email) => {
+  console.log("EMAIL", email)
   try {
     const {
       rows: [user],
@@ -116,9 +115,11 @@ const getUserByEmail = async (email) => {
       `
         SELECT *
         FROM users
-        WHERE email = ${email};
+        WHERE email = '${email}';
       `
     );
+
+    console.log("USER BY EMAIL", user)
 
     delete user.password;
     return user;
@@ -136,7 +137,7 @@ const authenticateUser = async ({ username, password }) => {
       `
         SELECT *
         FROM users
-        WHERE username = "${username}";
+        WHERE username = '${username}';
       `
     );
     const passwordsMatch = await bcrypt.compare(password, user.password);
