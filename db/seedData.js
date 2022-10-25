@@ -168,28 +168,32 @@ const createInitialPosts = async () => {
   console.log(chalk.green("CREATING INITIAL POSTS..."));
 
   try {
-    const postSeed1 = {
+    const seedPost1 = {
       userId: 1,
       text: "This is the first post in social stack!",
       isPublic: true,
       time: "2022-10-25 10:46",
     };
 
-    const postSeed2 = {
+    const seedPost2 = {
       userId: 2,
       text: "Hey checkout this code!!!",
       time: "2022-10-25 10:46",
     };
 
-    const postSeed3 = {
+    const seedPost3 = {
       userId: 3,
       text: "Please hire us!",
       time: "2022-10-25 10:46",
     };
 
-    const post1 = await createPost(postSeed1);
-    const post2 = await createPost(postSeed2);
-    const post3 = await createPost(postSeed3);
+    console.log(
+      chalk.blueBright("SEEDING POSTS...", seedPost1, seedPost2, seedPost3)
+    );
+
+    const post1 = await createPost(seedPost1);
+    const post2 = await createPost(seedPost2);
+    const post3 = await createPost(seedPost3);
 
     console.log(chalk.yellowBright("SEEDED POSTS: ", post1, post2, post3));
     console.log(chalk.green("FINISHED CREATING POSTS!"));
@@ -224,6 +228,15 @@ const createInitialMessages = async () => {
       text: "Please hire me!",
     };
 
+    console.log(
+      chalk.blueBright(
+        "SEEDING MESSAGES...",
+        seedMessage1,
+        seedMessage2,
+        seedMessage3
+      )
+    );
+
     const message1 = await createMessage(seedMessage1);
     const message2 = await createMessage(seedMessage2);
     const message3 = await createMessage(seedMessage3);
@@ -240,6 +253,48 @@ const createInitialMessages = async () => {
 
 const createInitialFriendsList = async () => {
   console.log(chalk.green("CREATING INITIAL FREINDSLIST..."));
+
+  try {
+    const seedFriendsList1 = {
+      userId: 1,
+      friendId: 2,
+    };
+
+    const seedFriendsList2 = {
+      userId: 2,
+      friendId: 1,
+    };
+
+    const seedFriendsList3 = {
+      userId: 2,
+      friendId: 3,
+    };
+    console.log(
+      chalk.blueBright(
+        "SEEDING FRIENDSLIST...",
+        seedFriendsList1,
+        seedFriendsList2,
+        seedFriendsList3
+      )
+    );
+    const friendsList1 = await createFriendsList(seedFriendsList1);
+    const friendsList2 = await createFriendsList(seedFriendsList2);
+    const friendsList3 = await createFriendsList(seedFriendsList3);
+
+    console.log(
+      chalk.yellowBright(
+        "SEEDED FRIENDSLIST",
+        friendsList1,
+        friendsList2,
+        friendsList3
+      )
+    );
+
+    console.log(chalk.green("FINISHED CREATING FRIENDSLIST!"));
+  } catch (error) {
+    console.error(chalk.red("ERROR SEEDING FRIENDSLIST", error));
+    throw error;
+  }
 };
 
 const rebuildDB = async () => {
@@ -250,6 +305,8 @@ const rebuildDB = async () => {
     await createTables();
     await createInitialUsers();
     // await createInitialPosts();
+    // await createInitialMessages();
+    // await createInitialFriendsList();
   } catch (error) {
     console.error(chalk.red("error rebuilding the db!", error));
     throw error;
