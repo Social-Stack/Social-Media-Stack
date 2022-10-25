@@ -67,7 +67,7 @@ const createTablePosts = async () => {
                id SERIAL PRIMARY KEY,
                "userId" INTEGER REFERENCES users(id),
                text VARCHAR(255) NOT NULL,
-               "isPublic" BOOLEAN DEFAULT false,
+               "isPublic" BOOLEAN DEFAULT false NOT NULL,
                "isActive" BOOLEAN DEFAULT true,
                time TIMESTAMPTZ NOT NULL
             );
@@ -261,9 +261,9 @@ const createInitialFriendsList = async () => {
   console.log(chalk.green("CREATING INITIAL FREINDSLIST..."));
 
   try {
-    const friendsList1 = await addFriend(1, 2);
-    const friendsList2 = await addFriend(1, 3);
-    const friendsList3 = await addFriend(2, 3);
+    const friendsList1 = await addFriends(1, 2);
+    const friendsList2 = await addFriends(1, 3);
+    const friendsList3 = await addFriends(2, 3);
 
     console.log(
       chalk.yellowBright(
@@ -290,7 +290,7 @@ const rebuildDB = async () => {
     await createInitialUsers();
     await createInitialPosts();
     await createInitialMessages();
-    // await createInitialFriendsList();
+    await createInitialFriendsList();
   } catch (error) {
     console.error(chalk.red("error rebuilding the db!", error));
     throw error;
