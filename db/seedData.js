@@ -1,5 +1,6 @@
 const client = require("./client");
 const chalk = require("chalk");
+
 const { createUser, createPost } = require("./");
 
 const createTables = async () => {
