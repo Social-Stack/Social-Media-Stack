@@ -1,6 +1,6 @@
 const client = require("./client");
 const chalk = require("chalk");
-const { createUser } = require("./");
+const { createUser, createPost } = require("./");
 
 const createTables = async () => {
   console.log(chalk.green("BUILDING TABLES..."));
@@ -172,19 +172,19 @@ const createInitialPosts = async () => {
       userId: 1,
       text: "This is the first post in social stack!",
       isPublic: true,
-      time: "2022-10-25 10:46",
+      timestamp: "2022-10-25 10:46:00+00:00",
     };
 
     const seedPost2 = {
       userId: 2,
       text: "Hey checkout this code!!!",
-      time: "2022-10-25 10:46",
+      timestamp: "2022-10-25 10:46:00+00:00",
     };
 
     const seedPost3 = {
       userId: 3,
       text: "Please hire us!",
-      time: "2022-10-25 10:46",
+      timestamp: "2022-10-25 10:46:00+00:00",
     };
 
     console.log(
@@ -210,21 +210,21 @@ const createInitialMessages = async () => {
     const seedMessage1 = {
       sendingUserId: 1,
       recipientUserId: 2,
-      time: "2022-10-25 11:06",
+      time: "2022-10-25 11:06:00+00:00",
       text: "Spammy spam spam",
     };
 
     const seedMessage2 = {
       sendingUserId: 2,
       recipientUserId: 1,
-      time: "2022-10-25 11:08",
+      time: "2022-10-25 11:08:00+00:00",
       text: "Spammy spam spam spam spam",
     };
 
     const seedMessage3 = {
       sendingUserId: 3,
       recipientUserId: 1,
-      time: "2022-10-25 11:08",
+      time: "2022-10-25 11:08:00+00:00",
       text: "Please hire me!",
     };
 
@@ -304,7 +304,7 @@ const rebuildDB = async () => {
     await dropTables();
     await createTables();
     await createInitialUsers();
-    // await createInitialPosts();
+    await createInitialPosts();
     // await createInitialMessages();
     // await createInitialFriendsList();
   } catch (error) {
