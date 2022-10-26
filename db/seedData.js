@@ -1,11 +1,12 @@
 const client = require("./client");
 const chalk = require("chalk");
 
-const { 
-  createUser, 
-  createPost, 
+const {
+  createUser,
+  createPost,
   createMessage,
-  getUserByEmail 
+  getUserByEmail,
+  addFriends,
 } = require("./");
 
 const createTables = async () => {
@@ -300,5 +301,5 @@ const rebuildDB = async () => {
 module.exports = {
   rebuildDB,
   createTables,
-  dropTables
+  dropTables,
 };

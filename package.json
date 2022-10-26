@@ -16,8 +16,8 @@
     "serve-favicon": "^2.5.0"
   },
   "scripts": {
-    "start:dev": "nodemon server.js",
-    "start": "node server.js",
+    "start:dev": "nodemon app.js",
+    "start": "node app.js",
     "seed:dev": "nodemon ./db/seed.js",
     "seed": "node ./db/seed.js",
     "client:build": "react-scripts build",
