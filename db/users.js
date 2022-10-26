@@ -142,11 +142,12 @@ const authenticateUser = async ({ username, password }) => {
         WHERE username = '${username}';
       `
     );
-    const passwordsMatch = await bcrypt.compare(password, user.password);
-
-    if (passwordsMatch) {
-      delete user.password;
-      return user;
+    if (user) {
+      const passwordsMatch = await bcrypt.compare(password, user.password);
+      if (passwordsMatch) {
+        delete user.password;
+        return user;
+      }
     }
   } catch (error) {
     console.error(error);
