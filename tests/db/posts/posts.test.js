@@ -6,6 +6,7 @@ const {
   editPostById,
   createUser,
   getUserById,
+  removePostById,
 } = require("../../../db");
 
 const fakeUserData = {
@@ -71,8 +72,33 @@ describe("getAllPublicPosts", () => {
 
 describe("editPostById", () => {
   it("Only edits the post with that id", async () => {
-    const editedPost = await editPostById(3, "Hello I'm the cold weather man!");
+    const editedPost = await editPostById({
+      id: 3,
+      text: "Please hire me!",
+    });
 
     console.log("EDITED POST", editedPost);
+  });
+
+  it("Changes the status of isPublic to true", async () => {
+    const changeStatusPost = await editPostById({
+      id: 3,
+      isPublic: true,
+    });
+
+    const getPublicPosts = await getAllPublicPosts();
+
+    console.log("CHANGED POST STATUS", changeStatusPost);
+    console.log("PUBLIC POSTS", getPublicPosts);
+  });
+});
+
+describe("removePostsById", () => {
+  it("Removes the post with that id and returns it", async () => {
+    const removedPost = await removePostById(2);
+    const allPublicPost = await getAllPublicPosts();
+
+    console.log("DELETED POST", removedPost);
+    console.log("PUBLIC POSTS AFTER DELETE", allPublicPost);
   });
 });
