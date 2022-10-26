@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client";
-import { Register } from "./components";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Register, Login } from "./components";
 
 const container = document.getElementById("app");
 const root = createRoot(container);
@@ -7,9 +8,16 @@ const root = createRoot(container);
 const App = () => {
   return (
     <div>
-      <Register />
+      <Routes>
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
+      </Routes>
     </div>
   );
 };
 
-root.render(<App />);
+root.render(
+  <Router>
+    <App />
+  </Router>
+);
