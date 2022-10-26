@@ -57,3 +57,5 @@ server.listen(PORT, () => {
     chalk.blueBright(".Concat with Social Stack!")
   );
 });
+
+module.exports = app;
