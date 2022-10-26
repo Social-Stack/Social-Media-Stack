@@ -132,6 +132,9 @@ const getUserByEmail = async (email) => {
 };
 
 const authenticateUser = async ({ username, password }) => {
+  if (!username || !password) {
+    return;
+  }
   try {
     const {
       rows: [user],
@@ -144,6 +147,7 @@ const authenticateUser = async ({ username, password }) => {
     );
     if (user) {
       const passwordsMatch = await bcrypt.compare(password, user.password);
+
       if (passwordsMatch) {
         delete user.password;
         return user;

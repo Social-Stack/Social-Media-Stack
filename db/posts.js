@@ -12,13 +12,13 @@ const createPost = async ({ userId, text, time, isPublic = false }) => {
         `,
       [userId, text, time, isPublic]
     );
-    console.log(post);
     return post;
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
+
 const getPostsByUserId = async (id) => {
   try {
     const { rows: posts } = await client.query(`
@@ -32,6 +32,7 @@ const getPostsByUserId = async (id) => {
     throw error;
   }
 };
+
 const getPostById = async (id) => {
   try {
     const {
@@ -47,6 +48,7 @@ const getPostById = async (id) => {
     throw error;
   }
 };
+
 const getAllPublicPosts = async () => {
   try {
     const { rows: posts } = await client.query(`
@@ -60,20 +62,41 @@ const getAllPublicPosts = async () => {
     throw error;
   }
 };
-const editPostById = async (id, text) => {
+
+const editPostById = async ({id, ...fields}) => {
   try {
+    const setString = Object.keys(fields)
+    .map((key, idx) => `"${key}" = $${idx+1}`)
+    .join(", ");
+
     const {
       rows: [post],
     } = await client.query(
       `
     UPDATE posts
-    SET text = $1
-    WHERE id = $2
+    SET ${setString}
+    WHERE id = ${id}
     RETURNING *;
     `,
-      [text, id]
+      Object.values(fields)
     );
     return post;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const removePostById = async(id) => {
+  try{
+    const _post = getPostById(id);
+    if(_post){
+      await client.query(`
+      DELETE FROM posts
+      WHERE id = ${id};
+      `)
+    }
+    return _post;
   } catch (error) {
     console.error(error);
     throw error;
@@ -86,4 +109,5 @@ module.exports = {
   getPostById,
   getAllPublicPosts,
   editPostById,
+  removePostById
 };
