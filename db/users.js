@@ -145,7 +145,6 @@ const authenticateUser = async ({ username, password }) => {
         WHERE username = '${username}';
       `
     );
-    
     if (user) {
       const passwordsMatch = await bcrypt.compare(password, user.password);
 
