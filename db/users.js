@@ -1,14 +1,14 @@
 const client = require("./client");
 const bcrypt = require("bcrypt");
 
-const createUser = async({
+const createUser = async ({
   firstname,
   lastname,
   username,
   password,
   email,
   picUrl = "https://i.ibb.co/ZJjmKmj/person-icon-red-3.png",
-  isAdmin = false
+  isAdmin = false,
 }) => {
   try {
     const SALT_COUNT = 10;
@@ -30,16 +30,16 @@ const createUser = async({
     console.error(error);
     throw error;
   }
-}
+};
 
-const updateUser = async ({ id, ...fields}) => {
+const updateUser = async ({ id, ...fields }) => {
   if (fields.password) {
     const SALT_COUNT = 10;
     fields.password = await bcrypt.hash(fields.password, SALT_COUNT);
   }
   const columns = Object.keys(fields)
-  .map((key, idx) => `"${key}" = $${idx + 1}`)
-  .join(", ")
+    .map((key, idx) => `"${key}" = $${idx + 1}`)
+    .join(", ");
 
   if (!columns || !columns.length) {
     return;
@@ -64,7 +64,7 @@ const updateUser = async ({ id, ...fields}) => {
     console.error(error);
     throw error;
   }
-}
+};
 
 const getUserByUsername = async (username) => {
   try {
@@ -77,14 +77,15 @@ const getUserByUsername = async (username) => {
         WHERE username = '${username}';
       `
     );
-    
-    delete user.password;
+    if (user) {
+      delete user.password;
+    }
     return user;
   } catch (error) {
     console.error(error);
     throw error;
   }
-}
+};
 
 const getUserById = async (id) => {
   try {
@@ -104,10 +105,10 @@ const getUserById = async (id) => {
     console.error(error);
     throw error;
   }
-}
+};
 
 const getUserByEmail = async (email) => {
-  console.log("EMAIL", email)
+  console.log("EMAIL", email);
   try {
     const {
       rows: [user],
@@ -119,15 +120,16 @@ const getUserByEmail = async (email) => {
       `
     );
 
-    console.log("USER BY EMAIL", user)
-
-    delete user.password;
+    console.log("USER BY EMAIL", user);
+    if (user) {
+      delete user.password;
+    }
     return user;
   } catch (error) {
     console.error(error);
     throw error;
   }
-}
+};
 
 const authenticateUser = async ({ username, password }) => {
   try {
@@ -150,7 +152,7 @@ const authenticateUser = async ({ username, password }) => {
     console.error(error);
     throw error;
   }
-}
+};
 
 module.exports = {
   createUser,
@@ -159,4 +161,4 @@ module.exports = {
   getUserById,
   getUserByEmail,
   authenticateUser,
-}
+};
