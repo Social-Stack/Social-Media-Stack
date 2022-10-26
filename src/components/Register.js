@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Navigate } from "react-router";
 import { registerUser } from "../api";
 
-const Register = () => {
+const Register = ({ setUsername, setLoggedIn, loggedIn }) => {
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(false);
+  //   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
@@ -20,11 +20,17 @@ const Register = () => {
     setUser((prev) => ({ ...prev, [event.target.name]: event.target.value }));
   };
 
+  const setInfo = (result) => {
+    localStorage.setItem("token", result.token);
+    localStorage.setItem("username", result.user.username);
+    setLoggedIn(true);
+    setUsername(result.user.username);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const result = await registerUser(user);
-    result.success && setLoggedIn(true);
-    result.token && localStorage.setItem("token", result.token);
+    result.token && setInfo(result);
     setError(result.error);
     setErrorMessage(result.message);
   };
@@ -33,7 +39,7 @@ const Register = () => {
   return (
     <div>
       {loggedIn ? (
-        <Navigate to="/" />
+        <Navigate to="/newsfeed" />
       ) : (
         <form id="register" className="form" onSubmit={handleSubmit}>
           <fieldset>

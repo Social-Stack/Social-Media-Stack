@@ -13,6 +13,8 @@ const Login = ({ setUsername, setLoggedIn, loggedIn }) => {
 
   const setInfo = (result) => {
     localStorage.setItem("token", result.token);
+    localStorage.setItem("username", result.user.username);
+    localStorage.setItem("profile pic", result.user.picUrl);
     setLoggedIn(true);
     setUsername(result.user.username);
   };
@@ -28,7 +30,7 @@ const Login = ({ setUsername, setLoggedIn, loggedIn }) => {
   return (
     <div>
       {loggedIn ? (
-        <Navigate to="/" />
+        <Navigate to="/newsfeed" />
       ) : (
         <form id="login" className="form" onSubmit={handleSubmit}>
           <fieldset>

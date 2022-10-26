@@ -3,33 +3,36 @@ import { Link, useNavigate } from "react-router-dom";
 const Header = ({ loggedIn, username }) => {
   let navigate = useNavigate();
   const logout = () => {
+    navigate("/login");
     localStorage.removeItem("token");
-    //   localStorage.removeItem("admin");
-    // localStorage.removeItem("username");
+    localStorage.removeItem("username");
     setLoggedIn(false);
     setUsername("");
-    //   setPassword("");
-    navigate("/");
   };
+  const picture = localStorage.getItem("profile pic");
+
   return (
-    <div id="header">
-      <Link to="/">Social Stack</Link>
+    <div className="header">
+      <Link id="logo" to="/newsfeed">
+        Social Stack
+      </Link>
       {loggedIn ? (
-        <>
-          <nav id="links">
+        <div>
+          <nav id="header-links">
             {/* <Link to="/profile">Profile</Link> | {""} */}
             {/* {isAdmin ? <Link to="admin">Admin | {""}</Link> : null} */}
-            <Link to="/" onClick={logout}>
-              Logout {username}
-            </Link>
+            {/* <div> */}
+            <img id="profile-pic" src={picture} />
+            {/* </div> */}
+            <Link onClick={logout}>Logout {username}</Link>
           </nav>
-        </>
+        </div>
       ) : (
-        <>
-          <nav id="links">
+        <div>
+          <nav id="header-links">
             <Link to="/login">Login/Register</Link> |
           </nav>
-        </>
+        </div>
       )}
     </div>
   );
