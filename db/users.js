@@ -108,7 +108,6 @@ const getUserById = async (id) => {
 };
 
 const getUserByEmail = async (email) => {
-  console.log("EMAIL", email);
   try {
     const {
       rows: [user],
@@ -120,11 +119,10 @@ const getUserByEmail = async (email) => {
       `
     );
 
-    console.log("USER BY EMAIL", user);
     if (user) {
       delete user.password;
+      return user;
     }
-    return user;
   } catch (error) {
     console.error(error);
     throw error;

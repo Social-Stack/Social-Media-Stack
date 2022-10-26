@@ -112,7 +112,7 @@ describe("api/users", () => {
     })
 
     it("Returns correct error if Username already exists", async() => {
-      fakeNewUserData.email = "DifferentEmail@gmail.com";
+      fakeNewUserData.username = "ProtectorOfTheRealm";
 
       const response = await request(app)
         .post("/api/users/register")
@@ -125,9 +125,8 @@ describe("api/users", () => {
     })
 
     it("Returns correct error if E-mail already exists", async() => {
-      fakeNewUserData.email = "DifferentEmail@gmail.com";
-      fakeNewUserData.username = "RealmProtector";
-      console.log("USER DATA", fakeNewUserData);
+      fakeNewUserData.username = "DiffName"
+      fakeNewUserData.email = "Ser.T.Lannister@gmail.com"
 
       const response = await request(app)
         .post("/api/users/register")
@@ -137,6 +136,34 @@ describe("api/users", () => {
         error: expect.stringContaining("E-mail"),
         message: expect.stringContaining("is already taken")
       })
+    })
+  })
+  describe("PATCH api/users/:username/edit", () => {
+
+    it("Updates only the received fields & returns the user", async() => {
+
+      const token = jwt.sign(fakeUserData, 
+        JWT_SECRET
+      );
+      console.log("TOKEN", token)
+      
+      const response = await request(app)
+        .patch(`/api/users/${fakeUserData.username}/edit`)
+        .set({ "Authorization": `Bearer ${token}` })
+        .send({
+          id: 1,
+          firstname: "Tyrant",
+          picUrl: "https://www.fake-url.com"
+        })
+
+      console.log("BODY", response.body)
+      expect(response.body).toMatchObject({
+        userInputs: {
+          firstname: "Tyrant",
+          picUrl: "https://www.fake-url.com"
+        },
+        success: expect.any(String)
+      });
     })
   })
 })

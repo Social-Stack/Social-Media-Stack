@@ -48,7 +48,6 @@ usersRouter.post("/login", async (req, res, next) => {
 
 // REGISTER
 usersRouter.post("/register", async (req, res, next) => {
-  console.log("REQBODY", req.body);
   const {
     username,
     password,
@@ -62,6 +61,7 @@ usersRouter.post("/register", async (req, res, next) => {
   try {
     const _user = await getUserByUsername(username);
     const _email = await getUserByEmail(email);
+    console.log("EMAIL", _email)
     if (_user) {
       next({
         error: "Username Exists",
@@ -115,6 +115,7 @@ usersRouter.post("/register", async (req, res, next) => {
 // PATCH
 usersRouter.patch("/:username/edit", requireUser, async (req, res, next) => {
   const { id, username: _username } = req.user;
+  console.log("ID UN", id, _username)
   const { username } = req.params;
   const userInputs = ({
     firstname,
@@ -125,6 +126,8 @@ usersRouter.patch("/:username/edit", requireUser, async (req, res, next) => {
     picUrl,
   } = req.body);
   userInputs.id = id;
+
+  console.log("FIELDS1", userInputs)
 
   Object.keys(userInputs).forEach((key) => {
     if (userInputs[key] === "") {
