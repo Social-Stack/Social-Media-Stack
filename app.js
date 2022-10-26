@@ -42,7 +42,7 @@ app.get("*", async (req, res) => {
 });
 
 client.connect();
-const PORT = process.env["PORT"] ?? 3000;
+const PORT = process.env["PORT"] ?? 4000;
 const server = http.createServer(app);
 
 server.listen(PORT, () => {
@@ -52,3 +52,5 @@ server.listen(PORT, () => {
     chalk.blueBright(".Concat with Social Stack!")
   );
 });
+
+module.exports = app;

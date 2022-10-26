@@ -11,7 +11,7 @@ const tearDown = async({ watch, watchAll }) => {
     `
       DELETE FROM users;
       DELETE FROM posts;
-      DELETE FROM users;
+      DELETE FROM messages;
       DELETE FROM friendslists;
       DELETE FROM upvotes;
     `
