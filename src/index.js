@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Register, Login, Header } from "./components";
+import { Header, Register, Login, NewsFeed } from "./components";
 
 const container = document.getElementById("app");
 const root = createRoot(container);
@@ -9,6 +9,17 @@ const root = createRoot(container);
 const App = () => {
   const [username, setUsername] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("token");
+    const usernameExists = localStorage.getItem("username");
+    if (loggedInUser) {
+      setLoggedIn(true);
+    }
+    if (usernameExists) {
+      setUsername(usernameExists);
+    }
+  }, []);
 
   return (
     <div>
@@ -18,7 +29,16 @@ const App = () => {
         username={username}
       />
       <Routes>
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/register"
+          element={
+            <Register
+              setUsername={setUsername}
+              setLoggedIn={setLoggedIn}
+              loggedIn={loggedIn}
+            />
+          }
+        />
         <Route
           path="/login"
           element={
@@ -29,7 +49,7 @@ const App = () => {
             />
           }
         />
-        {/* <Route path="/newsfeed" element={<NewsFeed />} /> */}
+        <Route path="/newsfeed" element={<NewsFeed />} />
       </Routes>
     </div>
   );
