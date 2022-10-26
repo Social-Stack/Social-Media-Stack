@@ -1,10 +1,9 @@
 require("dotenv").config();
 const client = require("./db/client");
-// const cors = require("cors");
+const cors = require("cors");
 const path = require("path");
 const http = require("http");
 const chalk = require("chalk");
-
 
 // const favicon = require("serve-favicon");
 
@@ -15,6 +14,12 @@ const morgan = require("morgan");
 app.use(morgan("dev"));
 
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 app.use((req, res, next) => {
   console.log(chalk.whiteBright("<___Body Logger Start___>"));
@@ -42,7 +47,7 @@ app.get("*", async (req, res) => {
 });
 
 client.connect();
-const PORT = process.env["PORT"] ?? 3000;
+const PORT = process.env["PORT"] ?? 4000;
 const server = http.createServer(app);
 
 server.listen(PORT, () => {
