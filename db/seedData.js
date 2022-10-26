@@ -290,7 +290,7 @@ const rebuildDB = async () => {
     await createInitialUsers();
     await createInitialPosts();
     await createInitialMessages();
-    await createInitialFriendsList();
+    // await createInitialFriendsList();
   } catch (error) {
     console.error(chalk.red("error rebuilding the db!", error));
     throw error;
