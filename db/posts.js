@@ -18,6 +18,7 @@ const createPost = async ({ userId, text, time, isPublic = false }) => {
     throw error;
   }
 };
+
 const getPostsByUserId = async (id) => {
   try {
     const { rows: posts } = await client.query(`
@@ -31,6 +32,7 @@ const getPostsByUserId = async (id) => {
     throw error;
   }
 };
+
 const getPostById = async (id) => {
   try {
     const {
@@ -46,6 +48,7 @@ const getPostById = async (id) => {
     throw error;
   }
 };
+
 const getAllPublicPosts = async () => {
   try {
     const { rows: posts } = await client.query(`
@@ -59,6 +62,7 @@ const getAllPublicPosts = async () => {
     throw error;
   }
 };
+
 const editPostById = async ({id, ...fields}) => {
   try {
     const setString = Object.keys(fields)
@@ -82,6 +86,7 @@ const editPostById = async ({id, ...fields}) => {
     throw error;
   }
 };
+
 const removePostById = async(id) => {
   try{
     const _post = getPostById(id);
