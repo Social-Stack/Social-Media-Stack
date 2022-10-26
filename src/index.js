@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Register, Login, Header } from "./components";
+import { Register, Login, Header, NewsFeed } from "./components";
 
 const container = document.getElementById("app");
 const root = createRoot(container);
@@ -29,7 +29,7 @@ const App = () => {
             />
           }
         />
-        {/* <Route path="/newsfeed" element={<NewsFeed />} /> */}
+        <Route path="/newsfeed" element={<NewsFeed />} />
       </Routes>
     </div>
   );
