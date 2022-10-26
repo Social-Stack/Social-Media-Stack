@@ -48,3 +48,13 @@ export const loginUser = async (user) => {
     console.error(error);
   }
 };
+
+export const getAllPublicPosts = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/posts/public`);
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  };
+}
