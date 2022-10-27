@@ -76,29 +76,28 @@ router.patch("/update/:postId", requireUser, async (req, res, next) => {
     const { userId: originalUserId } = await getPostById(postId);
 
     if (isPublic === undefined || text === undefined) {
-      throw new Error({
+      next({
         name: "MissingData",
         message: "Send relevant fields",
       });
     } else if (userId !== originalUserId) {
-      throw new Error({
+      next({
         name: "AuthorizationError",
         message: "You must be the original author of this post",
       });
     } else {
       const editedPost = await editPostById({ id: postId, text, isPublic });
-      console.log("About to send editedPost", editedPost);
       res.send({
         editedPost,
         success: "You've successfully edited a post!",
       });
     }
-    console.log(
-      "IF YOU'RE SEEING THIS...there's a problem with the editPost patch request in api/posts (blame Fred)"
-    );
+    // console.log(
+    //   "IF YOU'RE SEEING THIS...there's a problem with the editPost patch request in api/posts (blame Fred)"
+    // );
   } catch (error) {
     console.error(error);
-    throw error;
+    next(error);
   }
 });
 
@@ -108,17 +107,20 @@ router.delete("/:postId", async (req, res, next) => {
     const { id: userId, isAdmin } = req.user;
     const { userId: authorId } = await getPostById(postId);
     if (isAdmin || authorId === userId) {
-      await removePostById(postId);
-      res.send({ message: "Post Removed" });
+      const deletedPost = await removePostById(postId);
+      res.send({
+        deletedPost,
+        success: "You've successfully removed this post!",
+      });
     } else {
-      throw {
+      next({
         name: "AuthorizationError",
         message: "You must be an Admin or the original author of this post",
-      };
+      });
     }
   } catch (error) {
     console.error(error);
-    throw error;
+    next(error);
   }
 });
 

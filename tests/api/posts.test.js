@@ -43,6 +43,12 @@ describe("api/posts", () => {
         isPublic: true,
       };
 
+      const newPost3 = {
+        text: "I created three posts! Yay!",
+        time: new Date(),
+        isPublic: true,
+      };
+
       const response = await request(app)
         .post("/api/posts/new")
         .send(newPost)
@@ -57,12 +63,24 @@ describe("api/posts", () => {
           Authorization: `Bearer ${token}`,
         });
 
+      const response3 = await request(app)
+        .post("/api/posts/new")
+        .send(newPost3)
+        .set({
+          Authorization: `Bearer ${token}`,
+        });
+
       await expect(response.body).toMatchObject({
         newPost: expect.any(Object),
         success: expect.stringContaining("success"),
       });
 
       await expect(response2.body).toMatchObject({
+        newPost: expect.any(Object),
+        success: expect.stringContaining("success"),
+      });
+
+      await expect(response3.body).toMatchObject({
         newPost: expect.any(Object),
         success: expect.stringContaining("success"),
       });
@@ -126,7 +144,7 @@ describe("api/posts", () => {
           Authorization: `Bearer ${token}`,
         });
 
-      await expect(response.body.length).toEqual(2);
+      await expect(response.body.length).toEqual(3);
       await expect(response.body[0]).toMatchObject({
         id: expect.any(Number),
         userId: expect.any(Number),
@@ -151,6 +169,15 @@ describe("api/posts", () => {
   });
 
   describe("PATCH /api/posts/update/:postId", () => {
+    const editedPost1 = {
+      isPublic: true,
+      text: "Green tea is the best!",
+    };
+
+    const editedFred = {
+      isPublic: false,
+    };
+
     it("Edits the post if it belongs to the current logged in user", async () => {
       const { body } = await request(app).post("/api/users/login").send({
         username: fakeUserData.username,
@@ -160,21 +187,96 @@ describe("api/posts", () => {
 
       const postToEdit = await request(app)
         .patch("/api/posts/update/1")
-        .send({
-          isPublic: true,
-          text: "Green tea is the best!",
-        })
+        .send(editedPost1)
         .set({
           Authorization: `Bearer ${token}`,
         });
 
       await expect(postToEdit.body).toMatchObject({
-        postToEdit: expect.any(Object),
+        editedPost: expect.any(Object),
         success: expect.stringContaining("success"),
       });
 
       await expect(postToEdit.statusCode).toBe(200);
-      console.log("EDITED POST", postToEdit.body);
+    });
+
+    it("Returns an error message if missing an update field", async () => {
+      const { body } = await request(app).post("/api/users/login").send({
+        username: fakeUserData.username,
+        password: fakeUserData.password,
+      });
+      const token = body.token;
+
+      const postToEdit = await request(app)
+        .patch("/api/posts/update/1")
+        .send(editedFred)
+        .set({
+          Authorization: `Bearer ${token}`,
+        });
+
+      expect(postToEdit.body).toMatchObject({
+        name: "MissingData",
+        message: "Send relevant fields",
+      });
+    });
+
+    it("Returns an unauthorized user tries to edit a post that's not there's", async () => {
+      const user2 = await createUser(fakeUserData2);
+      const token = jwt.sign(user2, JWT_SECRET, { expiresIn: "1w" });
+
+      const postToEdit = await request(app)
+        .patch("/api/posts/update/1")
+        .send(editedPost1)
+        .set({
+          Authorization: `Bearer ${token}`,
+        });
+
+      expect(postToEdit.body).toMatchObject({
+        name: "AuthorizationError",
+        message: "You must be the original author of this post",
+      });
+    });
+  });
+
+  describe("DELETE /api/posts/:postId", () => {
+    it("Deletes the post if it belongs to the current logged in user", async () => {
+      const { body } = await request(app).post("/api/users/login").send({
+        username: fakeUserData.username,
+        password: fakeUserData.password,
+      });
+      const token = body.token;
+
+      const postToDelete = await request(app)
+        .delete("/api/posts/3")
+        .set({
+          Authorization: `Bearer ${token}`,
+        });
+
+      expect(postToDelete.body).toMatchObject({
+        deletedPost: expect.any(Object),
+        success: expect.stringContaining("success"),
+      });
+
+      expect(postToDelete.statusCode).toBe(200);
+    });
+
+    it("Returns an error if a user other than the author or an admin tries to delete a post", async () => {
+      const { body } = await request(app).post("/api/users/login").send({
+        username: fakeUserData2.username,
+        password: fakeUserData2.password,
+      });
+      const token = body.token;
+
+      const postToDelete = await request(app)
+        .delete("/api/posts/2")
+        .set({
+          Authorization: `Bearer ${token}`,
+        });
+
+      expect(postToDelete.body).toMatchObject({
+        name: "AuthorizationError",
+        message: "You must be an Admin or the original author of this post",
+      });
     });
   });
 });
