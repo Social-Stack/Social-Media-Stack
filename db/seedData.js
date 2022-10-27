@@ -14,8 +14,9 @@ const createTables = async () => {
   try {
     await createTableUsers();
     await createTablePosts();
-    await createTableUpvotes();
+    await createTablePostUpvotes();
     await createTableComments();
+    await createTableCommentUpvotes();
     await createTableMessages();
     await createTableFriendsLists();
 
@@ -71,7 +72,6 @@ const createTablePosts = async () => {
                "userId" INTEGER REFERENCES users(id),
                text VARCHAR(255) NOT NULL,
                "isPublic" BOOLEAN DEFAULT false NOT NULL,
-               "isActive" BOOLEAN DEFAULT true,
                time TIMESTAMPTZ NOT NULL
             );
         `);
@@ -80,13 +80,14 @@ const createTablePosts = async () => {
     throw error;
   }
 };
-const createTableUpvotes = async () => {
+const createTablePostUpvotes = async () => {
   try {
     await client.query(`
-            CREATE TABLE upvotes(
+            CREATE TABLE post_upvotes(
+                id SERIAL PRIMARY KEY,
                 "userId" INTEGER REFERENCES users(id),
                 "postId" INTEGER REFERENCES posts(id),
-                CONSTRAINT UC_upvotes UNIQUE ("userId", "postId")
+                UNIQUE ("userId", "postId")
             ); 
         `);
   } catch (error) {
@@ -110,6 +111,21 @@ const createTableComments = async () => {
     throw error;
   }
 }
+const createTableCommentUpvotes = async () => {
+  try {
+    await client.query(`
+            CREATE TABLE comment_upvotes(
+                id SERIAL PRIMARY KEY,
+                "userId" INTEGER REFERENCES users(id),
+                "commentId" INTEGER REFERENCES comments(id),
+                UNIQUE ("userId", "commentId")
+            ); 
+        `);
+  } catch (error) {
+    console.error(chalk.red("error during create upvotes table"));
+    throw error;
+  }
+};
 const createTableMessages = async () => {
   try {
     await client.query(`
@@ -244,14 +260,14 @@ const createInitialComments = async() => {
       authorId: 2,
       postId: 1,
       time: "2022-10-26 11:06:00+00:00",
-      text: ""
+      text: "Great job, everyone!"
     }
 
     const seedComment3 = {
       authorId: 1,
       postId: 2,
       time: "2022-10-24 11:06:00+00:00",
-      text: "Look what I can do!!!"
+      text: "We did it!"
     }
 
     console.log(
