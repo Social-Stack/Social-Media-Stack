@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Navigate } from "react-router";
 import { registerUser } from "../api";
 
-const Register = ({ setUsername, setLoggedIn, loggedIn }) => {
+const Register = ({ setUsername, setLoggedIn, loggedIn, setToken }) => {
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   //   const [loggedIn, setLoggedIn] = useState(false);
@@ -23,6 +23,7 @@ const Register = ({ setUsername, setLoggedIn, loggedIn }) => {
   const setInfo = (result) => {
     localStorage.setItem("token", result.token);
     localStorage.setItem("username", result.user.username);
+    setToken(result.token);
     setLoggedIn(true);
     setUsername(result.user.username);
   };

@@ -186,6 +186,7 @@ const createInitialPosts = async () => {
       userId: 2,
       text: "Hey checkout this code!!!",
       time: "2022-10-25 10:46:00+00:00",
+      isPublic: true,
     };
 
     const seedPost3 = {

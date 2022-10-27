@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { loginUser } from "../api";
 
-const Login = ({ setUsername, setLoggedIn, loggedIn }) => {
+const Login = ({ setUsername, setLoggedIn, loggedIn, setToken }) => {
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [user, setUser] = useState({ username: "", password: "" });
@@ -15,6 +15,7 @@ const Login = ({ setUsername, setLoggedIn, loggedIn }) => {
     localStorage.setItem("token", result.token);
     localStorage.setItem("username", result.user.username);
     localStorage.setItem("profile pic", result.user.picUrl);
+    setToken(result.token);
     setLoggedIn(true);
     setUsername(result.user.username);
   };

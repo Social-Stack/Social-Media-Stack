@@ -9,6 +9,7 @@ const container = document.getElementById("app");
 const root = createRoot(container);
 
 const App = () => {
+  const [token, setToken] = useState('');
   const [username, setUsername] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -26,6 +27,7 @@ const App = () => {
   return (
     <div>
       <Header
+        setToken={setToken}
         setLoggedIn={setLoggedIn}
         loggedIn={loggedIn}
         username={username}
@@ -35,6 +37,7 @@ const App = () => {
           path="/register"
           element={
             <Register
+              setToken={setToken}
               setUsername={setUsername}
               setLoggedIn={setLoggedIn}
               loggedIn={loggedIn}
@@ -45,13 +48,14 @@ const App = () => {
           path="/login"
           element={
             <Login
+              setToken={setToken}
               setUsername={setUsername}
               setLoggedIn={setLoggedIn}
               loggedIn={loggedIn}
             />
           }
         />
-        <Route path="/newsfeed" element={<NewsFeed />} />
+        <Route path="/newsfeed" element={<NewsFeed token={token} />} />
       </Routes>
     </div>
   );
