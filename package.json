@@ -22,7 +22,7 @@
     "seed": "node ./db/seed.js",
     "client:build": "react-scripts build",
     "client:start": "react-scripts start",
-    "test": "jest --runInBand",
+    "test": "jest",
     "test:watch": "jest --runInBand --watchAll"
   },
   "devDependencies": {
