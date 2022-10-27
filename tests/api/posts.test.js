@@ -43,8 +43,6 @@ describe("api/posts", () => {
       });
 
       expect(response.status).toEqual(200);
-
-      console.log("response", response.body);
     });
   });
 });

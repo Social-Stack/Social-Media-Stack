@@ -126,8 +126,6 @@ usersRouter.patch("/:username/edit", requireUser, async (req, res, next) => {
   } = req.body);
   userInputs.id = id;
 
-  console.log("userInputs", userInputs)
-
   Object.keys(userInputs).forEach((key) => {
     if (userInputs[key] === "") {
       delete userInputs[key];
