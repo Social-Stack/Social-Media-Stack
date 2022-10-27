@@ -26,6 +26,7 @@ apiRouter.use(async (req, res, next) => {
       next({ name, message });
     }
   } else {
+    res.status(401);
     next({
       name: "AuthoriztionHeaderError",
       message: 'Authorization must start with "Bearer "',
@@ -36,8 +37,8 @@ apiRouter.use(async (req, res, next) => {
 const usersRouter = require("./users");
 apiRouter.use("/users", usersRouter);
 
-// const postsRouter = require("./posts");
-// apiRouter.use("/posts", postsRouter);
+const postsRouter = require("./posts");
+apiRouter.use("/posts", postsRouter);
 
 // const messagesRouter = require("./messages");
 // apiRouter.use("/messages", messagesRouter);
