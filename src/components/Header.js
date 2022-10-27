@@ -7,6 +7,7 @@ const Header = ({ loggedIn, username }) => {
     navigate("/login");
     localStorage.removeItem("token");
     localStorage.removeItem("username");
+    localStorage.removeItem("profile pic");
     setLoggedIn(false);
     setUsername("");
   };
