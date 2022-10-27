@@ -48,7 +48,7 @@ const Register = ({ setUsername, setLoggedIn, loggedIn, setToken }) => {
             <h1>Create A New Account</h1>
           </div>
           <div id="req-text">* Required</div>
-          <div className="form-body">
+          <div className="register-form-body">
             {/* <div className="form-group"> */}
             {/* <label htmlFor="firstname" className="label-title">
                   Username

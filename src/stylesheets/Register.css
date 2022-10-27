@@ -34,7 +34,8 @@
 
 }
 
-.form-body {
+
+.register-form-body {
     padding:10px 40px;
     color:#666;
 }
@@ -43,13 +44,14 @@
     margin-bottom:20px;
 }
   
-.form-body .label-title {
+
+.register-form-body .label-title {
     color:#1BBA93;
     font-size: 17px;
     font-weight: bold;
 }
-  
-.form-body .form-input {
+
+.register-form-body .form-input {
     font-size: 17px;
     box-sizing: border-box;
     width: 100%;
