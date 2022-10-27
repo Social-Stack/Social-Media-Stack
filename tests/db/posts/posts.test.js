@@ -10,11 +10,11 @@ const {
 } = require("../../../db");
 
 const fakeUserData = {
-  firstname: "Jon",
-  lastname: "Snow",
-  username: "WardenOfTheNorth",
-  password: "dragonRider",
-  email: "J.Snow@gmail.com",
+  firstname: "Name",
+  lastname: "Nameson",
+  username: "TestUser",
+  password: "TestPassword",
+  email: "test123@gmail.com",
 };
 
 describe("DB Posts", () => {
@@ -49,7 +49,7 @@ describe("DB Posts", () => {
 
   describe("getPostsByUserId", () => {
     it("Gets all posts by that user's id and returns them", async () => {
-      const _user = await getUserById(4);
+      const _user = await getUserById(1);
       const posts = await getPostsByUserId(_user.id);
 
       console.log("POSTS", posts);

@@ -22,11 +22,10 @@
     "seed": "node ./db/seed.js",
     "client:build": "react-scripts build",
     "client:start": "react-scripts start",
-    "test": "jest --runInBand",
+    "test": "jest",
     "test:watch": "jest --runInBand --watchAll"
   },
   "devDependencies": {
-    "@jest/test-sequencer": "^29.2.2",
     "jest": "^29.2.2",
     "supertest": "^6.3.1"
   },

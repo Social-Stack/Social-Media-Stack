@@ -23,8 +23,8 @@ describe("DB Users", () =>{
   describe("createUser", () => {
     
     it("Creates & returns the user", async() => {
-      await createUser(fakeUserData);
-      const user = await getUserById(1);
+      const _user = await createUser(fakeUserData);
+      const user = await getUserById(_user.id);
 
 
       await expect(user.username).toBe(fakeUserData.username);
