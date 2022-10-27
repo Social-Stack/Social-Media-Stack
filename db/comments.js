@@ -54,8 +54,29 @@ const deleteComment = async(commentId) => {
   }
 }
 
+const getCommentUpvotes = async(commentId) => {
+  let upvoteCount = 0;
+
+  try {
+    const { rows: [upvotes] } = await client.query(`
+      SELECT *
+      FROM comment_upvotes
+      WHERE "commentId" = ${commentId};
+    `)
+    console.log("UPVOTES", upvotes);
+    console.log("UPVOTE COUNT", upvoteCount);
+
+    upvotes.forEach(upvoteCount++);
+    return upvoteObj = { upvoteCount, upvotes }
+  } catch (error) {
+    console.error(error)
+    throw error;
+  }
+}
+
 module.exports = {
   createComment,
   updateComment,
-  deleteComment
+  deleteComment,
+  getCommentUpvotes
 }
