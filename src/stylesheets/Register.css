@@ -17,8 +17,6 @@
 
 .form-header  {
   background-color: #EFF0F1;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
 }
 
 .form-header h1 {
@@ -27,6 +25,7 @@
   color:#666;
   padding:20px 0;
   border-bottom:1px solid #cccccc;
+  margin-top: 0;
 }
 
 #req-text{
@@ -68,15 +67,13 @@
 
 ::-webkit-input-placeholder {
     color:#a79e9e;
-    /* font-family: 'Josefin Slab', serif; */
     font-family: 'Saira Condensed', sans-serif;
 }
 
 .signup-form .form-footer  {
     background-color: #EFF0F1;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
     padding:10px 40px;
+    padding-top: 20px;
     text-align: right;
     border-top: 1px solid #cccccc;
   }
@@ -105,3 +102,7 @@
     color:white;
   }
 
+.error{
+    margin-bottom: 0;
+    text-align: center;
+}

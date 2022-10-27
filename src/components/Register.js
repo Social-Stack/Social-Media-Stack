@@ -46,7 +46,7 @@ const Register = ({ setUsername, setLoggedIn, loggedIn }) => {
           <div className="form-header">
             <h1>Create A New Account</h1>
           </div>
-          <div id="req-text">All Fields Are Required</div>
+          <div id="req-text">* Required</div>
           <div className="form-body">
             {/* <div className="form-group"> */}
             {/* <label htmlFor="firstname" className="label-title">
@@ -59,7 +59,7 @@ const Register = ({ setUsername, setLoggedIn, loggedIn }) => {
               required
               minLength={5}
               onChange={handleChange}
-              placeholder="Username"
+              placeholder="Username *"
             />
             {/* </div> */}
             <div>
@@ -70,7 +70,7 @@ const Register = ({ setUsername, setLoggedIn, loggedIn }) => {
                 required
                 minLength={8}
                 onChange={handleChange}
-                placeholder="Password"
+                placeholder="Password *"
               />
             </div>
             <div>
@@ -81,7 +81,7 @@ const Register = ({ setUsername, setLoggedIn, loggedIn }) => {
                 required
                 minLength={8}
                 onChange={handleChange}
-                placeholder="Confirm Password"
+                placeholder="Confirm Password *"
               />
             </div>
             <div>
@@ -91,7 +91,7 @@ const Register = ({ setUsername, setLoggedIn, loggedIn }) => {
                 className="form-input"
                 required
                 onChange={handleChange}
-                placeholder="First Name"
+                placeholder="First Name *"
               />
             </div>
             <div>
@@ -101,7 +101,7 @@ const Register = ({ setUsername, setLoggedIn, loggedIn }) => {
                 className="form-input"
                 required
                 onChange={handleChange}
-                placeholder="Last Name"
+                placeholder="Last Name *"
               />
             </div>
             <div>
@@ -111,7 +111,7 @@ const Register = ({ setUsername, setLoggedIn, loggedIn }) => {
                 className="form-input"
                 required
                 onChange={handleChange}
-                placeholder="Email"
+                placeholder="Email *"
               />
             </div>
             <div>
@@ -119,7 +119,6 @@ const Register = ({ setUsername, setLoggedIn, loggedIn }) => {
                 type="text"
                 name="picUrl"
                 className="form-input"
-                required
                 onChange={handleChange}
                 placeholder="Profile Picture URL"
               />
@@ -135,9 +134,9 @@ const Register = ({ setUsername, setLoggedIn, loggedIn }) => {
             <button className="form-btn" type="submit">
               Register!
             </button>
-          </div>
-          <div className="error">
-            <h4>{error && `${errorMessage}`}</h4>
+            <div className="error">
+              <h3>{error && `${errorMessage}`}</h3>
+            </div>
           </div>
         </form>
       )}
