@@ -6,10 +6,17 @@ const NewsFeed = ({token}) => {
     const [friendsPosts, setFriendsPosts] = useState([]);
     const [allPublic, setAllPublic] = useState([]);
 
-    useEffect(async() => {
-        const getPublicPosts = await getAllPublicPosts();
-        setAllPublic(getPublicPosts);
+    useEffect(() => {
+        fetchPosts();
     },[])
+
+    const fetchPosts = async() => {
+        const newPostsArr = [];
+        const getPublicPosts = await getAllPublicPosts();
+        //const getFriendPosts
+        newPostsArr.push(getPublicPosts);
+        setAllPublic(newPostsArr);
+    }
 
 
 

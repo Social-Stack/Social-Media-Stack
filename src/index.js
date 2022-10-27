@@ -1,7 +1,9 @@
 import { createRoot } from "react-dom/client";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import { Header, Register, Login, NewsFeed } from "./components";
+
 
 const container = document.getElementById("app");
 const root = createRoot(container);
