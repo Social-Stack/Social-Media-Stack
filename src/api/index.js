@@ -59,18 +59,18 @@ export const getAllPublicPosts = async() => {
   }
 }
 
-export const newPost = async(token, text, time, isPublic) => {
+export const newPost = async(token, _text, _time, _isPublic) => {
   try {
     const response = await fetch(`${BASE_URL}/posts/new`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify({
-      text,
-      time,
-      isPublic
+      text: _text,
+      time: _time,
+      isPublic: _isPublic
     })
     });
     const result = await response.json();
