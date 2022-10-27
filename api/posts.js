@@ -1,4 +1,6 @@
 const express = require("express");
+const router = express.Router();
+
 const {
   createPost,
   getAllPublicPosts,
@@ -8,7 +10,6 @@ const {
   removePostById,
   getFriendsByUserId,
 } = require("../db");
-const router = express.Router();
 
 router.post("/new", async (req, res, next) => {
   try {

@@ -49,12 +49,33 @@ export const loginUser = async (user) => {
   }
 };
 
-export const getAllPublicPosts = async () => {
+export const getAllPublicPosts = async() => {
   try {
     const response = await fetch(`${BASE_URL}/posts/public`);
-    const result = response.json();
+    const result = await response.json();
     return result;
   } catch (error) {
     console.error(error);
-  };
+  }
+}
+
+export const newPost = async(token, text, time, isPublic) => {
+  try {
+    const response = await fetch(`${BASE_URL}/posts/new`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      text,
+      time,
+      isPublic
+    })
+    });
+    const result = await response.json();
+    return result
+  } catch (error) {
+    console.error(error);
+  }
 }
