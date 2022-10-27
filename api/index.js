@@ -26,6 +26,7 @@ apiRouter.use(async (req, res, next) => {
       next({ name, message });
     }
   } else {
+    res.status(401);
     next({
       name: "AuthoriztionHeaderError",
       message: 'Authorization must start with "Bearer "',
