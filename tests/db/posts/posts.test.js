@@ -18,7 +18,6 @@ const fakeUserData = {
 };
 
 describe("DB Posts", () => {
-
   describe("createPost", () => {
     it("Creates a new post and returns", async () => {
       const _user = await createUser(fakeUserData);
@@ -29,11 +28,25 @@ describe("DB Posts", () => {
         time: "10/26/2022 10:33:00+00:00",
       });
 
+      expect(post1).toMatchObject({
+        userId: _user.id,
+        text: "I'm coding in the cold weather",
+        isPublic: true,
+        time: expect.any(Object),
+      });
+
       const post2 = await createPost({
         userId: _user.id,
         text: "My hands are starting to freeze!",
         isPublic: true,
         time: "10/26/2022 10:56:00+00:00",
+      });
+
+      expect(post2).toMatchObject({
+        userId: _user.id,
+        text: "My hands are starting to freeze!",
+        isPublic: true,
+        time: expect.any(Object),
       });
 
       const post3 = await createPost({
@@ -42,8 +55,11 @@ describe("DB Posts", () => {
         time: "10/26/2022 10:56:00+00:00",
       });
 
-      console.log("POST1", post1);
-      console.log("POST2", post2);
+      expect(post3).toMatchObject({
+        userId: _user.id,
+        text: "Testing private post",
+        time: expect.any(Object),
+      });
     });
   });
 
@@ -52,7 +68,15 @@ describe("DB Posts", () => {
       const _user = await getUserById(1);
       const posts = await getPostsByUserId(_user.id);
 
-      console.log("POSTS", posts);
+      expect(posts.length).toEqual(3);
+      expect(posts[0]).toMatchObject({
+        id: expect.any(Number),
+        userId: expect.any(Number),
+        text: expect.any(String),
+        isPublic: expect.any(Boolean),
+        isActive: expect.any(Boolean),
+        time: expect.any(Object),
+      });
     });
   });
 
@@ -60,7 +84,14 @@ describe("DB Posts", () => {
     it("Gets a post with a certain id and returns it", async () => {
       const post = await getPostById(2);
 
-      console.log("POST WITH ID 2", post);
+      expect(post).toMatchObject({
+        id: expect.any(Number),
+        userId: expect.any(Number),
+        text: expect.any(String),
+        isPublic: expect.any(Boolean),
+        isActive: expect.any(Boolean),
+        time: expect.any(Object),
+      });
     });
   });
 
@@ -68,7 +99,15 @@ describe("DB Posts", () => {
     it("Only returns all of the public posts", async () => {
       const publicPosts = await getAllPublicPosts();
 
-      console.log("PUBLIC POSTS", publicPosts);
+      expect(publicPosts.length).toEqual(2);
+      expect(publicPosts[0]).toMatchObject({
+        id: expect.any(Number),
+        userId: expect.any(Number),
+        text: expect.any(String),
+        isPublic: expect.any(Boolean),
+        isActive: expect.any(Boolean),
+        time: expect.any(Object),
+      });
     });
   });
 
@@ -79,7 +118,10 @@ describe("DB Posts", () => {
         text: "Please hire me!",
       });
 
-      console.log("EDITED POST", editedPost);
+      expect(editedPost).toMatchObject({
+        id: 3,
+        text: "Please hire me!",
+      });
     });
 
     it("Changes the status of isPublic to true", async () => {
@@ -88,20 +130,46 @@ describe("DB Posts", () => {
         isPublic: true,
       });
 
+      expect(changeStatusPost).toMatchObject({
+        id: 3,
+        isPublic: true,
+      });
       const getPublicPosts = await getAllPublicPosts();
 
-      console.log("CHANGED POST STATUS", changeStatusPost);
-      console.log("PUBLIC POSTS", getPublicPosts);
+      expect(getPublicPosts.length).toEqual(3);
+      expect(getPublicPosts[0]).toMatchObject({
+        id: expect.any(Number),
+        userId: expect.any(Number),
+        text: expect.any(String),
+        isPublic: expect.any(Boolean),
+        isActive: expect.any(Boolean),
+        time: expect.any(Object),
+      });
     });
   });
 
   describe("removePostsById", () => {
     it("Removes the post with that id and returns it", async () => {
       const removedPost = await removePostById(2);
-      const allPublicPost = await getAllPublicPosts();
+      const allPublicPosts = await getAllPublicPosts();
 
-      console.log("DELETED POST", removedPost);
-      console.log("PUBLIC POSTS AFTER DELETE", allPublicPost);
+      expect(removedPost).toMatchObject({
+        id: 2,
+        userId: 1,
+        text: "My hands are starting to freeze!",
+        isPublic: true,
+        isActive: true,
+        time: expect.any(Object),
+      });
+      expect(allPublicPosts.length).toEqual(2);
+      expect(allPublicPosts[0]).toMatchObject({
+        id: expect.any(Number),
+        userId: expect.any(Number),
+        text: expect.any(String),
+        isPublic: expect.any(Boolean),
+        isActive: expect.any(Boolean),
+        time: expect.any(Object),
+      });
     });
   });
 });

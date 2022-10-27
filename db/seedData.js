@@ -162,7 +162,7 @@ const createInitialUsers = async () => {
       password: "sandra123",
       email: "San.Dra@gmail.com",
       picUrl:
-        "https://images.hellomagazine.com/imagenes/celebrities/20220804147350/sandra-bullock-rare-admission-partner-bryan-randall-kids/0-717-450/sandra-bullock-bryan-randall-relationship-t.jpg",
+        "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTc5OTUwNjI0MDU2NTUwNTIy/gettyimages-1074346390-square.jpg",
     };
     const glamgalSeed = {
       firstname: "Glam",
