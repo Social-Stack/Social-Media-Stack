@@ -14,13 +14,7 @@ const NewPost = ({token, loadingTrigger, setLoadingTrigger}) => {
     
     const handleSubmit = async(event) => {
         event.preventDefault();
-        const time = new Date();
-        console.log(visibility)
-        console.log(time)
-        console.log(text)
-        console.log(checkIsPublic())
-        console.log(token)
-        console.log('attempt', await newPost(token, text, new Date(), checkIsPublic()))
+        await newPost(token, text, new Date(), checkIsPublic())
         setLoadingTrigger(!loadingTrigger)
     }
     const handleVisibility = (newVis) => {
