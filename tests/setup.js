@@ -8,7 +8,7 @@ const {
 const setup = async () => {
   console.log(chalk.blueBright("Jest Setup in Progress"));
 
-  await client.connect();
+  // await client.connect();
   await dropTables();
   await createTables();
 }

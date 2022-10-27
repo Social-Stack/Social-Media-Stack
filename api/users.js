@@ -61,7 +61,6 @@ usersRouter.post("/register", async (req, res, next) => {
   try {
     const _user = await getUserByUsername(username);
     const _email = await getUserByEmail(email);
-    console.log("EMAIL", _email)
     if (_user) {
       next({
         error: "Username Exists",
@@ -115,8 +114,8 @@ usersRouter.post("/register", async (req, res, next) => {
 // PATCH
 usersRouter.patch("/:username/edit", requireUser, async (req, res, next) => {
   const { id, username: _username } = req.user;
-  console.log("ID UN", id, _username)
   const { username } = req.params;
+
   const userInputs = ({
     firstname,
     lastname,
@@ -127,7 +126,7 @@ usersRouter.patch("/:username/edit", requireUser, async (req, res, next) => {
   } = req.body);
   userInputs.id = id;
 
-  console.log("FIELDS1", userInputs)
+  console.log("userInputs", userInputs)
 
   Object.keys(userInputs).forEach((key) => {
     if (userInputs[key] === "") {
@@ -145,7 +144,7 @@ usersRouter.patch("/:username/edit", requireUser, async (req, res, next) => {
       error: "Password Too Short",
       message: "Minimum password length is 8 characters",
     });
-  } else if (!Object.keys(userInputs).length) {
+  } else if (Object.keys(userInputs).length <= 1) {
     next({
       error: "No Fields Submitted",
       message: "You must update at least one field before submission",
@@ -156,7 +155,7 @@ usersRouter.patch("/:username/edit", requireUser, async (req, res, next) => {
 
       if (username !== _username) {
         res.status(403).send({
-          name: "Unauthorized User",
+          error: "Unauthorized User",
           message: `${_username} cannot update ${username}'s information.`,
         });
       } else if (_email) {
@@ -168,9 +167,8 @@ usersRouter.patch("/:username/edit", requireUser, async (req, res, next) => {
         if (userInputs.confirmPassword) {
           delete userInputs.confirmPassword;
         }
-        console.log("USER INPUTS", userInputs);
         await updateUser(userInputs);
-
+        delete userInputs.id
         res.send({
           userInputs,
           success: `Successfully updated ${username}'s profile!`,

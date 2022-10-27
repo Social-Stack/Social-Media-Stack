@@ -77,10 +77,13 @@ const getUserByUsername = async (username) => {
         WHERE username = '${username}';
       `
     );
-    if (user) {
+
+    if (!user) {
+      return;
+    } else {
       delete user.password;
+      return user;
     }
-    return user;
   } catch (error) {
     console.error(error);
     throw error;
@@ -99,8 +102,12 @@ const getUserById = async (id) => {
       `
     );
 
-    delete user.password;
-    return user;
+    if (!user) {
+      return;
+    } else {
+      delete user.password;
+      return user;
+    }
   } catch (error) {
     console.error(error);
     throw error;
@@ -119,7 +126,9 @@ const getUserByEmail = async (email) => {
       `
     );
 
-    if (user) {
+    if (!user) {
+      return;
+    } else {
       delete user.password;
       return user;
     }

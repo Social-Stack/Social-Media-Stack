@@ -6,6 +6,7 @@ const requireUser = (req, res, next) => {
       message: "Please login to perform this action.",
     });
   }
+  console.log("REQUSER", req.user)
   next();
 };
 

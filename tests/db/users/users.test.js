@@ -23,11 +23,11 @@ describe("DB Users", () =>{
   describe("createUser", () => {
     
     it("Creates & returns the user", async() => {
-      const _user = await createUser(fakeUserData);
-      const user = await getUserById(_user.id);
+      await createUser(fakeUserData);
+      const user = await getUserById(1);
 
 
-      expect(user.username).toBe(fakeUserData.username);
+      await expect(user.username).toBe(fakeUserData.username);
     });
 
     it("Encrypts the password", async() => {
@@ -46,13 +46,13 @@ describe("DB Users", () =>{
         user.password
       );
 
-      expect(passwordsMatch).toBe(true);
+      await expect(passwordsMatch).toBe(true);
     });
 
     it("Defaults isAdmin to false when not provided a value", async() => {
       const user = await getUserByEmail(fakeUserData.email);
 
-      expect(user.isAdmin).toBe(false);
+      await expect(user.isAdmin).toBe(false);
     });
 
     it("Does update isAdmin to true when provided a true value", async() => {
@@ -67,13 +67,13 @@ describe("DB Users", () =>{
       const _admin = await createUser(fakeAdminData);
       const admin = await getUserById(_admin.id);
 
-      expect(admin.isAdmin).toBe(true);
+      await expect(admin.isAdmin).toBe(true);
     });
 
     it("Defaults picUrl to placeholder when not provided a value", async() => {
       const user = await getUserByEmail(fakeUserData.email);
 
-      expect(user.picUrl).toBe("https://i.ibb.co/ZJjmKmj/person-icon-red-3.png");
+      await expect(user.picUrl).toBe("https://i.ibb.co/ZJjmKmj/person-icon-red-3.png");
     });
 
     it("Does update picUrl when provided a value", async() => {
@@ -89,7 +89,7 @@ describe("DB Users", () =>{
       const _user = await createUser(_fakeUserData);
       const user = await getUserById(_user.id);
 
-      expect(user.picUrl).toBe("https://upload.wikimedia.org/wikipedia/en/5/51/Theon_Greyjoy-Alfie_Allen.jpg");
+      await expect(user.picUrl).toBe("https://upload.wikimedia.org/wikipedia/en/5/51/Theon_Greyjoy-Alfie_Allen.jpg");
     });
   });
 
@@ -111,12 +111,12 @@ describe("DB Users", () =>{
       const _user = await updateUser(fakeUpdateFields);
       const user = await getUserById(_user.id);
 
-      expect(user.firstname).toBe(fakeUpdateFields.firstname);
-      expect(user.lastname).toBe(fakeUpdateFields.lastname);
-      expect(user.username).toBe(fakeUpdateFields.username);
-      expect(user.email).toBe(fakeUpdateFields.email);
-      expect(user.picUrl).toBe(fakeUpdateFields.picUrl);
-      expect(user.isAdmin).toBe(fakeUpdateFields.isAdmin);
+      await expect(user.firstname).toBe(fakeUpdateFields.firstname);
+      await expect(user.lastname).toBe(fakeUpdateFields.lastname);
+      await expect(user.username).toBe(fakeUpdateFields.username);
+      await expect(user.email).toBe(fakeUpdateFields.email);
+      await expect(user.picUrl).toBe(fakeUpdateFields.picUrl);
+      await expect(user.isAdmin).toBe(fakeUpdateFields.isAdmin);
     });
 
     it("Updates only the fields received", async() => {
@@ -128,8 +128,8 @@ describe("DB Users", () =>{
       await updateUser(fakeUpdateFields);
       const user = await getUserById(1);
 
-      expect(user.username).toBe(fakeUpdateFields.username);
-      expect(user.picUrl).toBe(fakeUpdateFields.picUrl);
+      await expect(user.username).toBe(fakeUpdateFields.username);
+      await expect(user.picUrl).toBe(fakeUpdateFields.picUrl);
     });
   });
   describe("getUserByUsername", () => {
@@ -137,13 +137,13 @@ describe("DB Users", () =>{
     it("Returns the correct user", async() => {
       const user = await getUserByUsername("JonJon");
 
-      expect(user.username).toBe("JonJon");
+      await expect(user.username).toBe("JonJon");
     });
 
     it("Does not return the password", async() => {
       const user = await getUserByUsername("JonJon");
 
-      expect(user.password).toBe(undefined);
+      await expect(user.password).toBe(undefined);
     });
   });
 
@@ -151,13 +151,13 @@ describe("DB Users", () =>{
     it("Returns the correct user", async() => {
       const user = await getUserById(1);
 
-      expect(user.id).toBe(1);
+      await expect(user.id).toBe(1);
     });
 
     it("Does not return the password", async() => {
       const user = await getUserById(1);
 
-      expect(user.password).toBe(undefined);
+      await expect(user.password).toBe(undefined);
     });
   });
   
@@ -165,13 +165,13 @@ describe("DB Users", () =>{
     it("Returns the correct user", async() => {
       const user = await getUserByEmail("Snow.J@gmail.com");
 
-      expect(user.email).toBe("Snow.J@gmail.com");
+      await expect(user.email).toBe("Snow.J@gmail.com");
     });
 
     it("Does not return the password", async() => {
       const user = await getUserByEmail("Snow.J@gmail.com");
 
-      expect(user.password).toBe(undefined);
+      await expect(user.password).toBe(undefined);
     });
   });
   describe("authenticateUser", () => {
@@ -183,7 +183,7 @@ describe("DB Users", () =>{
       }
 
       const user = await authenticateUser(truthyUserData);
-      expect(user.username).toBe("JonJon");
+      await expect(user.username).toBe("JonJon");
     });
 
     it("Does not return a user when password doesn't verify", async() => {
@@ -194,7 +194,7 @@ describe("DB Users", () =>{
 
       const user = await authenticateUser(falsyUserData);
 
-      expect(user).toBe(undefined);
+      await expect(user).toBe(undefined);
     });
 
     it("Does not return the password", async() => {
@@ -205,7 +205,7 @@ describe("DB Users", () =>{
 
       const user = await authenticateUser(truthyUserData);
 
-      expect(user.password).toBe(undefined);
+      await expect(user.password).toBe(undefined);
     })
   });
 });

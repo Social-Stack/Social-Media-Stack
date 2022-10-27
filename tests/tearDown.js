@@ -1,5 +1,4 @@
 const client = require("../db/client");
-const { rebuildDB } = require("../db/seedData");
 const chalk = require("chalk");
 
 const tearDown = async ({ watch, watchAll }) => {
