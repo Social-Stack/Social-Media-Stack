@@ -15,6 +15,7 @@ const createTables = async () => {
     await createTableUsers();
     await createTablePosts();
     await createTableUpvotes();
+    await createTableComments();
     await createTableMessages();
     await createTableFriendsLists();
 
@@ -31,6 +32,7 @@ const dropTables = async () => {
     await client.query(`
         DROP TABLE IF EXISTS friendslists;
         DROP TABLE IF EXISTS messages;
+        DROP TABLE IF EXISTS comments;
         DROP TABLE IF EXISTS upvotes;
         DROP TABLE IF EXISTS posts;
         DROP TABLE IF EXISTS users;
@@ -92,6 +94,22 @@ const createTableUpvotes = async () => {
     throw error;
   }
 };
+const createTableComments = async () => { 
+  try {
+    await client.query(`
+      CREATE TABLE comments(
+        id SERIAL PRIMARY KEY,
+        "authorId" INTEGER REFERENCES users(id),
+        "postId" INTEGER REFERENCES posts(id),
+        time TIMESTAMPTZ NOT NULL,
+        text VARCHAR(400) NOT NULL
+      );
+    `);
+  } catch (error) {
+    console.error(chalk.red("error during create comments table", error))
+    throw error;
+  }
+}
 const createTableMessages = async () => {
   try {
     await client.query(`
@@ -211,6 +229,45 @@ const createInitialPosts = async () => {
   }
 };
 
+const createInitialComments = async() => {
+  console.log(chalk.green("CREATING INITIAL COMMENTS..."));
+  
+  try {
+    const seedComment1 = {
+      authorId: 1,
+      postId: 1,
+      time: "2022-10-25 11:06:00+00:00",
+      text: "Look what I can do!!!"
+    }
+
+    const seedComment2 = {
+      authorId: 2,
+      postId: 1,
+      time: "2022-10-26 11:06:00+00:00",
+      text: ""
+    }
+
+    const seedComment3 = {
+      authorId: 1,
+      postId: 2,
+      time: "2022-10-24 11:06:00+00:00",
+      text: "Look what I can do!!!"
+    }
+
+    console.log(
+      chalk.blueBright("SEEDING COMMENTS...", 
+      seedComment1, 
+      seedComment2, 
+      seedComment3)
+    );
+
+    // const comment1 = await 
+
+  } catch (error) {
+    
+  }
+}
+
 const createInitialMessages = async () => {
   console.log(chalk.green("CREATING INITIAL MESSAGES..."));
 
@@ -291,6 +348,7 @@ const rebuildDB = async () => {
     await createTables();
     await createInitialUsers();
     await createInitialPosts();
+    // await createInitialComments();
     await createInitialMessages();
     // await createInitialFriendsList();
   } catch (error) {
