@@ -7,10 +7,11 @@ import SinglePost from './SinglePost';
 const NewsFeed = ({token}) => {
     const [friendsPosts, setFriendsPosts] = useState([]);
     const [allPublic, setAllPublic] = useState([]);
+    const [loadingTrigger, setLoadingTrigger] = useState(true);
 
     useEffect(() => {
         fetchPosts();
-    },[])
+    },[loadingTrigger])
 
     const fetchPosts = async() => {
         const newPostsArr = [];
@@ -23,10 +24,15 @@ const NewsFeed = ({token}) => {
     return (
         <div>
             <div>Hi from the NewsFeed</div>
-            <NewPost token={token}/>
+            <NewPost
+            token={token}
+            loadingTrigger={loadingTrigger}
+            setLoadingTrigger={setLoadingTrigger}/>
             {allPublic[0] ? allPublic.map((post, i) => {
                 return (
-                    <SinglePost key= {i} post={post}/>
+                    <SinglePost
+                    key= {i}
+                    post={post}/>
                 )
             }):null}
         </div>
