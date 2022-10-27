@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Navigate } from "react-router";
+import { Navigate, Link } from "react-router-dom";
 import { registerUser } from "../api";
+import "../stylesheets/Register.css";
 
 const Register = ({ setUsername, setLoggedIn, loggedIn, setToken }) => {
   const [error, setError] = useState(null);
@@ -42,85 +43,102 @@ const Register = ({ setUsername, setLoggedIn, loggedIn, setToken }) => {
       {loggedIn ? (
         <Navigate to="/newsfeed" />
       ) : (
-        <form id="register" className="form" onSubmit={handleSubmit}>
-          <fieldset>
-            <legend>
-              <h2>Register</h2>
-            </legend>
-            All Fields Are Required
-            <div>
-              <input
-                type="text"
-                name="username"
-                required
-                minLength={5}
-                onChange={handleChange}
-                placeholder="Username"
-              />
-            </div>
+        <form id="register" className="signup-form" onSubmit={handleSubmit}>
+          <div className="form-header">
+            <h1>Create A New Account</h1>
+          </div>
+          <div id="req-text">* Required</div>
+          <div className="form-body">
+            {/* <div className="form-group"> */}
+            {/* <label htmlFor="firstname" className="label-title">
+                  Username
+                </label> */}
+            <input
+              type="text"
+              name="username"
+              className="form-input"
+              required
+              minLength={5}
+              onChange={handleChange}
+              placeholder="Username *"
+            />
+            {/* </div> */}
             <div>
               <input
                 type="password"
                 name="password"
+                className="form-input"
                 required
                 minLength={8}
                 onChange={handleChange}
-                placeholder="Password"
+                placeholder="Password *"
               />
             </div>
             <div>
               <input
                 type="password"
                 name="confirmPassword"
+                className="form-input"
                 required
                 minLength={8}
                 onChange={handleChange}
-                placeholder="Confirm Password"
+                placeholder="Confirm Password *"
               />
             </div>
             <div>
               <input
                 type="text"
                 name="firstname"
+                className="form-input"
                 required
                 onChange={handleChange}
-                placeholder="First Name"
+                placeholder="First Name *"
               />
             </div>
             <div>
               <input
                 type="text"
                 name="lastname"
+                className="form-input"
                 required
                 onChange={handleChange}
-                placeholder="Last Name"
+                placeholder="Last Name *"
               />
             </div>
             <div>
               <input
                 type="text"
                 name="email"
+                className="form-input"
                 required
                 onChange={handleChange}
-                placeholder="Email"
+                placeholder="Email *"
               />
             </div>
             <div>
               <input
                 type="text"
                 name="picUrl"
-                required
+                className="form-input"
                 onChange={handleChange}
                 placeholder="Profile Picture URL"
               />
             </div>
+          </div>
+          <div className="form-footer">
+            <span className="form-redirect-text">
+              Already a member?{" "}
+              <Link className="form-redirect-link" to="/login">
+                Login!
+              </Link>
+            </span>
             <button className="form-btn" type="submit">
               Register!
             </button>
             <div className="error">
-              <h4>{error && `${errorMessage}`}</h4>
+              <h3>{error && `${errorMessage}`}</h3>
             </div>
-          </fieldset>
+          </div>
         </form>
       )}
     </div>

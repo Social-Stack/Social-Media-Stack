@@ -1,26 +1,3 @@
-#profile-pic{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-}
-
-.header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* background-color: rgb(240, 3, 3); */
-    height: 10%;
-    /* text-decoration: none; */
-}
-
-#header-links{
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-/* #logo{
-    display: flex;
-    text-decoration: none;
-}
- */
+/* body {
+    background-color: rgb(245, 244, 244)
+} */
