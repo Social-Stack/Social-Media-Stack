@@ -3,7 +3,7 @@ import { Navigate, Link } from "react-router-dom";
 import { registerUser } from "../api";
 import "../stylesheets/Register.css";
 
-const Register = ({ setUsername, setLoggedIn, loggedIn }) => {
+const Register = ({ setUsername, setLoggedIn, loggedIn, setToken }) => {
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   //   const [loggedIn, setLoggedIn] = useState(false);
@@ -24,6 +24,7 @@ const Register = ({ setUsername, setLoggedIn, loggedIn }) => {
   const setInfo = (result) => {
     localStorage.setItem("token", result.token);
     localStorage.setItem("username", result.user.username);
+    setToken(result.token);
     setLoggedIn(true);
     setUsername(result.user.username);
   };

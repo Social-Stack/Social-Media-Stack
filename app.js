@@ -23,7 +23,7 @@ app.use(
 
 app.use((req, res, next) => {
   console.log(chalk.whiteBright("<___Body Logger Start___>"));
-  console.log(chalk.greenBright.bgWhiteBright(req.body));
+  console.log(req.body);
   console.log(chalk.whiteBright("<___Body Logger End___>"));
 
   next();

@@ -1,13 +1,15 @@
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../stylesheets/Header.css";
 
-const Header = ({ loggedIn, username }) => {
+const Header = ({ loggedIn, username, setToken }) => {
   let navigate = useNavigate();
   const logout = () => {
     navigate("/login");
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("profile pic");
+    setToken('');
     setLoggedIn(false);
     setUsername("");
   };
