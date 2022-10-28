@@ -40,8 +40,8 @@ apiRouter.use("/users", usersRouter);
 const postsRouter = require("./posts");
 apiRouter.use("/posts", postsRouter);
 
-// const messagesRouter = require("./messages");
-// apiRouter.use("/messages", messagesRouter);
+const messagesRouter = require("./messages");
+apiRouter.use("/messages", messagesRouter);
 
 // const friendsListsRouter = require("./friendsLists");
 // apiRouter.use("/friendsLists", friendsListsRouter);
