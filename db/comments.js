@@ -82,7 +82,6 @@ const getCommentsByPostId = async(postId) => {
       ON U.id = comments."authorId"
       WHERE "postId" = ${postId};
     `)
-    console.log("db/comments will return ", comments)
     return comments
   } catch (error) {
     console.error(error)
