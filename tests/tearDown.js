@@ -8,7 +8,6 @@ const tearDown = async ({ watch, watchAll }) => {
   console.log(chalk.green("Testing complete."));
   await client.query(
     `
-    DELETE FROM upvotes;
     DELETE FROM friendslists;
     DELETE FROM messages;
     DELETE FROM posts;
