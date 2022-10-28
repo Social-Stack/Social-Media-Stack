@@ -6,6 +6,7 @@ const {
   getUserByUsername,
   removeFriend,
   getFriendsByUserId,
+  getPostsByUserId,
 } = require("../db");
 
 const { requireUser } = require("./utils");
@@ -64,6 +65,29 @@ friendsRouter.get("/friends", requireUser, async (req, res, next) => {
       next({
         error: "YouHaveNoFriendsError",
         message: "You currently have no friends. Please add some.",
+      });
+    }
+  } catch ({ error, message }) {
+    next({ error, message });
+  }
+});
+
+friendsRouter.get("/friends/:friendId", requireUser, async (req, res, next) => {
+  try {
+    const { username } = req.params;
+    const { id: friendId } = await getUserByUsername(username);
+
+    const friendsPosts = await getPostsByUserId(friendId);
+
+    if (friendsPosts) {
+      res.send({
+        friendsPosts,
+        success: "Your friend's posts were successfully retrieved!",
+      });
+    } else {
+      next({
+        error: "FriendHasNoPostsError",
+        message: "This friend doesn't have any posts currently",
       });
     }
   } catch ({ error, message }) {
