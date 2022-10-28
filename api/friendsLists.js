@@ -11,47 +11,70 @@ const {
 
 const { requireUser } = require("./utils");
 
-friendsRouter.post(
-  "/friends/:friendId",
-  requireUser,
-  async (req, res, next) => {
-    try {
-      const { username } = req.params;
-      const { id: userId } = req.user;
-      const { id: friendsId } = await getUserByUsername(username);
+friendsRouter.post("/:friendUsername", requireUser, async (req, res, next) => {
+  try {
+    const { username } = req.params;
+    const { id: userId } = req.user;
+    const result = await getUserByUsername(username);
 
+    let friendsId;
+
+    if (result) {
+      friendsId = result.id;
+    }
+
+    if (friendsId) {
       const addFriend = await addFriends(userId, friendsId);
       res.send({
         addFriend,
         success: "You've successfully added a friend",
       });
-    } catch ({ error, message }) {
-      next({ error, message });
+    } else {
+      next({
+        error: "FriendIdDoesNotExistError",
+        message: "A friend with that id doesn't exist",
+      });
     }
+  } catch ({ error, message }) {
+    next({ error, message });
   }
-);
+});
 
 friendsRouter.delete(
-  "/friends/:friendId",
+  "/:friendUsername",
   requireUser,
   async (req, res, next) => {
     try {
       const { username } = req.params;
       const { id: userId } = req.user;
-      const { id: friendsId } = await getUserByUsername(username);
+      const result = await getUserByUsername(username);
 
-      const deletedFriend = await removeFriend(userId, friendsId);
-      res.send({
-        deletedFriend,
-        success: "You've successfully removed a friend",
-      });
+      let friendsId;
+
+      if (result) {
+        friendsId = result.id;
+      }
+
+      if (friendsId) {
+        const deletedFriend = await removeFriend(userId, friendsId);
+        res.send({
+          deletedFriend,
+          success: "You've successfully removed a friend",
+        });
+      } else {
+        next({
+          error: "FriendIdDoesNotExistError",
+          message: "A friend with that id doesn't exist",
+        });
+      }
     } catch ({ error, message }) {
       next({ error, message });
     }
   }
 );
 
-friendsRouter.get("/friends", requireUser, async (req, res, next) => {
+// would this just be a / as the endpoint?
+friendsRouter.get("/", requireUser, async (req, res, next) => {
   try {
     const { id: userId } = req.user;
 
@@ -72,7 +95,7 @@ friendsRouter.get("/friends", requireUser, async (req, res, next) => {
   }
 });
 
-friendsRouter.get("/friends/:friendId", requireUser, async (req, res, next) => {
+friendsRouter.get("/:friendUsername", requireUser, async (req, res, next) => {
   try {
     const { username } = req.params;
     const { id: friendId } = await getUserByUsername(username);
