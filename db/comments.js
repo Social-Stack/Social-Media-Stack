@@ -54,19 +54,16 @@ const deleteComment = async(commentId) => {
   }
 }
 
-const getCommentUpvotesById = async(commentId) => {
-  let upvoteCount = 0;
+const getCommentsByPostId = async(postId) => {
   try {
-    const { rows: upvotes } = await client.query(`
-      SELECT *
-      FROM comment_upvotes
-      WHERE "commentId" = ${commentId};
+    const { rows: comments } = await client.query(`
+      SELECT comments.* , U.firstname, U.lastname, U."picUrl"
+      FROM comments
+      INNER JOIN users U
+      ON U.id = comments."authorId"
+      WHERE "postId" = ${postId};
     `)
-    for (let i = 0; i < upvotes.length; i++) {
-      upvoteCount++
-    }
-
-    return { upvoteCount, upvotes }
+    return comments
   } catch (error) {
     console.error(error)
     throw error;
@@ -77,5 +74,5 @@ module.exports = {
   createComment,
   updateComment,
   deleteComment,
-  getCommentUpvotesById
+  getCommentsByPostId
 }

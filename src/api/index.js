@@ -79,3 +79,13 @@ export const newPost = async(token, _text, _time, _isPublic) => {
     console.error(error);
   }
 }
+
+export const getCommentsByPostId = async(postId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/comments/${postId}`);
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
