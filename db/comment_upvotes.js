@@ -50,10 +50,6 @@ const getCommentUpvotesById = async(commentId) => {
     throw error;
   }
 }
-const testFetch = async() => {
-  console.log(await getCommentUpvotesById(1))
-}
-testFetch();
 
 module.exports = {
   addUpvoteToComment,
