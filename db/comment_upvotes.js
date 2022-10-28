@@ -37,7 +37,26 @@ const removeUpvoteFromComment = async({
   }
 }
 
+const getCommentUpvotesById = async(commentId) => {
+  try {
+    const { rows: upvotes } = await client.query(`
+      SELECT "userId"
+      FROM comment_upvotes
+      WHERE "commentId" = ${commentId};
+    `)
+    return { upvoteCount: upvotes.length, upvotes }
+  } catch (error) {
+    console.error(error)
+    throw error;
+  }
+}
+const testFetch = async() => {
+  console.log(await getCommentUpvotesById(1))
+}
+testFetch();
+
 module.exports = {
   addUpvoteToComment,
-  removeUpvoteFromComment
+  removeUpvoteFromComment,
+  getCommentUpvotesById
 }
