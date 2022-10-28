@@ -1,19 +1,15 @@
 import React,{useEffect, useState} from "react";
+import { getCommentsByPostId } from "../api";
 
 
 const SinglePost = ({post}) => {
-    const [time, setTime] = useState("Just now");
-    
+    const [comments, setComments] = useState([]);
 
-    const assignTime = () => {
-        console.log('current', new Date())
-        console.log('post time', post.time)
+    const loadComments = async() => {
+        const postComments = await getCommentsByPostId(post.id);
+        setComments(postComments);
     }
 
-    useEffect(() => {
-        assignTime();
-    },[])
-    
 
 
 
@@ -23,7 +19,6 @@ const SinglePost = ({post}) => {
         margin:'5px',
         display:'flex',
         flexDirection:'column'
-        
     }
 
     return (
@@ -32,7 +27,7 @@ const SinglePost = ({post}) => {
                 <img id="profile-pic" src={post.profilePic} />
                 <div>
                     <div>{post.firstname} {post.lastname}</div>
-                    <div>{time}</div>
+                    <div>{post.time}</div>
                 </div>
             </div>
             <div>{post.text}</div>

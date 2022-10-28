@@ -49,4 +49,7 @@ apiRouter.use("/posts", postsRouter);
 // const upvotesRouter = require("./upvotes");
 // apiRouter.use("/upvotes", upvotesRouter);
 
+const commentsRouter = require("./comments");
+apiRouter.use("/comments", commentsRouter);
+
 module.exports = apiRouter;
