@@ -7,8 +7,9 @@ const addUpvoteToComment = async({
   try {
     const { rows: [upvote] } = await client.query(`
       INSERT INTO comment_upvotes
-      SET "commentId" = ${commentId},
-        "userId" = ${userId}
+        ("commentId", "userId")
+      VALUES 
+        (${commentId}, ${userId})
       RETURNING *;
     `);
     return upvote;

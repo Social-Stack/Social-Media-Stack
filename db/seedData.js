@@ -8,6 +8,8 @@ const {
   getUserByEmail,
   addFriends,
 } = require("./");
+const { createComment } = require("./comments");
+const { addUpvoteToComment } = require("./comment_upvotes");
 
 const createTables = async () => {
   console.log(chalk.green("BUILDING TABLES..."));
@@ -33,8 +35,9 @@ const dropTables = async () => {
     await client.query(`
         DROP TABLE IF EXISTS friendslists;
         DROP TABLE IF EXISTS messages;
+        DROP TABLE IF EXISTS comment_upvotes;
         DROP TABLE IF EXISTS comments;
-        DROP TABLE IF EXISTS upvotes;
+        DROP TABLE IF EXISTS post_upvotes;
         DROP TABLE IF EXISTS posts;
         DROP TABLE IF EXISTS users;
         `);
@@ -277,10 +280,53 @@ const createInitialComments = async() => {
       seedComment3)
     );
 
-    // const comment1 = await 
+    const comment1 = await createComment(seedComment1);
+    const comment2 = await createComment(seedComment2);
+    const comment3 = await createComment(seedComment3);
 
+    console.log(chalk.yellowBright("SEEDED COMMENTS: ", comment1, comment2, comment3));
+    console.log(chalk.green("FINISHED CREATING COMMENTS!"));
   } catch (error) {
-    
+    console.error(chalk.red("ERROR SEEDING COMMENTS", error));
+    throw error;
+  }
+}
+
+const createInitialCommentUpvotes = async() => {
+  console.log(chalk.green("CREATING INITIAL COMMENT UPVOTES..."));
+  
+  try {
+    const seedCommentUpvote1 = {
+      commentId: 1,
+      userId: 1
+    }
+
+    const seedCommentUpvote2 = {
+      commentId: 1,
+      userId: 2
+    }
+
+    const seedCommentUpvote3 = {
+      commentId: 2,
+      userId: 1
+    }
+
+    console.log(
+      chalk.blueBright("SEEDING COMMENT UPVOTES...", 
+      seedCommentUpvote1, 
+      seedCommentUpvote2, 
+      seedCommentUpvote3)
+    );
+
+    const upvote1 = await addUpvoteToComment(seedCommentUpvote1);
+    const upvote2 = await addUpvoteToComment(seedCommentUpvote2);
+    const upvote3 = await addUpvoteToComment(seedCommentUpvote3);
+
+    console.log(chalk.yellowBright("SEEDED COMMENT UPVOTES: ", upvote1, upvote2, upvote3));
+    console.log(chalk.green("FINISHED CREATING COMMENT UPVOTES!"));
+  } catch (error) {
+    console.error(chalk.red("ERROR SEEDING COMMENT UPVOTES", error));
+    throw error;
   }
 }
 
@@ -364,7 +410,8 @@ const rebuildDB = async () => {
     await createTables();
     await createInitialUsers();
     await createInitialPosts();
-    // await createInitialComments();
+    await createInitialComments();
+    await createInitialCommentUpvotes();
     await createInitialMessages();
     // await createInitialFriendsList();
   } catch (error) {
