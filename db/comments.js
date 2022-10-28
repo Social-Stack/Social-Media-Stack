@@ -43,7 +43,7 @@ const updateComment = async({
 const deleteComment = async(commentId) => {
   try {
     const { rows: [deletedComment] } = await client.query(`
-      DELETE FROM messages
+      DELETE FROM comments
       WHERE id = ${commentId}
       RETURNING *;
     `)
