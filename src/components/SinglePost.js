@@ -1,21 +1,41 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 
 
 const SinglePost = ({post}) => {
-    //component for posts to get mapped into
-
+    const [time, setTime] = useState("Just now");
     
+
+    const assignTime = () => {
+        console.log('current', new Date())
+        console.log('post time', post.time)
+    }
+
+    useEffect(() => {
+        assignTime();
+    },[])
+    
+
+
+
     const tempStyle = {
         border:'solid',
-        height:'50px',
-        width:'500px'
+        width:'500px',
+        margin:'5px',
+        display:'flex',
+        flexDirection:'column'
         
     }
 
-
     return (
         <div style={tempStyle}>
-            {post.text}
+            <div style={{display:'flex'}}>
+                <img id="profile-pic" src={post.profilePic} />
+                <div>
+                    <div>{post.firstname} {post.lastname}</div>
+                    <div>{time}</div>
+                </div>
+            </div>
+            <div>{post.text}</div>
         </div>
     )
 }
