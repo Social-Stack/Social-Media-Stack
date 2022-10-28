@@ -252,12 +252,12 @@ describe("api/posts", () => {
           Authorization: `Bearer ${token}`,
         });
 
-      expect(postToDelete.body).toMatchObject({
+      await expect(postToDelete.body).toMatchObject({
         deletedPost: expect.any(Object),
         success: expect.stringContaining("success"),
       });
 
-      expect(postToDelete.statusCode).toBe(200);
+      await expect(postToDelete.statusCode).toBe(200);
     });
 
     it("Returns an error if a user other than the author or an admin tries to delete a post", async () => {
@@ -273,9 +273,28 @@ describe("api/posts", () => {
           Authorization: `Bearer ${token}`,
         });
 
-      expect(postToDelete.body).toMatchObject({
+      await expect(postToDelete.body).toMatchObject({
         name: "AuthorizationError",
         message: "You must be an Admin or the original author of this post",
+      });
+    });
+
+    it("Returns an error if a post has already been deleted", async () => {
+      const { body } = await request(app).post("/api/users/login").send({
+        username: fakeUserData.username,
+        password: fakeUserData.password,
+      });
+      const token = body.token;
+
+      const postToDelete = await request(app)
+        .delete("/api/posts/3")
+        .set({
+          Authorization: `Bearer ${token}`,
+        });
+
+      await expect(postToDelete.body).toMatchObject({
+        name: "PostDoesNotExistError",
+        message: "That post does not exist",
       });
     });
   });

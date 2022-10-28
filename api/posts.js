@@ -105,14 +105,25 @@ router.delete("/:postId", async (req, res, next) => {
   try {
     const { postId } = req.params;
     const { id: userId, isAdmin } = req.user;
-    const { userId: authorId } = await getPostById(postId);
+    const result = await getPostById(postId);
+    let authorId;
+
+    if (result) {
+      authorId = result.userId;
+    }
+
     if (isAdmin || authorId === userId) {
       const deletedPost = await removePostById(postId);
       res.send({
         deletedPost,
         success: "You've successfully removed this post!",
       });
-    } else {
+    } else if (!result) {
+      next({
+        name: "PostDoesNotExistError",
+        message: "That post does not exist",
+      });
+    } else if (!isAdmin || authorId !== userId) {
       next({
         name: "AuthorizationError",
         message: "You must be an Admin or the original author of this post",
