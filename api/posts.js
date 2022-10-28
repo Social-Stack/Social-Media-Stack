@@ -16,44 +16,63 @@ const { requireUser } = require("./utils");
 router.post("/new", requireUser, async (req, res, next) => {
   try {
     const { id: userId } = req.user;
-    const { text, time, isPublic } = req.body;
+    const userInputs = ({ text, time, isPublic } = req.body);
 
-    const newPost = await createPost({ userId, text, time, isPublic });
-    res.send({
-      newPost,
-      success: "You've successfully created a new post!",
-    });
-  } catch (error) {
-    console.error(error);
-    throw error;
+    if (Object.keys(userInputs).length === 3) {
+      const newPost = await createPost({ userId, text, time, isPublic });
+      res.send({
+        newPost,
+        success: "You've successfully created a new post!",
+      });
+    } else {
+      next({
+        error: "MissingPostFieldError",
+        message: "Please supply all required fields",
+      });
+    }
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 
 router.get("/public", requireUser, async (req, res, next) => {
   try {
     const allPublicPosts = await getAllPublicPosts();
-    res.send(allPublicPosts);
-  } catch (error) {
-    console.error(error);
-    next(error);
+    if (allPublicPosts) {
+      res.send(allPublicPosts);
+    } else {
+      next({
+        error: "NoPostsExistError",
+        message: "No posts to display",
+      });
+    }
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 
 router.get("/myfriends", async (req, res, next) => {
   //simply this whole function
   try {
-    const { id } = req.user;
+    const { id: userId } = req.user;
     const allFriendsPosts = [];
-    const friends = await getFriendsByUserId(id);
-    for (let i = 0; i < friends.length; i++) {
-      const { friendId } = friends[i];
-      const friendPosts = await getPostsByUserId(friendId);
-      allFriendsPosts.push(...friendPosts);
+    const friends = await getFriendsByUserId(userId);
+    if (friends) {
+      for (let i = 0; i < friends.length; i++) {
+        const { friendId } = friends[i];
+        const friendPosts = await getPostsByUserId(friendId);
+        allFriendsPosts.push(...friendPosts);
+      }
+      res.send(allFriendsPosts);
+    } else {
+      next({
+        error: "SorryYouHaveNoFriendsError",
+        message:
+          "You have no friends so therefore there isn't any posts to display",
+      });
     }
-    res.send(allFriendsPosts);
-  } catch (error) {
-    console.error(error);
-    throw error;
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 
@@ -61,10 +80,16 @@ router.get("/me", requireUser, async (req, res, next) => {
   try {
     const { id } = req.user;
     const allMyPosts = await getPostsByUserId(id);
-    res.send(allMyPosts);
-  } catch (error) {
-    console.error(error);
-    throw error;
+    if (allMyPosts[0]) {
+      res.send(allMyPosts);
+    } else {
+      next({
+        error: "PostDoesNotExistError",
+        message: "That post does not exist",
+      });
+    }
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 
@@ -95,9 +120,8 @@ router.patch("/update/:postId", requireUser, async (req, res, next) => {
     // console.log(
     //   "IF YOU'RE SEEING THIS...there's a problem with the editPost patch request in api/posts (blame Fred)"
     // );
-  } catch (error) {
-    console.error(error);
-    next(error);
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 
@@ -129,17 +153,9 @@ router.delete("/:postId", async (req, res, next) => {
         message: "You must be an Admin or the original author of this post",
       });
     }
-  } catch (error) {
-    console.error(error);
-    next(error);
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
-
-// router.use((error, req, res, next) => {
-//   res.send({
-//     name: error.name,
-//     message: error.message,
-//   });
-// });
 
 module.exports = router;
