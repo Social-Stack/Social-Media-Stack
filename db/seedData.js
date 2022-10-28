@@ -98,7 +98,7 @@ const createTablePostUpvotes = async () => {
     throw error;
   }
 };
-const createTableComments = async () => { 
+const createTableComments = async () => {
   try {
     await client.query(`
       CREATE TABLE comments(
@@ -110,10 +110,10 @@ const createTableComments = async () => {
       );
     `);
   } catch (error) {
-    console.error(chalk.red("error during create comments table", error))
+    console.error(chalk.red("error during create comments table", error));
     throw error;
   }
-}
+};
 const createTableCommentUpvotes = async () => {
   try {
     await client.query(`
@@ -248,87 +248,95 @@ const createInitialPosts = async () => {
   }
 };
 
-const createInitialComments = async() => {
+const createInitialComments = async () => {
   console.log(chalk.green("CREATING INITIAL COMMENTS..."));
-  
+
   try {
     const seedComment1 = {
       authorId: 1,
       postId: 1,
       time: "2022-10-25 11:06:00+00:00",
-      text: "Look what I can do!!!"
-    }
+      text: "Look what I can do!!!",
+    };
 
     const seedComment2 = {
       authorId: 2,
       postId: 1,
       time: "2022-10-26 11:06:00+00:00",
-      text: "Great job, everyone!"
-    }
+      text: "Great job, everyone!",
+    };
 
     const seedComment3 = {
       authorId: 1,
       postId: 2,
       time: "2022-10-24 11:06:00+00:00",
-      text: "We did it!"
-    }
+      text: "We did it!",
+    };
 
     console.log(
-      chalk.blueBright("SEEDING COMMENTS...", 
-      seedComment1, 
-      seedComment2, 
-      seedComment3)
+      chalk.blueBright(
+        "SEEDING COMMENTS...",
+        seedComment1,
+        seedComment2,
+        seedComment3
+      )
     );
 
     const comment1 = await createComment(seedComment1);
     const comment2 = await createComment(seedComment2);
     const comment3 = await createComment(seedComment3);
 
-    console.log(chalk.yellowBright("SEEDED COMMENTS: ", comment1, comment2, comment3));
+    console.log(
+      chalk.yellowBright("SEEDED COMMENTS: ", comment1, comment2, comment3)
+    );
     console.log(chalk.green("FINISHED CREATING COMMENTS!"));
   } catch (error) {
     console.error(chalk.red("ERROR SEEDING COMMENTS", error));
     throw error;
   }
-}
+};
 
-const createInitialCommentUpvotes = async() => {
+const createInitialCommentUpvotes = async () => {
   console.log(chalk.green("CREATING INITIAL COMMENT UPVOTES..."));
-  
+
   try {
     const seedCommentUpvote1 = {
       commentId: 1,
-      userId: 1
-    }
+      userId: 1,
+    };
 
     const seedCommentUpvote2 = {
       commentId: 1,
-      userId: 2
-    }
+      userId: 2,
+    };
 
     const seedCommentUpvote3 = {
       commentId: 2,
-      userId: 1
-    }
+      userId: 1,
+    };
 
     console.log(
-      chalk.blueBright("SEEDING COMMENT UPVOTES...", 
-      seedCommentUpvote1, 
-      seedCommentUpvote2, 
-      seedCommentUpvote3)
+      chalk.blueBright(
+        "SEEDING COMMENT UPVOTES...",
+        seedCommentUpvote1,
+        seedCommentUpvote2,
+        seedCommentUpvote3
+      )
     );
 
     const upvote1 = await addUpvoteToComment(seedCommentUpvote1);
     const upvote2 = await addUpvoteToComment(seedCommentUpvote2);
     const upvote3 = await addUpvoteToComment(seedCommentUpvote3);
 
-    console.log(chalk.yellowBright("SEEDED COMMENT UPVOTES: ", upvote1, upvote2, upvote3));
+    console.log(
+      chalk.yellowBright("SEEDED COMMENT UPVOTES: ", upvote1, upvote2, upvote3)
+    );
     console.log(chalk.green("FINISHED CREATING COMMENT UPVOTES!"));
   } catch (error) {
     console.error(chalk.red("ERROR SEEDING COMMENT UPVOTES", error));
     throw error;
   }
-}
+};
 
 const createInitialMessages = async () => {
   console.log(chalk.green("CREATING INITIAL MESSAGES..."));
@@ -413,7 +421,7 @@ const rebuildDB = async () => {
     await createInitialComments();
     await createInitialCommentUpvotes();
     await createInitialMessages();
-    // await createInitialFriendsList();
+    await createInitialFriendsList();
   } catch (error) {
     console.error(chalk.red("error rebuilding the db!", error));
     throw error;
