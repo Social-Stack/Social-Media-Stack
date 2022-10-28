@@ -61,7 +61,8 @@ const getCommentsByPostId = async(postId) => {
       FROM comments
       INNER JOIN users U
       ON U.id = comments."authorId"
-      WHERE "postId" = ${postId};
+      WHERE "postId" = ${postId}
+      ORDER BY comments.time ASC;
     `)
     return comments
   } catch (error) {
