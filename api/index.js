@@ -52,4 +52,7 @@ apiRouter.use("/messages", messagesRouter);
 const commentsRouter = require("./comments");
 apiRouter.use("/comments", commentsRouter);
 
+const commentUpvotesRouter = require("./comment_upvotes");
+apiRouter.use("/comments", commentUpvotesRouter);
+
 module.exports = apiRouter;

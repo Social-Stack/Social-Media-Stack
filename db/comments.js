@@ -21,7 +21,7 @@ const createComment = async({
 }
 
 const updateComment = async({
-  id,
+  commentId,
   newTime,
   text
 }) => {
@@ -30,7 +30,7 @@ const updateComment = async({
       UPDATE comments
       SET time = ${newTime}, 
         text = ${text}
-      WHERE id = ${id}
+      WHERE id = ${commentId}
       RETURNING *;
     `)
     return comment;
@@ -54,22 +54,24 @@ const deleteComment = async(commentId) => {
   }
 }
 
-const getCommentsByPostId = async(postId) => {
-  try {
-    const { rows: comments } = await client.query(`
-      SELECT comments.* , U.firstname, U.lastname, U."picUrl"
-      FROM comments
-      INNER JOIN users U
-      ON U.id = comments."authorId"
-      WHERE "postId" = ${postId}
-      ORDER BY comments.time ASC;
-    `)
-    return comments
-  } catch (error) {
-    console.error(error)
-    throw error;
-  }
-}
+// Removing for now, leaving code for future realizations
+
+// const getCommentsByPostId = async(postId) => {
+//   try {
+//     const { rows: comments } = await client.query(`
+//       SELECT comments.* , U.firstname, U.lastname, U."picUrl"
+//       FROM comments
+//       INNER JOIN users U
+//       ON U.id = comments."authorId"
+//       WHERE "postId" = ${postId}
+//       ORDER BY comments.time ASC;
+//     `)
+//     return comments
+//   } catch (error) {
+//     console.error(error)
+//     throw error;
+//   }
+// }
 
 module.exports = {
   createComment,
