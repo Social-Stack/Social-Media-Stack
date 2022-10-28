@@ -1,4 +1,5 @@
 const express = require("express");
+const router = express.Router();
 const { 
   getPostById, 
   createComment, 
@@ -6,7 +7,6 @@ const {
   updateComment
 } = require("../db");
 const { requireUser } = require("./utils")
-const router = express.Router();
 
 router.get("/:postId", async (req, res, next) => {
     try {

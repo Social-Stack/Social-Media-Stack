@@ -1,4 +1,5 @@
-const router = require("../app");
+const express = require("express");
+const router = express.Router();
 const { 
   addUpvoteToComment,
   removeUpvoteFromComment,
