@@ -18,12 +18,12 @@ const NewsFeed = ({token}) => {
         const getPublicPosts = await getAllPublicPosts();
         //const getFriendPosts
         getPublicPosts[0] && newPostsArr.push(...getPublicPosts);
+        console.log(newPostsArr)
         setAllPublic(newPostsArr);
     }
 
     return (
         <div>
-            <div>Hi from the NewsFeed</div>
             <NewPost
             token={token}
             loadingTrigger={loadingTrigger}
@@ -36,7 +36,6 @@ const NewsFeed = ({token}) => {
                 )
             }):null}
         </div>
-        //map all the loaded posts to the SinglePost component
         //post object comes back with a userID. what it needs is a authorname convered before the API sends it back.
     )
 }

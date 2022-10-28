@@ -1,0 +1,29 @@
+#newPostBox {
+    display:flex;
+    flex-direction: column;
+    border: solid;
+    border-radius: 10px;
+    border-width: 1;
+    width: 500px;
+    margin: 2px;
+
+}
+#newPostTextBox{
+    min-width: 480px;
+    max-width: 480px;
+    min-height: 120;
+    max-height: 120;
+    height: 120px;
+    margin: 5px;
+}
+#postButton{
+    background-color: aquamarine;
+    width: 250;
+    height: 30;
+    margin-left: auto;
+    margin-right: 2px;
+}
+#newPostBottomBar{
+    display: flex;
+    flex-direction: row;
+}
