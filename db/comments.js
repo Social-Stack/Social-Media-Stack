@@ -73,9 +73,26 @@ const getCommentUpvotesById = async(commentId) => {
   }
 }
 
+const getCommentsByPostId = async(postId) => {
+  try {
+    const { rows: comments } = await client.query(`
+      SELECT comments.* , U.firstname, U.lastname, U."picURL"
+      FROM comments
+      INNER JOIN users U
+      ON U.id = comments."authorId"
+      WHERE "postId" = ${postId};
+    `)
+    return comments
+  } catch (error) {
+    console.error(error)
+    throw error;
+  }
+}
+
 module.exports = {
   createComment,
   updateComment,
   deleteComment,
-  getCommentUpvotesById
+  getCommentUpvotesById,
+  getCommentsByPostId
 }
