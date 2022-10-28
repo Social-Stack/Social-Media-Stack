@@ -29,14 +29,14 @@ const getMessagesBetweenUsers = async(loggedInUserId, friendUserId) => {
   }
 }
 const deleteMessageById = async(messageId) => {
-    try {
+  try {
         const {rows: [deletedMessage]} = await client.query(`
         DELETE FROM messages
         WHERE id = ${messageId}
         RETURNING *;
         `)
         return deletedMessage
-    } catch (error) {
+  } catch (error) {
     console.error(error);
     throw error;
   }

@@ -33,7 +33,7 @@ describe("api/posts", () => {
         .set({
           Authorization: `Bearer ${token}`,
         });
-
+        
       expect(response.body).toMatchObject({
         newPost: expect.any(Object),
         success: expect.stringContaining("success"),
