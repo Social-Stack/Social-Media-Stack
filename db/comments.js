@@ -76,12 +76,13 @@ const getCommentUpvotesById = async(commentId) => {
 const getCommentsByPostId = async(postId) => {
   try {
     const { rows: comments } = await client.query(`
-      SELECT comments.* , U.firstname, U.lastname, U."picURL"
+      SELECT comments.* , U.firstname, U.lastname, U."picUrl"
       FROM comments
       INNER JOIN users U
       ON U.id = comments."authorId"
       WHERE "postId" = ${postId};
     `)
+    console.log("db/comments will return ", comments)
     return comments
   } catch (error) {
     console.error(error)
