@@ -1,5 +1,6 @@
 import React,{useEffect, useState} from "react";
 import { getCommentsByPostId } from "../api";
+import SinglePostComment from "./SinglePostComment";
 
 
 const SinglePost = ({post}) => {
@@ -7,10 +8,13 @@ const SinglePost = ({post}) => {
 
     const loadComments = async() => {
         const postComments = await getCommentsByPostId(post.id);
+        console.log(postComments)
         setComments(postComments);
     }
 
-
+    useEffect(() => {
+        loadComments();
+    },[])
 
 
     const tempStyle = {
@@ -31,6 +35,16 @@ const SinglePost = ({post}) => {
                 </div>
             </div>
             <div>{post.text}</div>
+            <div>
+                <>comments:</>
+                {comments[0] && comments.map((comment) => {
+                    return(
+                        <SinglePostComment
+                        key={comment.id}
+                        comment={comment}/>
+                    )
+                })}
+            </div>
         </div>
     )
 }
