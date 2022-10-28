@@ -42,7 +42,8 @@ const getCommentUpvotesById = async(commentId) => {
     const { rows: upvotes } = await client.query(`
       SELECT "userId"
       FROM comment_upvotes
-      WHERE "commentId" = ${commentId};
+      WHERE "commentId" = ${commentId}
+      ORDER BY "userId" ASC;
     `)
     return { upvoteCount: upvotes.length, upvotes }
   } catch (error) {
@@ -50,6 +51,7 @@ const getCommentUpvotesById = async(commentId) => {
     throw error;
   }
 }
+
 
 module.exports = {
   addUpvoteToComment,
