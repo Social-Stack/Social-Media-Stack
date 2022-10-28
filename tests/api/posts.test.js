@@ -150,7 +150,6 @@ describe("api/posts", () => {
         userId: expect.any(Number),
         text: expect.any(String),
         isPublic: expect.any(Boolean),
-        isActive: expect.any(Boolean),
         time: expect.any(String),
       });
 
@@ -215,7 +214,7 @@ describe("api/posts", () => {
         });
 
       expect(postToEdit.body).toMatchObject({
-        name: "MissingData",
+        error: "MissingData",
         message: "Send relevant fields",
       });
     });
@@ -232,7 +231,7 @@ describe("api/posts", () => {
         });
 
       expect(postToEdit.body).toMatchObject({
-        name: "AuthorizationError",
+        error: "AuthorizationError",
         message: "You must be the original author of this post",
       });
     });
@@ -274,7 +273,7 @@ describe("api/posts", () => {
         });
 
       await expect(postToDelete.body).toMatchObject({
-        name: "AuthorizationError",
+        error: "AuthorizationError",
         message: "You must be an Admin or the original author of this post",
       });
     });
@@ -293,7 +292,7 @@ describe("api/posts", () => {
         });
 
       await expect(postToDelete.body).toMatchObject({
-        name: "PostDoesNotExistError",
+        error: "PostDoesNotExistError",
         message: "That post does not exist",
       });
     });

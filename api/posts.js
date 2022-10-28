@@ -77,12 +77,12 @@ router.patch("/update/:postId", requireUser, async (req, res, next) => {
 
     if (isPublic === undefined || text === undefined) {
       next({
-        name: "MissingData",
+        error: "MissingData",
         message: "Send relevant fields",
       });
     } else if (userId !== originalUserId) {
       next({
-        name: "AuthorizationError",
+        error: "AuthorizationError",
         message: "You must be the original author of this post",
       });
     } else {
@@ -120,12 +120,12 @@ router.delete("/:postId", async (req, res, next) => {
       });
     } else if (!result) {
       next({
-        name: "PostDoesNotExistError",
+        error: "PostDoesNotExistError",
         message: "That post does not exist",
       });
     } else if (!isAdmin || authorId !== userId) {
       next({
-        name: "AuthorizationError",
+        error: "AuthorizationError",
         message: "You must be an Admin or the original author of this post",
       });
     }
@@ -135,11 +135,11 @@ router.delete("/:postId", async (req, res, next) => {
   }
 });
 
-router.use((error, req, res, next) => {
-  res.send({
-    name: error.name,
-    message: error.message,
-  });
-});
+// router.use((error, req, res, next) => {
+//   res.send({
+//     name: error.name,
+//     message: error.message,
+//   });
+// });
 
 module.exports = router;
