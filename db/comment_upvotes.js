@@ -19,14 +19,28 @@ const addUpvoteToComment = async({
   }
 }
 
+const checkIfUpvoted = async({
+  commentId,
+  userId
+}) => {
+  const { rows: [upvote] } = await client.query(`
+    SELECT *
+    FROM comment_upvotes
+    WHERE "commentId" = ${commentId}
+        AND "userId" = ${userId}
+    RETURNING *;
+  `)
+  return upvote ? true : false
+}
+
 const removeUpvoteFromComment = async({
-  commendId,
+  commentId,
   userId
 }) => {
   try {
     const { rows: [upvote] } = await client.query(`
       DELETE FROM comment_upvotes
-      WHERE "commentId" = ${commendId}
+      WHERE "commentId" = ${commentId}
         AND "userId" = ${userId}
       RETURNING *;
     `);
@@ -39,13 +53,13 @@ const removeUpvoteFromComment = async({
 
 const getCommentUpvotesById = async(commentId) => {
   try {
-    const { rows: upvotes } = await client.query(`
+    const { rows: upvotesArr } = await client.query(`
       SELECT "userId"
       FROM comment_upvotes
       WHERE "commentId" = ${commentId}
       ORDER BY "userId" ASC;
     `)
-    return { upvoteCount: upvotes.length, upvotes }
+    return { upvoteCount: upvotes.length, upvotesArr }
   } catch (error) {
     console.error(error)
     throw error;
@@ -56,5 +70,6 @@ const getCommentUpvotesById = async(commentId) => {
 module.exports = {
   addUpvoteToComment,
   removeUpvoteFromComment,
-  getCommentUpvotesById
+  getCommentUpvotesById,
+  checkIfUpvoted
 }
