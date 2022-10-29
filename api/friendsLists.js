@@ -14,8 +14,9 @@ friendsRouter.post("/:friendId", requireUser, async (req, res, next) => {
   try {
     const { friendId } = req.params;
     const { id: userId } = req.user;
+    const validFriendId = await getUserById(friendId);
 
-    if (friendId) {
+    if (validFriendId) {
       const addFriend = await addFriends(userId, friendId);
       res.send({
         addFriend,
@@ -36,8 +37,9 @@ friendsRouter.delete("/:friendId", requireUser, async (req, res, next) => {
   try {
     const { friendId } = req.params;
     const { id: userId } = req.user;
+    const validFriendId = await getUserById(friendId);
 
-    if (friendId) {
+    if (validFriendId) {
       const deletedFriend = await removeFriend(userId, friendId);
       res.send({
         deletedFriend,
@@ -65,9 +67,12 @@ friendsRouter.get("/", requireUser, async (req, res, next) => {
         success: "Your friends were successfully retrieved!",
       });
     } else {
+      // Not sure if I can use the key "friends" here but I think it will be fine
+      // since it is not used as the variable from above. If it does cause an error
+      // blame CJ & change const to let
       next({
-        error: "YouHaveNoFriendsError",
-        message: "You currently have no friends. Please add some.",
+        friends: [],
+        success: "You currently have no friends. Please add some.",
       });
     }
   } catch ({ error, message }) {
@@ -78,7 +83,10 @@ friendsRouter.get("/", requireUser, async (req, res, next) => {
 friendsRouter.get("/:friendId", requireUser, async (req, res, next) => {
   try {
     const { friendId } = req.params;
-    if (friendId) {
+
+    const validFriendId = await getUserById(friendId);
+
+    if (validFriendId) {
       const friendsPosts = await getPostsByUserId(friendId);
 
       if (friendsPosts) {
@@ -87,9 +95,12 @@ friendsRouter.get("/:friendId", requireUser, async (req, res, next) => {
           success: "Your friend's posts were successfully retrieved!",
         });
       } else {
+      // Not sure if I can use the key "friendsPosts" here but I think it will be fine
+      // since it is not used the same as the variable from above. If it does cause an error
+      // blame CJ & change const to let
         next({
-          error: "FriendHasNoPostsError",
-          message: "This friend doesn't have any posts currently",
+          friendsPosts: [],
+          success: "This friend doesn't have any posts currently",
         });
       }
     } else {
