@@ -146,7 +146,7 @@ describe("api/users", () => {
         .send({
           username: fakeUserData.username,
           password: fakeUserData.password
-        })
+        });
       const token = body.token;
       
       const response = await request(app)
@@ -155,7 +155,7 @@ describe("api/users", () => {
         .send({
           firstname: "Tyrant",
           picUrl: "https://www.fake-url.com"
-        })
+        });
 
       await expect(response.body).toMatchObject({
         userInputs: {

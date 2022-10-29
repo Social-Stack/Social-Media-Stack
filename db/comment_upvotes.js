@@ -14,8 +14,7 @@ const addUpvoteToComment = async({
     `);
     return upvote;
   } catch (error) {
-    console.error(error);
-    throw error;    
+    console.error(error); 
   }
 }
 
@@ -23,14 +22,17 @@ const checkIfUpvoted = async({
   commentId,
   userId
 }) => {
-  const { rows: [upvote] } = await client.query(`
-    SELECT *
-    FROM comment_upvotes
-    WHERE "commentId" = ${commentId}
-        AND "userId" = ${userId}
-    RETURNING *;
-  `)
-  return upvote ? true : false
+  try {
+    const { rows: [upvote] } = await client.query(`
+      SELECT *
+      FROM comment_upvotes
+      WHERE "commentId" = ${commentId}
+          AND "userId" = ${userId};
+    `)
+    return upvote ? true : false
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 const removeUpvoteFromComment = async({
@@ -47,7 +49,6 @@ const removeUpvoteFromComment = async({
     return upvote;
   } catch (error) {
     console.error(error);
-    throw error;
   }
 }
 
@@ -59,10 +60,9 @@ const getCommentUpvotesById = async(commentId) => {
       WHERE "commentId" = ${commentId}
       ORDER BY "userId" ASC;
     `)
-    return { upvoteCount: upvotes.length, upvotesArr }
+    return { upvotes: upvotesArr.length, upvoterIds: upvotesArr }
   } catch (error) {
     console.error(error)
-    throw error;
   }
 }
 

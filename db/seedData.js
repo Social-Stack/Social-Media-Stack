@@ -429,6 +429,12 @@ const rebuildDB = async () => {
 };
 
 module.exports = {
+  createInitialUsers,
+  createInitialPosts,
+  createInitialComments,
+  createInitialCommentUpvotes,
+  createInitialMessages,
+  createInitialFriendsList,
   rebuildDB,
   createTables,
   dropTables,
