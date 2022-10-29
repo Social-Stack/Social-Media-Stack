@@ -3,7 +3,6 @@ const friendsRouter = express.Router();
 
 const {
   addFriends,
-  getUserByUsername,
   removeFriend,
   getFriendsByUserId,
   getPostsByUserId,
@@ -11,20 +10,13 @@ const {
 
 const { requireUser } = require("./utils");
 
-friendsRouter.post("/:friendUsername", requireUser, async (req, res, next) => {
+friendsRouter.post("/:friendId", requireUser, async (req, res, next) => {
   try {
-    const { username } = req.params;
+    const { friendId } = req.params;
     const { id: userId } = req.user;
-    const result = await getUserByUsername(username);
 
-    let friendsId;
-
-    if (result) {
-      friendsId = result.id;
-    }
-
-    if (friendsId) {
-      const addFriend = await addFriends(userId, friendsId);
+    if (friendId) {
+      const addFriend = await addFriends(userId, friendId);
       res.send({
         addFriend,
         success: "You've successfully added a friend",
@@ -40,40 +32,28 @@ friendsRouter.post("/:friendUsername", requireUser, async (req, res, next) => {
   }
 });
 
-friendsRouter.delete(
-  "/:friendUsername",
-  requireUser,
-  async (req, res, next) => {
-    try {
-      const { username } = req.params;
-      const { id: userId } = req.user;
-      const result = await getUserByUsername(username);
+friendsRouter.delete("/:friendId", requireUser, async (req, res, next) => {
+  try {
+    const { friendId } = req.params;
+    const { id: userId } = req.user;
 
-      let friendsId;
-
-      if (result) {
-        friendsId = result.id;
-      }
-
-      if (friendsId) {
-        const deletedFriend = await removeFriend(userId, friendsId);
-        res.send({
-          deletedFriend,
-          success: "You've successfully removed a friend",
-        });
-      } else {
-        next({
-          error: "FriendIdDoesNotExistError",
-          message: "A friend with that id doesn't exist",
-        });
-      }
-    } catch ({ error, message }) {
-      next({ error, message });
+    if (friendId) {
+      const deletedFriend = await removeFriend(userId, friendId);
+      res.send({
+        deletedFriend,
+        success: "You've successfully removed a friend",
+      });
+    } else {
+      next({
+        error: "FriendIdDoesNotExistError",
+        message: "A friend with that id doesn't exist",
+      });
     }
+  } catch ({ error, message }) {
+    next({ error, message });
   }
-);
+});
 
-// would this just be a / as the endpoint?
 friendsRouter.get("/", requireUser, async (req, res, next) => {
   try {
     const { id: userId } = req.user;
@@ -95,22 +75,27 @@ friendsRouter.get("/", requireUser, async (req, res, next) => {
   }
 });
 
-friendsRouter.get("/:friendUsername", requireUser, async (req, res, next) => {
+friendsRouter.get("/:friendId", requireUser, async (req, res, next) => {
   try {
-    const { username } = req.params;
-    const { id: friendId } = await getUserByUsername(username);
+    const { friendId } = req.params;
+    if (friendId) {
+      const friendsPosts = await getPostsByUserId(friendId);
 
-    const friendsPosts = await getPostsByUserId(friendId);
-
-    if (friendsPosts) {
-      res.send({
-        friendsPosts,
-        success: "Your friend's posts were successfully retrieved!",
-      });
+      if (friendsPosts) {
+        res.send({
+          friendsPosts,
+          success: "Your friend's posts were successfully retrieved!",
+        });
+      } else {
+        next({
+          error: "FriendHasNoPostsError",
+          message: "This friend doesn't have any posts currently",
+        });
+      }
     } else {
       next({
-        error: "FriendHasNoPostsError",
-        message: "This friend doesn't have any posts currently",
+        error: "FriendIdDoesNotExistError",
+        message: "A friend with that id doesn't exist",
       });
     }
   } catch ({ error, message }) {
