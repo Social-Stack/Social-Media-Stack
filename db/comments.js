@@ -1,4 +1,5 @@
-const client = require("./client")
+const client = require("./client");
+const { getPostById } = require("./posts");
 
 const createComment = async({
   authorId,
@@ -44,43 +45,43 @@ const deleteComment = async(commentId) => {
       DELETE FROM comments
       WHERE id = ${commentId}
       RETURNING *;
-    `)
+    `);
     return deletedComment;
   } catch (error) {
     console.error(error);
   }
 }
 
-// Removing for now, leaving code for future realizations
+const getCommentsByPostId = async(postId) => {
+  try {
+    const post = await getPostById(postId);
+    if (!post) {
+      return;
+    }
+    const { rows: comments } = await client.query(`
+      SELECT C.* , U.firstname, U.lastname, U."picUrl"
+      FROM comments C
+      JOIN users U
+      ON U.id = C."authorId"
+      WHERE C."postId" = ${postId}
+      ORDER BY C.time ASC;
+    `);
+    return comments ? comments : [];
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-// const getCommentsByPostId = async(postId) => {
-//   try {
-//     const { rows: comments } = await client.query(`
-//       SELECT comments.* , U.firstname, U.lastname, U."picUrl"
-//       FROM comments
-//       INNER JOIN users U
-//       ON U.id = comments."authorId"
-//       WHERE "postId" = ${postId}
-//       ORDER BY comments.time ASC;
-//     `)
-//     return comments
-//   } catch (error) {
-//     console.error(error)
-//     throw error;
-//   }
-// }
-
-const getCommentById = async(postId) => {
+const getCommentById = async(id) => {
   try {
     const { rows: [comment] } = await client.query(`
       SELECT *
       FROM comments
-      WHERE id=${postId};
-    `)
-    return comment
+      WHERE id=${id};
+    `);
+    return comment;
   } catch (error) {
-    console.error(error)
-    throw error;
+    console.error(error);
   }
 }
 
@@ -88,6 +89,6 @@ module.exports = {
   createComment,
   updateComment,
   deleteComment,
-  getCommentsByPostId,
-  getCommentById
+  getCommentById,
+  getCommentsByPostId
 }
