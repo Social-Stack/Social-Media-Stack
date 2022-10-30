@@ -26,6 +26,7 @@ const Header = ({ loggedIn, username, setToken }) => {
             {/* <Link to="/profile">Profile</Link> | {""} */}
             {/* {isAdmin ? <Link to="admin">Admin | {""}</Link> : null} */}
             {/* <div> */}
+            {/* <img id="profile-pic" src={require(`./Assets/defaultPic.png`)} /> offline mode for Fred in the sky */}
             <img id="profile-pic" src={picture} />
             {/* </div> */}
             <Link onClick={logout}>Logout {username}</Link>

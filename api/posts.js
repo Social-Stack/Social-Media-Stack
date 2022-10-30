@@ -11,88 +11,123 @@ const {
   getFriendsByUserId,
 } = require("../db");
 
-router.post("/new", async (req, res, next) => {
+const { requireUser } = require("./utils");
+
+router.post("/new", requireUser, async (req, res, next) => {
   try {
     const { id: userId } = req.user;
-    const { text, time, isPublic } = req.body;
+    const userInputs = ({ text, time, isPublic } = req.body);
 
-    const newPost = await createPost({ userId, text, time, isPublic });
-    res.send({
-      newPost,
-      success: "You've successfully created a new post!",
-    });
-  } catch (error) {
-    console.error(error);
-    throw error;
+    if (Object.keys(userInputs).length === 3) {
+      const newPost = await createPost({ userId, text, time, isPublic });
+      res.send({
+        newPost,
+        success: "You've successfully created a new post!",
+      });
+    } else {
+      next({
+        error: "MissingPostFieldError",
+        message: "Please supply all required fields",
+      });
+    }
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 
 router.get("/public", async (req, res, next) => {
+  console.log("reached backend/api/posts")
   try {
     const allPublicPosts = await getAllPublicPosts();
-    res.send(allPublicPosts);
-  } catch (error) {
-    console.error(error);
-    throw error;
+    if (allPublicPosts) {
+      res.send(allPublicPosts);
+    } else {
+      next({
+        error: "NoPostsExistError",
+        message: "No posts to display",
+      });
+    }
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 
 router.get("/myfriends", async (req, res, next) => {
   //simply this whole function
   try {
-    const { id } = req.user;
+    const { id: userId } = req.user;
     const allFriendsPosts = [];
-    const friends = await getFriendsByUserId(id);
-    for (let i = 0; i < friends.length; i++) {
-      const { friendId } = friends[i];
-      const friendPosts = await getPostsByUserId(friendId);
-      allFriendsPosts.push(...friendPosts);
+    const friends = await getFriendsByUserId(userId);
+    if (friends) {
+      for (let i = 0; i < friends.length; i++) {
+        const { friendId } = friends[i];
+        const friendPosts = await getPostsByUserId(friendId);
+        allFriendsPosts.push(...friendPosts);
+      }
+      res.send(allFriendsPosts);
+    } else {
+      next({
+        error: "SorryYouHaveNoFriendsError",
+        message:
+          "You have no friends so therefore there isn't any posts to display",
+      });
     }
-    res.send(allFriendsPosts);
-  } catch (error) {
-    console.error(error);
-    throw error;
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 
-router.get("/me", async (req, res, next) => {
+router.get("/me", requireUser, async (req, res, next) => {
   try {
     const { id } = req.user;
     const allMyPosts = await getPostsByUserId(id);
-    res.send(allMyPosts);
-  } catch (error) {
-    console.error(error);
-    throw error;
+    if (allMyPosts[0]) {
+      res.send(allMyPosts);
+    } else {
+      next({
+        error: "PostDoesNotExistError",
+        message: "That post does not exist",
+      });
+    }
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 
-router.patch("/update/:postId", async (req, res, next) => {
+router.patch("/update/:postId", requireUser, async (req, res, next) => {
   try {
     const { postId } = req.params;
     const { id: userId } = req.user;
     const { text, isPublic } = req.body;
-    const { userId: originalUserId } = await getPostById(postId);
+    const post = await getPostById(postId);
 
-    if (isPublic === undefined || text === undefined) {
-      throw {
-        name: "MissingData",
+    if (!post) {
+      next({
+        error: "NoPostFound",
+        message: `No Post found by ID: ${postId}`,
+      })
+    } else if (isPublic === undefined || text === undefined) {
+      next({
+        error: "MissingData",
         message: "Send relevant fields",
-      };
-    } else if (userId !== originalUserId) {
-      throw {
-        name: "AuthorizationError",
+      });
+    } else if (userId !== post.userId) {
+      next({
+        error: "AuthorizationError",
         message: "You must be the original author of this post",
-      };
+      });
     } else {
       const editedPost = await editPostById({ id: postId, text, isPublic });
-      res.send(editedPost);
+      res.send({
+        editedPost,
+        success: "You've successfully edited a post!",
+      });
     }
-    console.log(
-      "IF YOU'RE SEEING THIS...there's a problem with the editPost patch request in api/posts (blame Fred)"
-    );
-  } catch (error) {
-    console.error(error);
-    throw error;
+    // console.log(
+    //   "IF YOU'RE SEEING THIS...there's a problem with the editPost patch request in api/posts (blame Fred)"
+    // );
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 
@@ -100,27 +135,33 @@ router.delete("/:postId", async (req, res, next) => {
   try {
     const { postId } = req.params;
     const { id: userId, isAdmin } = req.user;
-    const { userId: authorId } = await getPostById(postId);
-    if (isAdmin || authorId === userId) {
-      await removePostById(postId);
-      res.send({ message: "Post Removed" });
-    } else {
-      throw {
-        name: "AuthorizationError",
-        message: "You must be an Admin or the original author of this post",
-      };
-    }
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-});
+    const result = await getPostById(postId);
+    let authorId;
 
-router.use((error, req, res, next) => {
-  res.send({
-    name: error.name,
-    message: error.message,
-  });
+    if (result) {
+      authorId = result.userId;
+    }
+
+    if (isAdmin || authorId === userId) {
+      const deletedPost = await removePostById(postId);
+      res.send({
+        deletedPost,
+        success: "You've successfully removed this post!",
+      });
+    } else if (!result) {
+      next({
+        error: "PostDoesNotExistError",
+        message: "That post does not exist",
+      });
+    } else if (!isAdmin || authorId !== userId) {
+      next({
+        error: "AuthorizationError",
+        message: "You must be an Admin or the original author of this post",
+      });
+    }
+  } catch ({ error, message }) {
+    next({ error, message });
+  }
 });
 
 module.exports = router;

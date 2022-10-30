@@ -32,11 +32,11 @@ const NewsFeed = ({token}) => {
                 return (
                     <SinglePost
                     key= {i}
-                    post={post}/>
+                    post={post}
+                    token={token}/>
                 )
             }):null}
         </div>
-        //post object comes back with a userID. what it needs is a authorname convered before the API sends it back.
     )
 }
 export default NewsFeed;
