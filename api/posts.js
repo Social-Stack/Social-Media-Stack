@@ -99,14 +99,19 @@ router.patch("/update/:postId", requireUser, async (req, res, next) => {
     const { postId } = req.params;
     const { id: userId } = req.user;
     const { text, isPublic } = req.body;
-    const { userId: originalUserId } = await getPostById(postId);
+    const post = await getPostById(postId);
 
-    if (isPublic === undefined || text === undefined) {
+    if (!post) {
+      next({
+        error: "NoPostFound",
+        message: `No Post found by ID: ${postId}`,
+      })
+    } else if (isPublic === undefined || text === undefined) {
       next({
         error: "MissingData",
         message: "Send relevant fields",
       });
-    } else if (userId !== originalUserId) {
+    } else if (userId !== post.userId) {
       next({
         error: "AuthorizationError",
         message: "You must be the original author of this post",
