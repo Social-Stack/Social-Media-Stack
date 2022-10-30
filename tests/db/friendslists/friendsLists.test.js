@@ -1,4 +1,4 @@
-const { createUser } = require("../../../db");
+const { createUser, getUserById } = require("../../../db");
 const { addFriends, removeFriend, getFriendsByUserId } = require("../../../db");
 
 const fakeUserData = {
@@ -37,7 +37,23 @@ describe("DB FriendsLists", () => {
     it("gets all the friends of that user and returns them", async () => {
       const friends = await getFriendsByUserId(1);
 
-      console.log("friends", friends);
+      expect(friends.length).toEqual(1);
+      expect(friends[0]).toMatchObject({
+        userId: expect.any(Number),
+        friendId: expect.any(Number),
+      });
+    });
+  });
+
+  describe("removeFriend", () => {
+    it("Removes a friend from the user's friend list", async () => {
+      const removedFriend1 = await removeFriend(1, 2);
+
+      expect(removedFriend1.length).toEqual(2);
+      expect(removedFriend1[0]).toMatchObject({
+        userId: expect.any(Number),
+        friendId: expect.any(Number),
+      });
     });
   });
 });
