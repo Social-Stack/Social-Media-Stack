@@ -38,9 +38,11 @@ const getPostById = async (id) => {
     const {
       rows: [post],
     } = await client.query(`
-    SELECT *
-    FROM posts
-    WHERE "id" = ${id};
+    SELECT posts.*, comments.*
+    FROM posts P
+    JOIN comments C
+    ON P.id = C."postId"
+    WHERE P.id = ${id};
     `);
     return post;
   } catch (error) {
