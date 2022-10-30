@@ -16,27 +16,25 @@ const createComment = async({
     return comment;
   } catch (error) {
     console.error(error);
-    throw error;
   }
 }
 
 const updateComment = async({
   commentId,
-  newTime,
+  time,
   text
 }) => {
   try {
     const { rows: [comment] } = await client.query(`
       UPDATE comments
-      SET time = ${newTime}, 
-        text = ${text}
+      SET time = $1,
+        text = $2
       WHERE id = ${commentId}
       RETURNING *;
-    `)
+    `, [time, text])
     return comment;
   } catch (error) {
     console.error(error);
-    throw error;
   }
 }
 
@@ -50,7 +48,6 @@ const deleteComment = async(commentId) => {
     return deletedComment;
   } catch (error) {
     console.error(error);
-    throw error;
   }
 }
 
@@ -77,5 +74,4 @@ module.exports = {
   createComment,
   updateComment,
   deleteComment,
-  getCommentsByPostId
 }
