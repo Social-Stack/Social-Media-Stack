@@ -42,7 +42,6 @@ const getPostById = async (id) => {
     FROM posts P
     WHERE P.id = ${id};
     `);
-    console.log("POST", post)
     return post;
   } catch (error) {
     console.error(error);
@@ -53,12 +52,14 @@ const getPostById = async (id) => {
 const getAllPublicPosts = async () => {
   try {
     const { rows: posts } = await client.query(`
-    SELECT posts.id, posts.text, posts."userId", posts.time, U.firstname, U.lastname, U."picUrl" as "profilePic"
+    SELECT posts.*, 
+      U.firstname, U.lastname, U."picUrl" as "profilePic"
     FROM posts
     INNER JOIN users U
     ON U.id = posts."userId"
     WHERE "isPublic" = true;
     `);
+    console.log("POSTS", posts)
     return posts;
   } catch (error) {
     console.error(error);
@@ -92,15 +93,12 @@ const editPostById = async ({id, ...fields}) => {
 
 const removePostById = async(id) => {
   try{
-    const _post = getPostById(id);
-    if(_post){
-      await client.query(`
+    const { rows: [post] } = await client.query(`
       DELETE FROM posts
       WHERE id = ${id}
       RETURNING *;
-      `)
-    }
-    return _post;
+    `)
+    return post;
   } catch (error) {
     console.error(error);
     throw error;
