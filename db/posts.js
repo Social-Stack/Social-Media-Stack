@@ -38,12 +38,11 @@ const getPostById = async (id) => {
     const {
       rows: [post],
     } = await client.query(`
-    SELECT posts.*, comments.*
+    SELECT *
     FROM posts P
-    JOIN comments C
-    ON P.id = C."postId"
     WHERE P.id = ${id};
     `);
+    console.log("POST", post)
     return post;
   } catch (error) {
     console.error(error);
@@ -97,7 +96,8 @@ const removePostById = async(id) => {
     if(_post){
       await client.query(`
       DELETE FROM posts
-      WHERE id = ${id};
+      WHERE id = ${id}
+      RETURNING *;
       `)
     }
     return _post;
