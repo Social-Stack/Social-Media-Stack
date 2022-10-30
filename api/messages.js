@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const messagesRouter = express.Router();
 const {
   createMessage,
   getMessagesBetweenUsers,
@@ -7,11 +7,12 @@ const {
   getAllMessages,
   getUserById,
 } = require("../db");
+const { requireUser } = require("./utils");
 
-router.post("/new", async (req, res, next) => {
+messagesRouter.post("/new", requireUser, async (req, res, next) => {
   try {
     const { id: sendingUserId } = req.user;
-    const { id: recipientUserId, time, text } = req.body;
+    const { recipientUserId, time, text } = req.body;
 
     const newMessage = await createMessage({
       sendingUserId,
@@ -28,7 +29,7 @@ router.post("/new", async (req, res, next) => {
   }
 });
 
-router.get("/chat", async (req, res, next) => {
+messagesRouter.get("/chat", requireUser, async (req, res, next) => {
   const { id: loggedInUserId } = req.user;
   const { id: friendUserId } = req.body;
 
@@ -48,7 +49,7 @@ router.get("/chat", async (req, res, next) => {
   }
 });
 
-router.delete("/:messageId", async (req, res, next) => {
+messagesRouter.delete("/:messageId", requireUser, async (req, res, next) => {
   try {
     const { messageId } = req.params;
     const deletedMessage = deleteMessageById(messageId);
@@ -61,7 +62,7 @@ router.delete("/:messageId", async (req, res, next) => {
   }
 });
 
-router.get("/chatlist", async (req, res, next) => {
+messagesRouter.get("/chatlist", requireUser, async (req, res, next) => {
   try {
     const { id: userId } = req.user;
     const user = getUserById(loggedInUserId);
@@ -74,4 +75,4 @@ router.get("/chatlist", async (req, res, next) => {
     next({ error, message });
   }
 });
-module.exports = router;
+module.exports = messagesRouter;
