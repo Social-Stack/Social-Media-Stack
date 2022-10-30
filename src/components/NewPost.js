@@ -17,6 +17,7 @@ const NewPost = ({token, loadingTrigger, setLoadingTrigger}) => {
         setVisibility(newVis)
     }
 
+    //dont mind the bad style just focusing on functionality
 
     return (
         <div id="newPostBox">

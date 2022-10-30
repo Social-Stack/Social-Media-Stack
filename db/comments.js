@@ -70,8 +70,24 @@ const deleteComment = async(commentId) => {
 //   }
 // }
 
+const getCommentById = async(postId) => {
+  try {
+    const { rows: [comment] } = await client.query(`
+      SELECT *
+      FROM comments
+      WHERE id=${postId};
+    `)
+    return comment
+  } catch (error) {
+    console.error(error)
+    throw error;
+  }
+}
+
 module.exports = {
   createComment,
   updateComment,
   deleteComment,
+  getCommentsByPostId,
+  getCommentById
 }

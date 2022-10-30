@@ -1,10 +1,12 @@
 import React,{useEffect, useState} from "react";
 import { getCommentsByPostId } from "../api";
+import NewComment from "./NewComment";
 import SinglePostComment from "./SinglePostComment";
 
 
-const SinglePost = ({post}) => {
+const SinglePost = ({post, token}) => {
     const [comments, setComments] = useState([]);
+    const [reloadComTrigger, setReloadComTrigger] = useState(false);
 
     const loadComments = async() => {
         const postComments = await getCommentsByPostId(post.id);
@@ -14,7 +16,7 @@ const SinglePost = ({post}) => {
 
     useEffect(() => {
         loadComments();
-    },[])
+    },[reloadComTrigger])
 
 
     const tempStyle = {
@@ -25,10 +27,14 @@ const SinglePost = ({post}) => {
         flexDirection:'column'
     }
 
+    //dont mind the bad style just focusing on functionality
+
+
     return (
         <div style={tempStyle}>
             <div style={{display:'flex'}}>
                 <img id="profile-pic" src={post.profilePic} />
+                {/* <img style ={{height:'50', width:'50'}} src={require(`./Assets/defaultPic.png`)}></img> offline mode for Fred in the sky */}
                 <div>
                     <div>{post.firstname} {post.lastname}</div>
                     <div>{post.time}</div>
@@ -44,7 +50,13 @@ const SinglePost = ({post}) => {
                         comment={comment}/>
                     )
                 })}
+                
             </div>
+            <NewComment
+            token={token}
+            postId={post.id}
+            reloadComTrigger={reloadComTrigger}
+            setReloadComTrigger={setReloadComTrigger}></NewComment>
         </div>
     )
 }

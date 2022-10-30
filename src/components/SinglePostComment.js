@@ -11,6 +11,8 @@ const SinglePostComment = ({comment}) => {
         margin: '2px',
         padding:'5px'
     }
+    console.log(comment)
+    //dont mind the bad style just focusing on functionality
 
     return (
         <div style={tempStyle}>

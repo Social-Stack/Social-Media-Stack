@@ -89,3 +89,39 @@ export const getCommentsByPostId = async(postId) => {
     console.error(error);
   }
 }
+
+export const newComment = async(token, postId, time, text) => {
+  try{
+    const response = await fetch(`${BASE_URL}/comments/${postId}`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      text,
+      time
+    })
+    });
+    const result = await response.json();
+    return result
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export const removeComment = async(token, commentId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/comments/${commentId}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+    });
+    const result = await response.json();
+    return result
+  } catch (error) {
+    console.error(error);
+  }
+}
