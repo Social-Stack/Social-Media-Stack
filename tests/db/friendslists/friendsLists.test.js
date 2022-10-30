@@ -1,5 +1,9 @@
-const { createUser, getUserById } = require("../../../db");
-const { addFriends, removeFriend, getFriendsByUserId } = require("../../../db");
+const {
+  addFriends,
+  removeFriend,
+  getFriendsByUserId,
+  createUser,
+} = require("../../../db");
 
 const fakeUserData = {
   firstname: "Polly",
