@@ -29,11 +29,7 @@ describe("DB FriendsLists", () => {
 
       const addFriend1 = await addFriends(_user1.id, _user2.id);
 
-      expect(addFriend1.length).toEqual(2);
-      expect(addFriend1[0]).toMatchObject({
-        userId: expect.any(Number),
-        friendId: expect.any(Number),
-      });
+      expect(addFriend1).toEqual(2);
     });
   });
 

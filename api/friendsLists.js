@@ -19,7 +19,8 @@ friendsRouter.post("/:friendId", requireUser, async (req, res, next) => {
 
     if (validFriend) {
       const newFriend = await addFriends(userId, friendId);
-      if (newFriend) {
+
+      if (typeof newFriend === "number") {
         res.send({
           validFriend,
           success: "You've successfully added a friend",
@@ -68,18 +69,25 @@ friendsRouter.get("/", requireUser, async (req, res, next) => {
   try {
     const { id: userId } = req.user;
 
-    const friends = await getFriendsByUserId(userId);
-    if (friends) {
-      res.send({
-        friends,
-        success: "Your friends were successfully retrieved!",
+    const friendsLists = await getFriendsByUserId(userId);
+
+    if (friendsLists) {
+      const friendsList = [];
+
+      friendsLists.map(async (_friend) => {
+        const friend = await getUserById(_friend.friendId);
+        friendsList.push(friend);
+        res.send({
+          friendsList,
+          success: "Your friends were successfully retrieved!",
+        });
       });
     } else {
       // Not sure if I can use the key "friends" here but I think it will be fine
       // since it is not used as the variable from above. If it does cause an error
       // blame CJ & change const to let
       next({
-        friends: [],
+        friendsLists: [],
         success: "You currently have no friends. Please add some.",
       });
     }

@@ -10,10 +10,9 @@ const addFriends = async (id1, id2) => {
         `,
       [id1, id2]
     );
-    return friends ? id2 : null;
+    return friends ? Number(id2) : null;
   } catch (error) {
     console.error(error);
-    throw error;
   }
 };
 
