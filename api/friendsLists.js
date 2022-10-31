@@ -15,15 +15,21 @@ friendsRouter.post("/:friendId", requireUser, async (req, res, next) => {
   try {
     const { friendId } = req.params;
     const { id: userId } = req.user;
-    const validFriendId = await getUserById(friendId);
+    const validFriend = await getUserById(friendId);
 
-    if (validFriendId) {
-      const newFriendId = await addFriends(userId, friendId);
-      const newFriend = await getUserById(newFriendId);
-      res.send({
-        newFriend,
-        success: "You've successfully added a friend",
-      });
+    if (validFriend) {
+      const newFriend = await addFriends(userId, friendId);
+      if (newFriend) {
+        res.send({
+          validFriend,
+          success: "You've successfully added a friend",
+        });
+      } else {
+        next({
+          error: "AlreadyFriendsError",
+          message: "You're already friends!",
+        });
+      }
     } else {
       next({
         error: "FriendIdDoesNotExistError",
