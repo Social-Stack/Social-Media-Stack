@@ -22,13 +22,13 @@ apiRouter.use(async (req, res, next) => {
         req.user = await getUserById(id);
         next();
       }
-    } catch ({ name, message }) {
-      next({ name, message });
+    } catch ({ error, message }) {
+      next({ error, message });
     }
   } else {
     res.status(401);
     next({
-      name: "AuthoriztionHeaderError",
+      error: "AuthorizationHeaderError",
       message: 'Authorization must start with "Bearer "',
     });
   }

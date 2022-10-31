@@ -4,7 +4,8 @@ const {
   addUpvoteToComment,
   removeUpvoteFromComment,
   checkIfUpvoted,
-  getCommentUpvotesById
+  getCommentUpvotesById,
+  getCommentById
 } = require("../db");
 const { requireUser } = require("./utils")
 
@@ -12,19 +13,25 @@ router.get("/:commentId", async(req, res, next) => {
   const { commentId } = req.params;
   
   try {
+    const comment = await getCommentById(commentId);
     const upvoteObj = await getCommentUpvotesById(commentId);
-    const { upvoteCount, upvotesArr: upvoters } = upvoteObj;
+    const { upvotes, upvoterIds } = upvoteObj;
 
-    // Since no upvotes is not an error, still handling as a success
-    if (!upvoteObj) {
+    if (!comment) {
+      next({
+        error: "CommentNotFound",
+        message: `No comment found by ID: ${commentId}`
+      });
+    } else if (!upvoteObj) {
+      // Since no upvotes is not an error, still handling as a success
       res.send({
-        upvoteCount: 0,
+        upvotes: 0,
         success: "This comment has no upvotes yet"
       })
     } else {
       res.send({
-        upvoteCount,
-        upvoters,
+        upvotes,
+        upvoterIds,
         success: `This comment has ${upvoteCount} upvotes` 
       })
     }
@@ -38,21 +45,27 @@ router.post("/addvote", requireUser, async(req, res, next) => {
   const { id: commentId } = req.body;
 
   try {
+    const comment = await getCommentById(commentId);
     const alreadyUpvoted = await checkIfUpvoted({
       commentId,
       userId
     })
-    if (alreadyUpvoted) {
+    if (!comment) {
+      next({
+        error: "CommentNotFound",
+        message: `No comment found by ID: ${commentId}`
+      });
+    } else if (alreadyUpvoted) {
       res.status(409);
       next({
         error: "Conflict",
         message: "You have already upvoted this comment"
-      })
+      });
     } else {
       const upvote = await addUpvoteToComment({
         commentId,
         userId
-      })
+      });
       res.send({
         upvote,
         success: "Successfully upvoted this comment"
@@ -68,11 +81,17 @@ router.delete("/removevote", requireUser, async(req, res, next) => {
   const { id: commentId } = req.body;
 
   try {
+    const comment = await getCommentById(commentId);
     const alreadyUpvoted = await checkIfUpvoted({
       commentId,
       userId
     })
-    if (alreadyUpvoted) {
+    if (!comment) {
+      next({
+        error: "CommentNotFound",
+        message: `No comment found by ID: ${commentId}`
+      });
+    } else if (alreadyUpvoted) {
       const removedUpvote = await removeUpvoteFromComment({
         commentId,
         userId
