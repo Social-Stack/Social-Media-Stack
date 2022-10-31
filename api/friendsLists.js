@@ -6,6 +6,7 @@ const {
   removeFriend,
   getFriendsByUserId,
   getPostsByUserId,
+  getUserById,
 } = require("../db");
 
 const { requireUser } = require("./utils");
@@ -17,9 +18,10 @@ friendsRouter.post("/:friendId", requireUser, async (req, res, next) => {
     const validFriendId = await getUserById(friendId);
 
     if (validFriendId) {
-      const addFriend = await addFriends(userId, friendId);
+      const newFriendId = await addFriends(userId, friendId);
+      const newFriend = await getUserById(newFriendId);
       res.send({
-        addFriend,
+        newFriend,
         success: "You've successfully added a friend",
       });
     } else {
@@ -95,9 +97,9 @@ friendsRouter.get("/:friendId", requireUser, async (req, res, next) => {
           success: "Your friend's posts were successfully retrieved!",
         });
       } else {
-      // Not sure if I can use the key "friendsPosts" here but I think it will be fine
-      // since it is not used the same as the variable from above. If it does cause an error
-      // blame CJ & change const to let
+        // Not sure if I can use the key "friendsPosts" here but I think it will be fine
+        // since it is not used the same as the variable from above. If it does cause an error
+        // blame CJ & change const to let
         next({
           friendsPosts: [],
           success: "This friend doesn't have any posts currently",
