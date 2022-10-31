@@ -1,10 +1,7 @@
 require("dotenv").config()
 const request = require("supertest");
-const app = require("../../../app")
-const client = require("../../../db/client");
-const jwt = require("jsonwebtoken");
+const app = require("../../../app");
 const { createUser } = require("../../../db");
-const { JWT_SECRET = 'NoTelling' } = process.env;
 
 
 const fakeUserData = {
