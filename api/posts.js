@@ -35,8 +35,8 @@ router.post("/new", requireUser, async (req, res, next) => {
   }
 });
 
-router.get("/public", async (req, res, next) => {
-  console.log("reached backend/api/posts")
+router.get("/public", requireUser, async (req, res, next) => {
+  console.log("reached backend/api/posts");
   try {
     const allPublicPosts = await getAllPublicPosts();
     if (allPublicPosts) {
@@ -105,7 +105,7 @@ router.patch("/update/:postId", requireUser, async (req, res, next) => {
       next({
         error: "NoPostFound",
         message: `No Post found by ID: ${postId}`,
-      })
+      });
     } else if (isPublic === undefined || text === undefined) {
       next({
         error: "MissingData",
