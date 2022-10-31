@@ -1,12 +1,17 @@
 const express = require("express");
 
-const { getCommentsByPostId } = require("../db/comments");
+const {
+  // getCommentsByPostId,
+  createComment,
+  getCommentById,
+  deleteComment,
+} = require("../db/comments");
 const router = express.Router();
 const {
   getPostById,
-  createComment,
-  deleteComment,
-  updateComment,
+  // createComment,
+  // deleteComment,
+  // updateComment
 } = require("../db");
 const { requireUser } = require("./utils");
 
