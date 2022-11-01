@@ -1,20 +1,20 @@
 const express = require("express");
 const commentsRouter = express.Router();
-const { 
-  getPostById, 
-  createComment, 
+const {
+  getPostById,
+  createComment,
   deleteComment,
   getCommentsByPostId,
   updateComment,
-  getCommentById
+  getCommentById,
 } = require("../db");
 const { requireUser } = require("./utils");
 
 commentsRouter.get("/:postId", async (req, res, next) => {
   const { postId } = req.params;
 
-    try {
-      const post = await getPostById(postId);
+  try {
+    const post = await getPostById(postId);
 
       if (!post) {
         next({
@@ -31,11 +31,14 @@ commentsRouter.get("/:postId", async (req, res, next) => {
     } catch ({ error, message }) {
       next({ error, message });
     }
-  });
+  } catch ({ error, message }) {
+    next({ error, message });
+  }
+});
 
-commentsRouter.post("/:postId", requireUser, async(req, res, next) => {
-  try{
-    const { id: authorId} =req.user;
+commentsRouter.post("/:postId", requireUser, async (req, res, next) => {
+  try {
+    const { id: authorId } = req.user;
     const { postId } = req.params;
     const { time, text } = req.body;
 
@@ -44,6 +47,16 @@ commentsRouter.post("/:postId", requireUser, async(req, res, next) => {
     if (!post) {
       next({
         error: "PostNotFound",
+        message: `No post found by ID: ${postId}`,
+      });
+    } else {
+      const newComment = await createComment({ authorId, postId, time, text });
+
+      res.send(newComment);
+      const post = await getPostById(postId);
+      res.send({
+        post,
+        success: `Successfully created a new comment`,
         message: `No post found by ID: ${postId}`
       })
     } else {
@@ -94,17 +107,16 @@ commentsRouter.patch("/:id", requireUser, async (req, res, next) => {
   const { id: currentUserId } = req.user;
   const { time, text } = req.body;
 
-  
   try {
     const comment = await getCommentById(commentId);
 
     if (!comment) {
       next({
         error: "CommentNotFound",
-        message: `No comment found by ID: ${commentId}`
+        message: `No comment found by ID: ${commentId}`,
       });
     } else if (currentUserId !== comment.authorId) {
-      res.status(403)
+      res.status(403);
       next({
         error: "Forbidden",
         message: "Unauthorized to update this comment",
