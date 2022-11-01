@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const commentUpvotesRouter = express.Router();
 const { 
   addUpvoteToComment,
   removeUpvoteFromComment,
@@ -9,27 +9,34 @@ const {
 } = require("../db");
 const { requireUser } = require("./utils")
 
-router.get("/:commentId", async(req, res, next) => {
+commentUpvotesRouter.get("/:commentId", async(req, res, next) => {
   const { commentId } = req.params;
   
   try {
     const comment = await getCommentById(commentId);
-    const upvoteObj = await getCommentUpvotesById(commentId);
-    const { upvotes, upvoterIds } = upvoteObj;
+    const { upvotes, upvoterIds } = await getCommentUpvotesById(commentId);
+    let userHasUpvoted = false;
+
+    // User is not required to view comment but if they are logged in we can check if they upvoted this comment already
+    if (req.user) {
+      const { id: userId } = req.user;
+      userHasUpvoted = await checkIfUpvoted({ commentId, userId });
+    }
 
     if (!comment) {
       next({
         error: "CommentNotFound",
         message: `No comment found by ID: ${commentId}`
       });
-    } else if (!upvoteObj) {
+    } else if (!upvotes) {
       // Since no upvotes is not an error, still handling as a success
       res.send({
-        upvotes: 0,
+        upvotes,
         success: "This comment has no upvotes yet"
       })
     } else {
       res.send({
+        userHasUpvoted,
         upvotes,
         upvoterIds,
         success: `This comment has ${upvoteCount} upvotes` 
@@ -40,7 +47,7 @@ router.get("/:commentId", async(req, res, next) => {
   }
 })
 
-router.post("/addvote", requireUser, async(req, res, next) => {
+commentUpvotesRouter.post("/addvote", requireUser, async(req, res, next) => {
   const { id: userId } = req.user;
   const { id: commentId } = req.body;
 
@@ -76,7 +83,7 @@ router.post("/addvote", requireUser, async(req, res, next) => {
   }
 })
 
-router.delete("/removevote", requireUser, async(req, res, next) => {
+commentUpvotesRouter.delete("/removevote", requireUser, async(req, res, next) => {
   const { id: userId } = req.user;
   const { id: commentId } = req.body;
 
@@ -112,4 +119,4 @@ router.delete("/removevote", requireUser, async(req, res, next) => {
   }
 })
 
-module.exports = router;
+module.exports = commentUpvotesRouter;

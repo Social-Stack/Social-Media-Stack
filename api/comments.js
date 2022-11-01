@@ -31,9 +31,6 @@ commentsRouter.get("/:postId", async (req, res, next) => {
     } catch ({ error, message }) {
       next({ error, message });
     }
-  } catch ({ error, message }) {
-    next({ error, message });
-  }
 });
 
 commentsRouter.post("/:postId", requireUser, async (req, res, next) => {
@@ -49,16 +46,6 @@ commentsRouter.post("/:postId", requireUser, async (req, res, next) => {
         error: "PostNotFound",
         message: `No post found by ID: ${postId}`,
       });
-    } else {
-      const newComment = await createComment({ authorId, postId, time, text });
-
-      res.send(newComment);
-      const post = await getPostById(postId);
-      res.send({
-        post,
-        success: `Successfully created a new comment`,
-        message: `No post found by ID: ${postId}`
-      })
     } else {
       const newComment = await createComment({authorId, postId, time, text});
       
