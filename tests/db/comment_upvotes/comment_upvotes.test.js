@@ -1,11 +1,7 @@
 const { 
   createUser,
   createComment,
-  updateComment,
-  deleteComment,
   createPost,
-  getUserByUsername,
-  getPostsByUserId,
   addUpvoteToComment,
   checkIfUpvoted,
   removeUpvoteFromComment,
