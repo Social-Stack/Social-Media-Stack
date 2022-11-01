@@ -1,6 +1,6 @@
 const client = require("./client");
 
-const addUpvoteToPost = async (postId, userId) => {
+const addUpvoteToPost = async ( {postId, userId} ) => {
   try {
     const {
       rows: [upvote],
@@ -15,11 +15,10 @@ const addUpvoteToPost = async (postId, userId) => {
     return upvote;
   } catch (error) {
     console.error(error);
-    throw error;
   }
 };
 
-const checkIfUpvotedPost = async (postId, userId) => {
+const checkIfUpvotedPost = async ({ postId, userId }) => {
   try {
     const {
       rows: [upvote],
@@ -34,11 +33,10 @@ const checkIfUpvotedPost = async (postId, userId) => {
     return upvote ? true : false;
   } catch (error) {
     console.error(error);
-    throw error;
   }
 };
 
-const removeUpvoteFromPost = async (postId, userId) => {
+const removeUpvoteFromPost = async ( {postId, userId} ) => {
   try {
     const {
       rows: [upvote],
@@ -46,11 +44,10 @@ const removeUpvoteFromPost = async (postId, userId) => {
         DELETE FROM post_upvotes
         WHERE "postId" = $1 AND "userId" = $2
         RETURNING *;
-    `);
+    `, [postId, userId]);
     return upvote;
   } catch (error) {
     console.error(error);
-    throw error;
   }
 };
 
@@ -68,7 +65,6 @@ const getPostUpvotesById = async (postId) => {
     return { upvotes: upvotesArr.length, upvoterIds: upvotesArr };
   } catch (error) {
     console.error(error);
-    throw error;
   }
 };
 
