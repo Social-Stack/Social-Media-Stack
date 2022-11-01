@@ -15,7 +15,7 @@ apiRouter.use(async (req, res, next) => {
     next();
   } else if (auth.startsWith(prefix)) {
     const token = auth.slice(prefix.length);
-    console.log("TOKENMW", token)
+    
     try {
       const { id } = jwt.verify(token, JWT_SECRET);
 
