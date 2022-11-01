@@ -26,11 +26,11 @@ commentsRouter.get("/:postId", async (req, res, next) => {
       res.send({
         comments,
         success: `Comments for post: ${postId}`,
-      });
+        });      
+      }
+    } catch ({ error, message }) {
+      next({ error, message });
     }
-  } catch ({ error, message }) {
-    next({ error, message });
-  }
 });
 
 commentsRouter.post("/:postId", requireUser, async (req, res, next) => {
