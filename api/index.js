@@ -53,6 +53,6 @@ const commentsRouter = require("./comments");
 apiRouter.use("/comments", commentsRouter);
 
 const commentUpvotesRouter = require("./comment_upvotes");
-apiRouter.use("/comments", commentUpvotesRouter);
+apiRouter.use("/comment_upvotes", commentUpvotesRouter);
 
 module.exports = apiRouter;

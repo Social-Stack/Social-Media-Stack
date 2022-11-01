@@ -28,18 +28,12 @@ commentUpvotesRouter.get("/:commentId", async(req, res, next) => {
         error: "CommentNotFound",
         message: `No comment found by ID: ${commentId}`
       });
-    } else if (!upvotes) {
-      // Since no upvotes is not an error, still handling as a success
-      res.send({
-        upvotes,
-        success: "This comment has no upvotes yet"
-      })
     } else {
       res.send({
         userHasUpvoted,
         upvotes,
         upvoterIds,
-        success: `This comment has ${upvoteCount} upvotes` 
+        success: `This comment has ${upvotes} upvotes` 
       })
     }
   } catch ({ error, message }) {
@@ -47,7 +41,7 @@ commentUpvotesRouter.get("/:commentId", async(req, res, next) => {
   }
 })
 
-commentUpvotesRouter.post("/addvote", requireUser, async(req, res, next) => {
+commentUpvotesRouter.post("/add", requireUser, async(req, res, next) => {
   const { id: userId } = req.user;
   const { id: commentId } = req.body;
 
@@ -69,12 +63,18 @@ commentUpvotesRouter.post("/addvote", requireUser, async(req, res, next) => {
         message: "You have already upvoted this comment"
       });
     } else {
-      const upvote = await addUpvoteToComment({
+      await addUpvoteToComment({
         commentId,
         userId
       });
+      const { 
+        upvotes, 
+        upvoterIds 
+      } = await getCommentUpvotesById(commentId);
+
       res.send({
-        upvote,
+        upvotes,
+        upvoterIds,
         success: "Successfully upvoted this comment"
       })
     }
@@ -83,9 +83,10 @@ commentUpvotesRouter.post("/addvote", requireUser, async(req, res, next) => {
   }
 })
 
-commentUpvotesRouter.delete("/removevote", requireUser, async(req, res, next) => {
+commentUpvotesRouter.delete("/remove", requireUser, async(req, res, next) => {
   const { id: userId } = req.user;
   const { id: commentId } = req.body;
+
 
   try {
     const comment = await getCommentById(commentId);

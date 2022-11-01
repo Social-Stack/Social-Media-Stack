@@ -95,12 +95,169 @@ describe("api/comment_upvotes", () => {
       await seedTestData();
 
       const response = await request(app)
-        .get(`/api/comments/${comment.id}`)
+        .get(`/api/comment_upvotes/${comment.id}`)
         .set("Authorization", `Bearer ${token}`)
 
-      expect(response.body).toMatchObject({
-        
+      await expect(response.body).toMatchObject({
+        userHasUpvoted: expect.any(Boolean),
+        upvotes: expect.any(Number),
+        upvoterIds: expect.any(Array),
+        success: expect.any(String)
+      });
+    })
+
+    it("Returns a specific error when no comment is found by the provided ID", async () => {
+      const response = await request(app)
+        .get(`/api/comment_upvotes/0`)
+
+      await expect(response.body).toMatchObject({
+        error: expect.any(String),
+        message: expect.any(String)
       })
     })
-  })
-})
+
+    it("Returns true if current user has already upvoted", async () => {
+      const response = await request(app)
+        .get(`/api/comment_upvotes/${comment.id}`)
+        .set("Authorization", `Bearer ${token}`)
+
+      await expect(response.body).toMatchObject({
+        userHasUpvoted: true,
+        upvotes: expect.any(Number),
+        upvoterIds: expect.any(Array),
+        success: expect.any(String)
+      });
+    })
+    it("Returns false if current user has not upvoted the comment", async() => {
+      const response = await request(app)
+        .get(`/api/comment_upvotes/${comment2.id}`)
+        .set("Authorization", `Bearer ${token}`)
+
+      await expect(response.body).toMatchObject({
+        userHasUpvoted: false,
+        upvotes: expect.any(Number),
+        upvoterIds: expect.any(Array),
+        success: expect.any(String)
+      });
+    })
+
+    it("Returns Upvoter IDs in ascending order", async () => {
+      const { body } = await request(app)
+        .get(`/api/comment_upvotes/${comment.id}`)
+        .set("Authorization", `Bearer ${token}`)
+
+      await expect(body.upvoterIds[0].userId)
+        .toBeLessThan(body.upvoterIds[1].userId);
+    })
+
+    it("Defaults upvote status to false if no authorization is provided", async () => {
+      const response = await request(app)
+        .get(`/api/comment_upvotes/${comment.id}`)
+      
+      await expect(response.body).toMatchObject({
+        userHasUpvoted: false,
+        upvotes: expect.any(Number),
+        upvoterIds: expect.any(Array),
+        success: expect.any(String)
+      });
+    });
+  });
+
+  describe("POST /api/comment_upvotes/add", () => {
+
+    it("Adds one upvote & returns the new upvote data", async () => {
+      const { body: preQuery } = await request(app)
+        .get(`/api/comment_upvotes/${comment2.id}`)
+
+      const prevVotes = preQuery.upvotes;
+
+      const response = await request(app)
+        .post(`/api/comment_upvotes/add`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          id: comment2.id
+        });
+      
+      await expect(response.body).toMatchObject({
+        upvotes: expect.any(Number),
+        upvoterIds: expect.arrayContaining([{ userId: validUser.id }]),
+        success: expect.any(String)
+      })
+      await expect(response.body.upvotes).toEqual(prevVotes + 1)
+    });
+
+    it("Returns a specific error when no comment is found by the provided ID", async () => {
+      const response = await request(app)
+        .post(`/api/comment_upvotes/add`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          id: 0
+        });
+
+      await expect(response.body).toMatchObject({
+        error: expect.any(String),
+        message: expect.any(String)
+      })
+    })
+
+    it("Returns a specific error when user has already upvoted the comment", async () => {
+      const response = await request(app)
+        .post(`/api/comment_upvotes/add`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          id: comment2.id
+        });
+
+      await expect(response.status).toBe(409)
+      await expect(response.body).toMatchObject({
+        error: expect.stringContaining("Conflict"),
+        message: expect.stringContaining("already upvoted")
+      });
+    });
+  });
+  describe("DELETE /api/comment_upvotes/remove", () => {
+
+    it("Deletes & returns the prior upvote", async () => {
+      const response = await request(app)
+        .delete(`/api/comment_upvotes/remove`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          id: comment2.id
+        });
+
+      await expect(response.body).toMatchObject({
+        removedUpvote: expect.any(Object),
+        success: expect.any(String)
+      });
+    });
+
+    it("Returns a specific error when user has no upvote to remove", async () => {
+      const response = await request(app)
+        .delete(`/api/comment_upvotes/remove`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          id: comment2.id
+        });
+      
+      await expect(response.body).toMatchObject({
+        error: expect.any(String),
+        message: expect.any(String)
+      });
+      await expect(response.status).toEqual(409);
+    })
+
+    it("Returns a specific error when no comment is found by the given ID", async () => {
+      const response = await request(app)
+        .delete(`/api/comment_upvotes/remove`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          id: 0
+        });
+      
+      await expect(response.body).toMatchObject({
+        error: "CommentNotFound",
+        message: expect.any(String)
+      });
+    });
+  });
+});
