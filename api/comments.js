@@ -16,16 +16,16 @@ commentsRouter.get("/:postId", async (req, res, next) => {
   try {
     const post = await getPostById(postId);
 
-      if (!post) {
-        next({
-          error: "PostNotFound",
-          message: `No post found by ID: ${postId}`
-        })
-      } else {
-        const comments = await getCommentsByPostId(postId);
-        res.send({
-          comments,
-          success: `Comments for post: ${postId}` 
+    if (!post) {
+      next({
+        error: "PostNotFound",
+        message: `No post found by ID: ${postId}`,
+      });
+    } else {
+      const comments = await getCommentsByPostId(postId);
+      res.send({
+        comments,
+        success: `Comments for post: ${postId}`,
         });      
       }
     } catch ({ error, message }) {
@@ -47,11 +47,11 @@ commentsRouter.post("/:postId", requireUser, async (req, res, next) => {
         message: `No post found by ID: ${postId}`,
       });
     } else {
-      const newComment = await createComment({authorId, postId, time, text});
-      
+      const newComment = await createComment({ authorId, postId, time, text });
+
       res.send({
         newComment,
-        success: `Successfully created a new comment`
+        success: `Successfully created a new comment`,
       });
     }
   } catch ({ error, message }) {
