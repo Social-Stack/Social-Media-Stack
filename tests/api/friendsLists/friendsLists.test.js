@@ -111,9 +111,10 @@ describe("api/friendsLists", () => {
         .set({
           Authorization: `Bearer ${token}`,
         });
+      console.log("response", response.body);
       console.log("response2", response2.body);
 
-      expect(response.body).toMatchObject({
+      await expect(response.body).toMatchObject({
         validFriend: {
           id: expect.any(Number),
           firstname: expect.any(String),
@@ -125,7 +126,7 @@ describe("api/friendsLists", () => {
         },
         success: expect.stringContaining("success"),
       });
-      expect(response.statusCode).toBe(200);
+      await expect(response.statusCode).toBe(200);
     });
 
     it("sends back an error if the logged in user is already friends with that person", async () => {
@@ -135,7 +136,7 @@ describe("api/friendsLists", () => {
           Authorization: `Bearer ${token}`,
         });
 
-      expect(response.body).toMatchObject({
+      await expect(response.body).toMatchObject({
         error: "AlreadyFriendsError",
         message: "You're already friends!",
       });
@@ -144,25 +145,62 @@ describe("api/friendsLists", () => {
     it("sends back an error if the user is not logged in", async () => {
       const response = await request(app).post(`/api/friendsLists/${user2.id}`);
 
-      expect(response.body).toMatchObject({
+      await expect(response.body).toMatchObject({
         error: "401",
         message: expect.stringContaining("login"),
       });
-      expect(response.statusCode).toBe(401);
+      await expect(response.statusCode).toBe(401);
     });
   });
 
-  //   describe("DELETE api/friendsLists/:friendId", () => {
-  //     it("removes a friend from your friend list", async () => {
-  //       const response = await request(app)
-  //         .delete(`/api/friendsLists/${user4.id}`)
-  //         .set({
-  //           Authorization: `Bearer ${token}`,
-  //         });
+  describe("DELETE api/friendsLists/:friendId", () => {
+    it("removes a friend from your friend list", async () => {
+      const response = await request(app)
+        .delete(`/api/friendsLists/${user4.id}`)
+        .set({
+          Authorization: `Bearer ${token}`,
+        });
 
-  //       console.log("response", response.body);
-  //     });
-  //   });
+      await expect(response.body).toMatchObject({
+        validFriend: {
+          id: expect.any(Number),
+          firstname: expect.any(String),
+          lastname: expect.any(String),
+          email: expect.any(String),
+          picUrl: expect.any(String),
+          isAdmin: expect.any(Boolean),
+        },
+      });
+      await expect(response.statusCode).toBe(200);
+    });
+
+    it("sends back an error if that friend has already been removed", async () => {
+      const response2 = await request(app)
+        .delete(`/api/friendsLists/${user4.id}`)
+        .set({
+          Authorization: `Bearer ${token}`,
+        });
+
+      await expect(response2.body).toMatchObject({
+        error: "FriendAlreadyRemovedError",
+        message: "A friend by that id has already been removed",
+      });
+      await expect(response2.statusCode).toBe(200);
+    });
+
+    it("sends back an error if no friend by that id exists", async () => {
+      const response3 = await request(app)
+        .delete(`/api/friendsLists/${6}`)
+        .set({
+          Authorization: `Bearer ${token}`,
+        });
+
+      await expect(response3.body).toMatchObject({
+        error: "FriendIdDoesNotExistError",
+        message: "A friend with that id doesn't exist",
+      });
+    });
+  });
 
   describe("GET api/friendsLists", () => {
     it("sends back the current logged in user's friends", async () => {
@@ -172,7 +210,7 @@ describe("api/friendsLists", () => {
           Authorization: `Bearer ${token}`,
         });
 
-      expect(response.body).toMatchObject({
+      await expect(response.body).toMatchObject({
         friendsList: [
           {
             id: expect.any(Number),
@@ -186,7 +224,7 @@ describe("api/friendsLists", () => {
         ],
         success: expect.stringContaining("success"),
       });
-      expect(response.statusCode).toBe(200);
+      await expect(response.statusCode).toBe(200);
     });
 
     it("sends back an empty array if the current logged in user has no friends", async () => {
@@ -196,21 +234,21 @@ describe("api/friendsLists", () => {
           Authorization: `Bearer ${token2}`,
         });
 
-      expect(response.body).toMatchObject({
+      await expect(response.body).toMatchObject({
         friendsLists: [],
         success: "You currently have no friends. Please add some.",
       });
-      expect(response.statusCode).toBe(200);
+      await expect(response.statusCode).toBe(200);
     });
 
     it("sends back an error if the user is not logged in", async () => {
       const response = await request(app).get("/api/friendsLists");
 
-      expect(response.body).toMatchObject({
+      await expect(response.body).toMatchObject({
         error: "401",
         message: expect.stringContaining("login"),
       });
-      expect(response.statusCode).toBe(401);
+      await expect(response.statusCode).toBe(401);
     });
   });
 
@@ -222,7 +260,7 @@ describe("api/friendsLists", () => {
           Authorization: `Bearer ${token}`,
         });
 
-      expect(response.body).toMatchObject({
+      await expect(response.body).toMatchObject({
         friendsPosts: [
           {
             id: expect.any(Number),
@@ -234,7 +272,7 @@ describe("api/friendsLists", () => {
         ],
         success: expect.stringContaining("success"),
       });
-      expect(response.statusCode).toBe(200);
+      await expect(response.statusCode).toBe(200);
     });
 
     it("sends back an empty array if that friend has no posts", async () => {
@@ -244,21 +282,21 @@ describe("api/friendsLists", () => {
           Authorization: `Bearer ${token3}`,
         });
 
-      expect(response.body).toMatchObject({
+      await expect(response.body).toMatchObject({
         friendsPosts: [],
         success: "This friend doesn't have any posts currently",
       });
-      expect(response.statusCode).toBe(200);
+      await expect(response.statusCode).toBe(200);
     });
 
     it("sends back an error if the current user is not logged in", async () => {
       const response = await request(app).get(`/api/friendsLists/${user1.id}`);
 
-      expect(response.body).toMatchObject({
+      await expect(response.body).toMatchObject({
         error: "401",
         message: expect.stringContaining("login"),
       });
-      expect(response.statusCode).toBe(401);
+      await expect(response.statusCode).toBe(401);
     });
   });
 });
