@@ -37,7 +37,7 @@ describe("api/users", () => {
           username: fakeUserData.username,
           password: fakeUserData.password
         })
-      console.log("BDY", response.body)
+
       await expect(response.body).toMatchObject({
         user: expect.any(Object),
         message: expect.any(String),
