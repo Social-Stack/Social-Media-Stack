@@ -58,7 +58,7 @@ commentsRouter.post("/:postId", requireUser, async(req, res, next) => {
   }
 });
 
-router.delete("/:id", requireUser, async (req, res, next) => {
+commentsRouter.delete("/:id", requireUser, async (req, res, next) => {
   try {
     const { id: commentId } = req.params;
     const { id: userId, isAdmin } = req.user;
@@ -88,7 +88,7 @@ router.delete("/:id", requireUser, async (req, res, next) => {
   }
 });
 
-router.patch("/edit", requireUser, async (req, res, next) => {
+commentsRouter.patch("/edit", requireUser, async (req, res, next) => {
   const { id: currentUserId } = req.user;
   const { id: commentId, time: newTime, text } = req.body;
 
@@ -124,4 +124,4 @@ router.patch("/edit", requireUser, async (req, res, next) => {
   }
 });
 
-module.exports = router;
+module.exports = commentsRouter;
