@@ -16,14 +16,20 @@ commentsRouter.get("/:postId", async (req, res, next) => {
   try {
     const post = await getPostById(postId);
 
-    if (!post) {
-      next({
-        error: "PostNotFound",
-        message: `No post found by ID: ${postId}`,
-      });
-    } else {
-      const comments = await getCommentsByPostId(postId);
-      res.send(comments);
+      if (!post) {
+        next({
+          error: "PostNotFound",
+          message: `No post found by ID: ${postId}`
+        })
+      } else {
+        const comments = await getCommentsByPostId(postId);
+        res.send({
+          comments,
+          success: `Comments for post: ${postId}` 
+        });      
+      }
+    } catch ({ error, message }) {
+      next({ error, message });
     }
   } catch ({ error, message }) {
     next({ error, message });
@@ -51,6 +57,14 @@ commentsRouter.post("/:postId", requireUser, async (req, res, next) => {
       res.send({
         post,
         success: `Successfully created a new comment`,
+        message: `No post found by ID: ${postId}`
+      })
+    } else {
+      const newComment = await createComment({authorId, postId, time, text});
+      
+      res.send({
+        newComment,
+        success: `Successfully created a new comment`
       });
     }
   } catch ({ error, message }) {
@@ -88,9 +102,10 @@ commentsRouter.delete("/:id", requireUser, async (req, res, next) => {
   }
 });
 
-commentsRouter.patch("/edit", requireUser, async (req, res, next) => {
+commentsRouter.patch("/:id", requireUser, async (req, res, next) => {
+  const { id: commentId } = req.params;
   const { id: currentUserId } = req.user;
-  const { id: commentId, time: newTime, text } = req.body;
+  const { time, text } = req.body;
 
   try {
     const comment = await getCommentById(commentId);
@@ -109,7 +124,7 @@ commentsRouter.patch("/edit", requireUser, async (req, res, next) => {
     } else {
       const updatedComment = await updateComment({
         commentId,
-        newTime,
+        time,
         text,
       });
 

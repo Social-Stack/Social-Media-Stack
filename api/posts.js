@@ -36,7 +36,6 @@ router.post("/new", requireUser, async (req, res, next) => {
 });
 
 router.get("/public", requireUser, async (req, res, next) => {
-  console.log("reached backend/api/posts");
   try {
     const allPublicPosts = await getAllPublicPosts();
     if (allPublicPosts) {
