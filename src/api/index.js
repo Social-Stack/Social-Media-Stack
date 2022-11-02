@@ -177,3 +177,16 @@ export const getFriendMessages = async (token, friendUserId) => {
     console.error(error);
   }
 };
+
+export const getMyFriends = async (token, userId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/friendsLists`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {}
+};

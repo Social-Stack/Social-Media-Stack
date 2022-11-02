@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMyFriends, getMyUserInfo } from "../api";
+import "../stylesheets/FullpageFriendsLists.css";
 
 const FullpageFriendsLists = (props) => {
   const [friends, setFriends] = useState([]);
@@ -9,10 +10,8 @@ const FullpageFriendsLists = (props) => {
   useEffect(() => {
     const getAllFriends = async () => {
       const { id } = await getMyUserInfo(token);
-      console.log("id", id);
       const myFriends = await getMyFriends(token, id);
       setFriends(myFriends.friendsLists);
-      console.log("friends", myFriends);
     };
     getAllFriends();
   }, []);
@@ -20,19 +19,18 @@ const FullpageFriendsLists = (props) => {
   return (
     <div>
       <h1>My Friends</h1>
-      <div>
-        {friends.map((friend) => {
+      <div id="friends-container">
+        {friends.map((friend, i) => {
           return (
-            <div>
-              <h3>
-                <a href="#">
-                  <img src={friend.picUrl} />
-                </a>
+            <div id="friend-list" key={i}>
+              <a href="#">
+                <img id="friend-img" height="80px" src={friend.picUrl} />
+              </a>
+              <h3 id="friend-name">
                 <a href="#">
                   {friend.firstname} {friend.lastname}
                 </a>
               </h3>
-              <h3></h3>
             </div>
           );
         })}
