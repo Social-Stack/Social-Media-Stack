@@ -11,11 +11,11 @@ const NewsFeed = ({token}) => {
 
     useEffect(() => {
         fetchPosts();
-    },[loadingTrigger])
+    },[loadingTrigger, token])
 
     const fetchPosts = async() => {
         const newPostsArr = [];
-        const getPublicPosts = await getAllPublicPosts();
+        const getPublicPosts = await getAllPublicPosts(token);
         //const getFriendPosts
         getPublicPosts[0] && newPostsArr.push(...getPublicPosts);
         console.log(newPostsArr)
@@ -24,6 +24,7 @@ const NewsFeed = ({token}) => {
 
     return (
         <div>
+            <button onClick={() => console.log(token)}>helper</button>
             <NewPost
             token={token}
             loadingTrigger={loadingTrigger}

@@ -1,11 +1,7 @@
 const { 
   createUser,
   createComment,
-  updateComment,
-  deleteComment,
   createPost,
-  getUserByUsername,
-  getPostsByUserId,
   addUpvoteToComment,
   checkIfUpvoted,
   removeUpvoteFromComment,
@@ -163,6 +159,15 @@ describe("DB comment_upvotes", () => {
       const upvotes = await getCommentUpvotesById(comment.id);
 
       await expect(upvotes.upvoterIds[0].userId).toBeLessThan(upvotes.upvoterIds[1].userId)
+    })
+
+    it("Still returns an object with 0 upvotes and an empty array when given a bad commentId", async () => {
+      const upvotes = await getCommentUpvotesById(0);
+
+      expect(upvotes).toMatchObject({
+        upvotes: 0,
+        upvoterIds: []
+      })
     })
   })
 });

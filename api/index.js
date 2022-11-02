@@ -22,13 +22,13 @@ apiRouter.use(async (req, res, next) => {
         req.user = await getUserById(id);
         next();
       }
-    } catch ({ name, message }) {
-      next({ name, message });
+    } catch ({ error, message }) {
+      next({ error, message });
     }
   } else {
     res.status(401);
     next({
-      name: "AuthoriztionHeaderError",
+      error: "AuthorizationHeaderError",
       message: 'Authorization must start with "Bearer "',
     });
   }
@@ -53,6 +53,6 @@ const commentsRouter = require("./comments");
 apiRouter.use("/comments", commentsRouter);
 
 const commentUpvotesRouter = require("./comment_upvotes");
-apiRouter.use("/comments", commentUpvotesRouter);
+apiRouter.use("/comment_upvotes", commentUpvotesRouter);
 
 module.exports = apiRouter;
