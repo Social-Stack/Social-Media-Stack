@@ -1,4 +1,5 @@
 const client = require("./client");
+
 const { getPostById } = require("./posts");
 
 const createComment = async ({ authorId, postId, time, text }) => {
@@ -73,6 +74,7 @@ const getCommentsByPostId = async(postId) => {
     console.error(error);
   }
 }
+
 
 const getCommentById = async(id) => {
   try {

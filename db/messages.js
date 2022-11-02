@@ -59,18 +59,18 @@ const deleteMessageById = async (messageId) => {
 
 const getAllMessages = async (userId) => {
   try {
-    const {
-      rows: [allMessages],
-    } = await client.query(
+    const { rows } = await client.query(
       `
-    SELECT * 
+    SELECT messages.*, users.username AS sendingUsername, users.firstname AS sendingFirstname, users.lastname AS sendingLastname
     FROM messages
-    WHERE "recipientUserId" = $1
-    RETURNING *;
+    JOIN users
+      ON messages."sendingUserId" = users.id
+    WHERE "recipientUserId" = $1;
     `,
       [userId]
     );
-    return allMessages;
+
+    return rows;
   } catch (error) {
     console.error(error);
     throw error;

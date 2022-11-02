@@ -1,4 +1,5 @@
 const express = require("express");
+
 const commentsRouter = express.Router();
 const {
   getPostById,
@@ -38,7 +39,6 @@ commentsRouter.post("/:postId", requireUser, async (req, res, next) => {
     const { id: authorId } = req.user;
     const { postId } = req.params;
     const { time, text } = req.body;
-
     const post = await getPostById(postId);
 
     if (!post) {
@@ -58,6 +58,7 @@ commentsRouter.post("/:postId", requireUser, async (req, res, next) => {
     next({ error, message });
   }
 });
+
 
 commentsRouter.delete("/:id", requireUser, async (req, res, next) => {
   try {
@@ -88,6 +89,7 @@ commentsRouter.delete("/:id", requireUser, async (req, res, next) => {
     next({ error, message });
   }
 });
+
 
 commentsRouter.patch("/:id", requireUser, async (req, res, next) => {
   const { id: commentId } = req.params;
@@ -124,5 +126,6 @@ commentsRouter.patch("/:id", requireUser, async (req, res, next) => {
     next({ error, message });
   }
 });
+
 
 module.exports = commentsRouter;
