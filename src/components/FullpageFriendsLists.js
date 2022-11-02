@@ -18,7 +18,7 @@ const FullpageFriendsLists = (props) => {
 
   return (
     <div>
-      <h1>My Friends</h1>
+      <h1 id="friendslists-page-title">My Friends</h1>
       <div id="friends-container">
         {friends.map((friend, i) => {
           return (
