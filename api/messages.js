@@ -29,7 +29,7 @@ messagesRouter.post("/new", requireUser, async (req, res, next) => {
   }
 });
 
-messagesRouter.get("/chat", requireUser, async (req, res, next) => {
+messagesRouter.get("/", requireUser, async (req, res, next) => {
   const { id: loggedInUserId } = req.user;
   const { id: friendUserId } = req.body;
 
