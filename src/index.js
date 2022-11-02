@@ -17,6 +17,7 @@ const App = () => {
     const usernameExists = localStorage.getItem("username");
     if (loggedInUser) {
       setLoggedIn(true);
+      setToken(loggedInUser)
     }
     if (usernameExists) {
       setUsername(usernameExists);

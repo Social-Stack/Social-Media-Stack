@@ -1,46 +1,66 @@
 const express = require("express");
 
-const router = express.Router();
+const commentsRouter = express.Router();
 const {
-  getCommentsByPostId,
   getPostById,
   createComment,
-  getCommentById,
   deleteComment,
+  getCommentsByPostId,
   updateComment,
+  getCommentById,
 } = require("../db");
 const { requireUser } = require("./utils");
 
-router.get("/:postId", async (req, res, next) => {
-  try {
-    const { postId } = req.params;
+commentsRouter.get("/:postId", async (req, res, next) => {
+  const { postId } = req.params;
 
-    const comments = await getCommentsByPostId(postId);
-    res.send(comments);
-  } catch ({ error, message }) {
-    next({ error, message });
-  }
+  try {
+    const post = await getPostById(postId);
+
+    if (!post) {
+      next({
+        error: "PostNotFound",
+        message: `No post found by ID: ${postId}`,
+      });
+    } else {
+      const comments = await getCommentsByPostId(postId);
+      res.send({
+        comments,
+        success: `Comments for post: ${postId}`,
+        });      
+      }
+    } catch ({ error, message }) {
+      next({ error, message });
+    }
 });
 
-router.post("/:postId", requireUser, async (req, res, next) => {
+commentsRouter.post("/:postId", requireUser, async (req, res, next) => {
   try {
     const { id: authorId } = req.user;
     const { postId } = req.params;
     const { time, text } = req.body;
-
-    const newComment = await createComment({ authorId, postId, time, text });
-    res.send(newComment);
     const post = await getPostById(postId);
-    res.send({
-      post,
-      success: `Successfully created a new comment`,
-    });
+
+    if (!post) {
+      next({
+        error: "PostNotFound",
+        message: `No post found by ID: ${postId}`,
+      });
+    } else {
+      const newComment = await createComment({ authorId, postId, time, text });
+
+      res.send({
+        newComment,
+        success: `Successfully created a new comment`,
+      });
+    }
   } catch ({ error, message }) {
     next({ error, message });
   }
 });
 
-router.delete("/:id", requireUser, async (req, res, next) => {
+
+commentsRouter.delete("/:id", requireUser, async (req, res, next) => {
   try {
     const { id: commentId } = req.params;
     const { id: userId, isAdmin } = req.user;
@@ -70,12 +90,21 @@ router.delete("/:id", requireUser, async (req, res, next) => {
   }
 });
 
-router.patch("/edit", requireUser, async (req, res, next) => {
+
+commentsRouter.patch("/:id", requireUser, async (req, res, next) => {
+  const { id: commentId } = req.params;
   const { id: currentUserId } = req.user;
-  const { id: commentId, time: newTime, text } = req.body;
+  const { time, text } = req.body;
 
   try {
-    if (currentUserId !== authorId) {
+    const comment = await getCommentById(commentId);
+
+    if (!comment) {
+      next({
+        error: "CommentNotFound",
+        message: `No comment found by ID: ${commentId}`,
+      });
+    } else if (currentUserId !== comment.authorId) {
       res.status(403);
       next({
         error: "Forbidden",
@@ -84,7 +113,7 @@ router.patch("/edit", requireUser, async (req, res, next) => {
     } else {
       const updatedComment = await updateComment({
         commentId,
-        newTime,
+        time,
         text,
       });
 
@@ -98,4 +127,5 @@ router.patch("/edit", requireUser, async (req, res, next) => {
   }
 });
 
-module.exports = router;
+
+module.exports = commentsRouter;
