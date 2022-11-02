@@ -63,13 +63,14 @@ messagesRouter.delete("/:messageId", requireUser, async (req, res, next) => {
 });
 
 messagesRouter.get("/chatlist", requireUser, async (req, res, next) => {
+  const { id: userId } = req.user;
   try {
-    const { id: userId } = req.user;
-    const user = getUserById(loggedInUserId);
-    const allMyMessages = getAllMessages(userId);
+    const user = await getUserById(userId);
+    const allMyMessages = await getAllMessages(userId);
+
     res.send({
       allMyMessages,
-      success: `Chat history for ${user}`,
+      success: `Chat history for ${user.username}`,
     });
   } catch ({ error, message }) {
     next({ error, message });

@@ -362,6 +362,18 @@ const createInitialMessages = async () => {
       time: "2022-10-25 11:08:00+00:00",
       text: "Please hire me!",
     };
+    const seedMessage4 = {
+      sendingUserId: 2,
+      recipientUserId: 1,
+      time: "2022-10-25 11:08:00+00:00",
+      text: "Sandra says hi!",
+    };
+    const seedMessage5 = {
+      sendingUserId: 2,
+      recipientUserId: 1,
+      time: "2022-10-25 11:08:00+00:00",
+      text: "Hello World!",
+    };
 
     console.log(
       chalk.blueBright(
@@ -375,9 +387,18 @@ const createInitialMessages = async () => {
     const message1 = await createMessage(seedMessage1);
     const message2 = await createMessage(seedMessage2);
     const message3 = await createMessage(seedMessage3);
+    const message4 = await createMessage(seedMessage4);
+    const message5 = await createMessage(seedMessage5);
 
     console.log(
-      chalk.yellowBright("SEEDED MESSAGES", message1, message2, message3)
+      chalk.yellowBright(
+        "SEEDED MESSAGES",
+        message1,
+        message2,
+        message3,
+        message4,
+        message5
+      )
     );
     console.log(chalk.green("FINISHED CREATING MESSAGES!"));
   } catch (error) {

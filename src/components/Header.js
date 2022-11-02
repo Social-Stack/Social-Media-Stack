@@ -2,16 +2,16 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../stylesheets/Header.css";
 
-const Header = ({ loggedIn, username, setToken }) => {
+const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
   let navigate = useNavigate();
   const logout = () => {
-    navigate("/login");
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("profile pic");
-    setToken('');
+    setToken("");
     setLoggedIn(false);
     setUsername("");
+    navigate("/login");
   };
   const picture = localStorage.getItem("profile pic");
 
@@ -29,6 +29,7 @@ const Header = ({ loggedIn, username, setToken }) => {
             {/* <img id="profile-pic" src={require(`./Assets/defaultPic.png`)} /> offline mode for Fred in the sky */}
             <img id="profile-pic" src={picture} />
             {/* </div> */}
+            <Link to="/messages">Messages </Link> | {""}
             <Link onClick={logout}>Logout {username}</Link>
           </nav>
         </div>

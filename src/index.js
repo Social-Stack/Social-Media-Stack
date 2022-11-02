@@ -2,14 +2,13 @@ import { createRoot } from "react-dom/client";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { Header, Register, Login, NewsFeed } from "./components";
-
+import { Header, Register, Login, NewsFeed, Messages } from "./components";
 
 const container = document.getElementById("app");
 const root = createRoot(container);
 
 const App = () => {
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
   const [username, setUsername] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -31,6 +30,7 @@ const App = () => {
         setLoggedIn={setLoggedIn}
         loggedIn={loggedIn}
         username={username}
+        setUsername={setUsername}
       />
       <Routes>
         <Route
@@ -56,6 +56,7 @@ const App = () => {
           }
         />
         <Route path="/newsfeed" element={<NewsFeed token={token} />} />
+        <Route path="/messages" element={<Messages token={token} />} />
       </Routes>
     </div>
   );
