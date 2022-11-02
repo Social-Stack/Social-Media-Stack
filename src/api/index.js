@@ -49,15 +49,14 @@ export const loginUser = async (user) => {
   }
 };
 
-
-export const getAllPublicPosts = async(token) => {
+export const getAllPublicPosts = async (token) => {
   try {
     const response = await fetch(`${BASE_URL}/posts/public`, {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-    }
-  });
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const result = await response.json();
     return result;
   } catch (error) {
@@ -151,6 +150,22 @@ export const getAllMyMessages = async (token, userId) => {
 export const getMyUserInfo = async (token) => {
   try {
     const response = await fetch(`${BASE_URL}/users/me`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+//friendsLists
+export const getMyFriends = async (token, userId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/friendsLists`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
