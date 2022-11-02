@@ -29,25 +29,31 @@ messagesRouter.post("/new", requireUser, async (req, res, next) => {
   }
 });
 
-messagesRouter.get("/", requireUser, async (req, res, next) => {
-  const { id: loggedInUserId } = req.user;
-  const { id: friendUserId } = req.body;
+messagesRouter.get(
+  "/chat/:friendUserId",
+  requireUser,
+  async (req, res, next) => {
+    const { id: loggedInUserId } = req.user;
+    console.log("REQ.USER", loggedInUserId);
+    const { friendUserId } = req.params;
+    console.log("REQ.PARAMS", friendUserId);
 
-  const user = getUserById(loggedInUserId);
-  const friend = getUserById(friendUserId);
-  try {
-    const messagesBetweenUsers = await getMessagesBetweenUsers(
-      loggedInUserId,
-      friendUserId
-    );
-    res.send({
-      messagesBetweenUsers,
-      success: `Chat history between ${user} and ${friend}`,
-    });
-  } catch ({ error, message }) {
-    next({ error, message });
+    const user = await getUserById(loggedInUserId);
+    const friend = await getUserById(friendUserId);
+    try {
+      const messagesBetweenUsers = await getMessagesBetweenUsers(
+        loggedInUserId,
+        friendUserId
+      );
+      res.send({
+        messagesBetweenUsers,
+        success: `Chat history between ${user} and ${friend}`,
+      });
+    } catch ({ error, message }) {
+      next({ error, message });
+    }
   }
-});
+);
 
 messagesRouter.delete("/:messageId", requireUser, async (req, res, next) => {
   try {

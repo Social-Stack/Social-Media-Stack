@@ -1,30 +1,23 @@
 import { useEffect, useState } from "react";
-import { getAllMyMessages, getMyUserInfo } from "../api";
+import { getAllMyMessages, getMyUserInfo, getFriendMessages } from "../api";
 
 const Messages = (props) => {
-  //   const { token } = props;
+  // const { token } = props;
   const token = localStorage.getItem("token");
   const [allMessages, setAllMessages] = useState([]);
 
   useEffect(() => {
     const getChatlist = async () => {
       const { id } = await getMyUserInfo(token);
-      //   console.log("USERINFO", userInfo);
+      console.log("USERINFO", id);
+      console.log("HERE123");
       const myMessages = await getAllMyMessages(token, id);
+      console.log("HERE234", myMessages);
+
       setAllMessages(myMessages.allMyMessages);
     };
     getChatlist();
   }, []);
-
-  // const result = (allMessages) => {
-  //   {
-  //     allMessages.reduce(function (r, a) {
-  //       r[a.sendingUserId] = r[a.sendingUserId] || [];
-  //       r[a.sendingUserId].push(a);
-  //       return r;
-  //     }, Object.create(null));
-  //   }
-  // };
 
   const result = allMessages.reduce((groupedMessages, message) => {
     const sendingUserId = message.sendingUserId;
@@ -36,8 +29,9 @@ const Messages = (props) => {
 
   console.log("REDUCE RESULT", result);
 
-  const handleClick = (friendId) => {
-    console.log("friendid", friendId);
+  const handleClick = async (friendUserId) => {
+    console.log("friendid", friendUserId);
+    await getFriendMessages(token, friendUserId);
   };
 
   return (
@@ -73,7 +67,7 @@ const Messages = (props) => {
         {result.map((groupedMessage, i) => {
           const date = new Date(groupedMessage[0].time);
           const time = date.toLocaleString();
-          const friendId = groupedMessage[0].sendingUserId;
+          const friendUserId = groupedMessage[0].sendingUserId;
           return (
             <div className="single-message">
               <div className="single-message-sender">
@@ -85,7 +79,7 @@ const Messages = (props) => {
                 {groupedMessage[0].text}
               </div>
               <div className="single-message-time"> {time}</div>
-              <button onClick={() => handleClick(friendId)}>
+              <button onClick={() => handleClick(friendUserId)}>
                 View Conversation
               </button>
               <br />

@@ -30,8 +30,7 @@ const getMessagesBetweenUsers = async (loggedInUserId, friendUserId) => {
         SELECT *
         FROM messages
         WHERE "sendingUserId" = $1 AND "recipientUserId" = $2 OR
-        "sendingUserId" = $2 AND "recipientUserId" = $1
-        RETURNING *;
+        "sendingUserId" = $2 AND "recipientUserId" = $1;
         `,
       [loggedInUserId, friendUserId]
     );
