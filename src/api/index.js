@@ -49,15 +49,14 @@ export const loginUser = async (user) => {
   }
 };
 
-
-export const getAllPublicPosts = async(token) => {
+export const getAllPublicPosts = async (token) => {
   try {
     const response = await fetch(`${BASE_URL}/posts/public`, {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-    }
-  });
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const result = await response.json();
     return result;
   } catch (error) {
@@ -157,6 +156,22 @@ export const getMyUserInfo = async (token) => {
       },
     });
     const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getFriendMessages = async (token, friendUserId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/messages/chat/${friendUserId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    console.log("SINGLE MESSAGES RESULT", result);
     return result;
   } catch (error) {
     console.error(error);
