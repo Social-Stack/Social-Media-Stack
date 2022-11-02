@@ -162,16 +162,16 @@ export const getMyUserInfo = async (token) => {
   }
 };
 
-//friendsLists
-export const getMyFriends = async (token, userId) => {
+export const getFriendMessages = async (token, friendUserId) => {
   try {
-    const response = await fetch(`${BASE_URL}/friendsLists`, {
+    const response = await fetch(`${BASE_URL}/messages/chat/${friendUserId}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
     const result = await response.json();
+    console.log("SINGLE MESSAGES RESULT", result);
     return result;
   } catch (error) {
     console.error(error);
