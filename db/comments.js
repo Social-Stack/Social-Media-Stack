@@ -62,7 +62,7 @@ const getCommentsByPostId = async(postId) => {
       return;
     }
     const { rows: comments } = await client.query(`
-      SELECT C.* , U.firstname, U.lastname, U."picUrl"
+      SELECT C.* , U.firstname AS "authorName", U.lastname, U."picUrl"
       FROM comments C
       JOIN users U
       ON U.id = C."authorId"
