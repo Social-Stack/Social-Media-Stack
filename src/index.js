@@ -8,6 +8,7 @@ import {
   Login,
   NewsFeed,
   Messages,
+  Comments,
   FullpageFriendsLists,
 } from "./components";
 
@@ -63,7 +64,7 @@ const App = () => {
             />
           }
         />
-        <Route path="/newsfeed" element={<NewsFeed token={token} />} />
+        <Route path="/newsfeed" element={<NewsFeed token={token} element={<Comments />} />} />
         <Route path="/messages" element={<Messages token={token} />} />
         <Route
           path="/friendslists"

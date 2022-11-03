@@ -69,6 +69,7 @@ describe("api/comments", () => {
       const response = await request(app)
         .get(`/api/comments/${post.id}`);
 
+      console.log("COMMS", response.body)
       await expect(response.body.comments.length).toBeGreaterThanOrEqual(2);
       await expect(response.body.comments[0]).toMatchObject({
         id: expect.any(Number),

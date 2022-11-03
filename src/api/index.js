@@ -131,6 +131,21 @@ export const removeComment = async (token, commentId) => {
   }
 };
 
+export const getCommentUpvotesById = async (id, token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/comment_upvotes/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    });
+    const { comments } = await response.json();
+    return comments;
+  } catch (error) {
+    return error;
+  }
+}
+
 export const getAllMyMessages = async (token, userId) => {
   try {
     const response = await fetch(`${BASE_URL}/messages/chatlist`, {

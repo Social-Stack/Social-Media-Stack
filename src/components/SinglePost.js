@@ -1,22 +1,21 @@
 import React,{useEffect, useState} from "react";
-import { getCommentsByPostId } from "../api";
-import NewComment from "./NewComment";
-import SinglePostComment from "./SinglePostComment";
+import { NewComment, Comments } from "./";
+import timeAgo from "node-time-ago"
 
 
 const SinglePost = ({post, token}) => {
-    const [comments, setComments] = useState([]);
+    // const [comments, setComments] = useState([]);
     const [reloadComTrigger, setReloadComTrigger] = useState(false);
 
-    const loadComments = async() => {
-        const postComments = await getCommentsByPostId(post.id);
-        console.log(postComments)
-        setComments(postComments);
-    }
+    // const loadComments = async() => {
+    //     const postComments = await getCommentsByPostId(post.id);
+    //     console.log(postComments)
+    //     // setComments(postComments);
+    // }
 
-    useEffect(() => {
-        loadComments();
-    },[reloadComTrigger])
+    // useEffect(() => {
+    //     loadComments();
+    // },[reloadComTrigger])
 
 
     const tempStyle = {
@@ -37,20 +36,14 @@ const SinglePost = ({post, token}) => {
                 {/* <img style ={{height:'50', width:'50'}} src={require(`./Assets/defaultPic.png`)}></img> offline mode for Fred in the sky */}
                 <div>
                     <div>{post.firstname} {post.lastname}</div>
-                    <div>{post.time}</div>
+                    <div>{timeAgo(post.time)}</div>
                 </div>
             </div>
             <div>{post.text}</div>
             <div>
-                <>comments:</>
-                {comments[0] && comments.map((comment) => {
-                    return(
-                        <SinglePostComment
-                        key={comment.id}
-                        comment={comment}/>
-                    )
-                })}
-                
+            <Comments 
+            postId={post.id}
+            />
             </div>
             <NewComment
             token={token}

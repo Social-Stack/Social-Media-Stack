@@ -9,7 +9,7 @@ const {
 } = require("../db");
 const { requireUser } = require("./utils")
 
-commentUpvotesRouter.get("/:commentId", async(req, res, next) => {
+commentUpvotesRouter.get("/:commentId", requireUser, async(req, res, next) => {
   const { commentId } = req.params;
   
   try {
@@ -30,6 +30,7 @@ commentUpvotesRouter.get("/:commentId", async(req, res, next) => {
       });
     } else {
       res.send({
+        commentId,
         userHasUpvoted,
         upvotes,
         upvoterIds,
