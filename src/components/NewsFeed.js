@@ -15,13 +15,14 @@ const NewsFeed = ({ token }) => {
   }, [loadingTrigger, token]);
 
   useEffect(() => {
-    const getAllFriends = async () => {
-      const { id } = await getMyUserInfo(token);
-      const myFriends = await getMyFriends(token, id);
-      setFriends(myFriends.friendsLists);
-    };
     getAllFriends();
   }, []);
+
+  const getAllFriends = async () => {
+    const { id } = await getMyUserInfo(token);
+    const myFriends = await getMyFriends(token, id);
+    setFriends(myFriends.friendsLists);
+  };
 
   const fetchPosts = async () => {
     const newPostsArr = [];
