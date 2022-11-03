@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { Header, Register, Login, NewsFeed, Messages } from "./components";
+import { Header, Register, Login, NewsFeed, Messages, Comments } from "./components";
 
 const container = document.getElementById("app");
 const root = createRoot(container);
@@ -56,7 +56,7 @@ const App = () => {
             />
           }
         />
-        <Route path="/newsfeed" element={<NewsFeed token={token} />} />
+        <Route path="/newsfeed" element={<NewsFeed token={token} element={<Comments />} />} />
         <Route path="/messages" element={<Messages token={token} />} />
       </Routes>
     </div>
