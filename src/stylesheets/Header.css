@@ -1,22 +1,33 @@
-#profile-pic{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+#profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 5px;
 }
 
-.header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* background-color: rgb(240, 3, 3); */
-    height: 10%;
-    /* text-decoration: none; */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: rgb(240, 3, 3); */
+  height: 10%;
+  /* text-decoration: none; */
 }
 
-#header-links{
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+#header-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: black;
+}
+
+#header-links:last-child {
+  padding-right: 10px;
+}
+
+#header-links a {
+  text-decoration: none;
+  color: black;
 }
 
 /* #logo{
