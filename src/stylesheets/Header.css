@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow&family=Poppins:wght@600&display=swap");
+
 #profile-pic {
   width: 50px;
   height: 50px;
@@ -19,6 +21,7 @@
   align-items: center;
   justify-content: flex-end;
   color: black;
+  font-family: "Barlow", sans-serif;
 }
 
 #header-links:last-child {
@@ -28,10 +31,14 @@
 #header-links a {
   text-decoration: none;
   color: black;
+  padding: 0px 5px;
 }
 
-/* #logo{
-    display: flex;
-    text-decoration: none;
+#logo {
+  padding-left: 10px;
+  text-decoration: none;
+  color: black;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
 }
- */
