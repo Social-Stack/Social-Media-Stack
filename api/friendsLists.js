@@ -78,17 +78,11 @@ friendsRouter.get("/", requireUser, async (req, res, next) => {
     const { id: userId } = req.user;
 
     const friendsLists = await getFriendsByUserId(userId);
-
+    console.log("friendsLists", friendsLists);
     if (friendsLists[0]) {
-      const friendsList = [];
-
-      friendsLists.map(async (_friend) => {
-        const friend = await getUserById(_friend.friendId);
-        friendsList.push(friend);
-        res.send({
-          friendsList,
-          success: "Your friends were successfully retrieved!",
-        });
+      res.send({
+        friendsLists,
+        success: "Your friends were successfully retrieved!",
       });
     } else {
       // Not sure if I can use the key "friends" here but I think it will be fine

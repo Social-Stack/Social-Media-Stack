@@ -5,3 +5,4 @@ export { default as Register } from "./Register";
 export { default as Messages } from "./Messages";
 export { default as Comments } from "./Comments";
 export { default as NewComment } from "./NewComment";
+export { default as FullpageFriendsLists } from "./FullpageFriendsLists";

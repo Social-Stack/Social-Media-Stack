@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+
+#friendslists-page-title {
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+}
+
+#friends-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+#friend-list {
+  border-radius: 5px;
+  box-shadow: 5px 5px 20px lightgrey;
+  display: flex;
+  width: 40%;
+  padding: 20px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#friend-name {
+  font-family: "Roboto", sans-serif;
+  margin-left: 10px;
+}
+
+#friend-name a {
+  text-decoration: none;
+  color: black;
+}
+
+#friend-img {
+  border-radius: 100%;
+}

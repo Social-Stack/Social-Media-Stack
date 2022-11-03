@@ -2,7 +2,15 @@ import { createRoot } from "react-dom/client";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { Header, Register, Login, NewsFeed, Messages, Comments } from "./components";
+import {
+  Header,
+  Register,
+  Login,
+  NewsFeed,
+  Messages,
+  Comments,
+  FullpageFriendsLists,
+} from "./components";
 
 const container = document.getElementById("app");
 const root = createRoot(container);
@@ -17,7 +25,7 @@ const App = () => {
     const usernameExists = localStorage.getItem("username");
     if (loggedInUser) {
       setLoggedIn(true);
-      setToken(loggedInUser)
+      setToken(loggedInUser);
     }
     if (usernameExists) {
       setUsername(usernameExists);
@@ -58,6 +66,10 @@ const App = () => {
         />
         <Route path="/newsfeed" element={<NewsFeed token={token} element={<Comments />} />} />
         <Route path="/messages" element={<Messages token={token} />} />
+        <Route
+          path="/friendslists"
+          element={<FullpageFriendsLists token={token} />}
+        />
       </Routes>
     </div>
   );

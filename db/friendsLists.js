@@ -39,6 +39,8 @@ const getFriendsByUserId = async (id) => {
     const { rows: friends } = await client.query(`
         SELECT *
         FROM friendslists
+        JOIN users
+        ON friendslists."friendId" = users.id
         WHERE "userId"=${id};
         `);
     return friends;
