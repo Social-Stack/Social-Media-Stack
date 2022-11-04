@@ -42,6 +42,10 @@ const updateComment = async ({ commentId, time, text }) => {
 
 const deleteComment = async (commentId) => {
   try {
+    await client.query(`
+      DELETE FROM comment_upvotes
+      WHERE "commentId" = ${commentId};
+    `)
     const {
       rows: [deletedComment],
     } = await client.query(`

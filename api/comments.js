@@ -29,7 +29,6 @@ commentsRouter.get("/:postId", async (req, res, next) => {
       });
     } else {
       const comments = await getCommentsByPostId(postId, userId);
-      console.log("COMMS API", comments)
       res.send({
         comments,
         success: `Comments for post: ${postId}`,
@@ -74,7 +73,6 @@ commentsRouter.delete("/:id", requireUser, async (req, res, next) => {
     const comment = await getCommentById(commentId);
     if (comment && (userId === comment.authorId || isAdmin)) {
       const deletedComment = await deleteComment(commentId);
-
       res.send({
         deletedComment,
         success: "Successfully deleted this comment",

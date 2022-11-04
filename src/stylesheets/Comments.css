@@ -4,18 +4,49 @@
   align-content: flex-end;
 }
 
-#author-info {
+#comment-header {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  flex-grow: 1 2 0;
+  justify-content: space-between;
   height: 30px;
   width: 100%;
   background-color: rgb(104, 204, 243);
 }
 
+#author-info {
+  display: flex;
+  align-items: center;
+}
+
 #comment-prof-pic {
   padding-right: 15px;
+}
+
+#edit-del-btns {
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+}
+
+#edit-btn:hover {
+  cursor: pointer;
+}
+
+#delete-btn:hover {
+  cursor: pointer;
+}
+
+#edit-submit:hover {
+  background-color: rgb(104, 204, 243);
+}
+
+.upvotes {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: purple;
+  height: 25px;
+  padding: 0px 5px;
 }
 
 #user-has-upvoted-false {
@@ -41,13 +72,8 @@
   width: 35%;
 }
 
-.upvotes {
-  display: flex;
-  align-items: center;
-  font-weight: bold;
-  color: purple;
-  height: 25px;
-  padding: 0px 5px;
+.upvote-status:hover {
+  cursor: pointer;
 }
 
 .time {

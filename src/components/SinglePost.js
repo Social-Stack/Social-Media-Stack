@@ -43,6 +43,8 @@ const SinglePost = ({post, token}) => {
             <div>
             <Comments 
             postId={post.id}
+            reloadComTrigger={reloadComTrigger}
+            setReloadComTrigger={setReloadComTrigger}
             />
             </div>
             <NewComment
