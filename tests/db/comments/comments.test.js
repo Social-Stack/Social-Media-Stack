@@ -6,6 +6,8 @@ const {
   createPost,
   getUserByUsername,
   getPostsByUserId,
+  getCommentsByPostId,
+  addUpvoteToComment,
 } = require("../../../db");
 const client = require("../../../db/client");
 
@@ -24,7 +26,6 @@ describe("DB comments", () => {
       time: new Date(),
       isPublic: true
     })
-    return { user, post }
   }
   
   describe("createComment", () => {
@@ -167,6 +168,28 @@ describe("DB comments", () => {
       `);
 
       expect(nonexistentComment).toBe(undefined);
+    })
+  })
+
+  describe("getCommentsByPostId", () => {
+
+    it("Returns Comments and upvotes for a post", async () => {
+      const user = await getUserByUsername("IDKwhatToPick")
+      const user2 = await createUser({
+        firstname: "1guy",
+        lastname: "Upvoter",
+        username: "5754letsSee",
+        password: "12345okay",
+        email: "asdfiu34@gmail.com"
+      })
+      const posts = await getPostsByUserId(user.id)
+      const comments = await getCommentsByPostId(posts[0].id)
+      await addUpvoteToComment({ commentId: comments[0].id, userId: user.id });
+      await addUpvoteToComment({ commentId: comments[1].id, userId: user2.id });
+      await addUpvoteToComment({ commentId: comments[2].id, userId: user.id });
+      const _comments = await getCommentsByPostId(posts[0].id, user.id);
+
+      console.log("COMMS", _comments)
     })
   })
 })
