@@ -43,8 +43,6 @@ const Comments = ({
     const prevStatus = !editingStatus.editing;
     setEditText(commentText);
     setEditingStatus({ editing: prevStatus, commentId })
-    console.log("EDIT STATUS", editingStatus)
-    console.log("EDIT TEXT", editText)
     setReloadComTrigger(!reloadComTrigger)
   }
 

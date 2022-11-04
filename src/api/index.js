@@ -94,7 +94,6 @@ export const getCommentsByPostId = async (postId, token) => {
       }
     });
     const result = await response.json();
-    console.log("RESULT", result)
     return result;
   } catch (error) {
     console.error(error);
@@ -171,7 +170,6 @@ export const addUpvoteToComment = async (commentId, token) => {
       })
     });
     const result = response.json();
-    console.log("RESULT CU", result);
     return result;
   } catch (error) {
     return error;
@@ -191,7 +189,6 @@ export const removeUpvoteFromComment = async (commentId, token) => {
       })
     });
     const result = response.json();
-    console.log("RESULT CU", result);
     return result;
   } catch (error) {
     return error;
