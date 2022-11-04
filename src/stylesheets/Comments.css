@@ -36,6 +36,10 @@
   cursor: pointer;
 }
 
+#edit-submit:hover {
+  background-color: rgb(104, 204, 243);
+}
+
 .upvotes {
   display: flex;
   align-items: center;

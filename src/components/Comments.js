@@ -92,7 +92,7 @@ const Comments = ({
                       placeholder={comment.text} 
                       onChange={(e) => setEditText(e.target.value)}>
                       </textarea>
-                      <button>Submit</button>
+                      <button id="edit-submit">Submit</button>
                     </form>
                     :
                   <body>{comment.text}</body>
