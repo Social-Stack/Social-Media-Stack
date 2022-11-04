@@ -2,7 +2,7 @@ body {
   background-color: rgb(245, 244, 244);
 }
 
-* {
+.header {
   margin: 0;
   padding: 0;
 }
