@@ -193,7 +193,7 @@ export const removeUpvoteFromComment = async (commentId, token) => {
   } catch (error) {
     return error;
   }
-}
+};
 
 export const getAllMyMessages = async (token, userId) => {
   try {
@@ -242,6 +242,28 @@ export const getFriendMessages = async (token, friendUserId) => {
   }
 };
 
+export const sendMessage = async (recipientUserId, time, text, token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/messages/new`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        recipientUserId,
+        text,
+        time,
+      }),
+    });
+    const result = await response.json();
+    console.log("SEND MESSAGE RESULT", result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getMyFriends = async (token, userId) => {
   try {
     const response = await fetch(`${BASE_URL}/friendsLists`, {
@@ -252,5 +274,23 @@ export const getMyFriends = async (token, userId) => {
     });
     const result = response.json();
     return result;
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteMessage = async (token, messageId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/messages/${messageId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
 };
