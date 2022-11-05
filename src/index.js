@@ -10,6 +10,7 @@ import {
   Messages,
   Comments,
   FullpageFriendsLists,
+  Footer,
 } from "./components";
 
 const container = document.getElementById("app");
@@ -43,6 +44,18 @@ const App = () => {
       />
       <Routes>
         <Route
+          exact
+          path="/"
+          element={
+            <Login
+              setToken={setToken}
+              setUsername={setUsername}
+              setLoggedIn={setLoggedIn}
+              loggedIn={loggedIn}
+            />
+          }
+        />
+        <Route
           path="/register"
           element={
             <Register
@@ -64,13 +77,17 @@ const App = () => {
             />
           }
         />
-        <Route path="/newsfeed" element={<NewsFeed token={token} element={<Comments />} />} />
+        <Route
+          path="/newsfeed"
+          element={<NewsFeed token={token} element={<Comments />} />}
+        />
         <Route path="/messages" element={<Messages token={token} />} />
         <Route
           path="/friendslists"
           element={<FullpageFriendsLists token={token} />}
         />
       </Routes>
+      {loggedIn ? null : <Footer />}
     </div>
   );
 };

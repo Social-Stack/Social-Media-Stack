@@ -16,6 +16,7 @@ const Login = ({ setUsername, setLoggedIn, loggedIn, setToken }) => {
     localStorage.setItem("token", result.token);
     localStorage.setItem("username", result.user.username);
     localStorage.setItem("profile pic", result.user.picUrl);
+    localStorage.setItem("userId", result.user.id);
     setToken(result.token);
     setLoggedIn(true);
     setUsername(result.user.username);

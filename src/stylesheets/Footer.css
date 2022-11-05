@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow&family=Poppins:wght@600&display=swap");
+
+#footer-container {
+  background-color: black;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#footer-items {
+  color: white;
+  text-align: center;
+}
+
+#footer-copyright {
+  font-family: "Poppins", sans-serif;
+}
+
+#footer-text {
+  font-family: "Barlow", sans-serif;
+}

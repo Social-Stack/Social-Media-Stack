@@ -13,6 +13,11 @@ const { requireUser } = require("./utils");
 
 commentsRouter.get("/:postId", async (req, res, next) => {
   const { postId } = req.params;
+  let userId = 0;
+
+  if (req.user) {
+    userId = req.user.id;
+  }
 
   try {
     const post = await getPostById(postId);
@@ -23,7 +28,7 @@ commentsRouter.get("/:postId", async (req, res, next) => {
         message: `No post found by ID: ${postId}`,
       });
     } else {
-      const comments = await getCommentsByPostId(postId);
+      const comments = await getCommentsByPostId(postId, userId);
       res.send({
         comments,
         success: `Comments for post: ${postId}`,
@@ -68,7 +73,6 @@ commentsRouter.delete("/:id", requireUser, async (req, res, next) => {
     const comment = await getCommentById(commentId);
     if (comment && (userId === comment.authorId || isAdmin)) {
       const deletedComment = await deleteComment(commentId);
-
       res.send({
         deletedComment,
         success: "Successfully deleted this comment",
