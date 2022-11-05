@@ -6,6 +6,7 @@ const {
   deleteMessageById,
   getAllMessages,
   getUserById,
+  getMessageById,
 } = require("../db");
 const { requireUser } = require("./utils");
 
@@ -58,11 +59,35 @@ messagesRouter.get(
 messagesRouter.delete("/:messageId", requireUser, async (req, res, next) => {
   try {
     const { messageId } = req.params;
-    const deletedMessage = deleteMessageById(messageId);
-    res.send({
-      deletedMessage,
-      success: "Message deleted!",
-    });
+    console.log("MESSAGE ID", messageId);
+    const { id: userId, isAdmin } = req.user;
+    console.log("userId", userId);
+
+    const messageToDelete = await getMessageById(messageId);
+    console.log("MESSAGE TO DELETE", messageToDelete);
+    if (!messageToDelete[0]) {
+      console.log("INSIDE ELSE IF");
+      next({
+        error: "MessageDoesNotExistError",
+        message: "That message does not exist",
+      });
+    } else if (
+      (messageToDelete && messageToDelete[0].id === userId) ||
+      isAdmin
+    ) {
+      const deletedMessage = await deleteMessageById(messageId);
+      console.log("DELETED MESSAGE INSIDE", deletedMessage);
+      res.send({
+        deletedMessage,
+        success: "Message deleted!",
+      });
+    } else {
+      res.status(403);
+      next({
+        error: "Forbidden",
+        message: "Unauthorized to delete this message",
+      });
+    }
   } catch ({ error, message }) {
     next({ error, message });
   }
