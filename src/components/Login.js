@@ -31,7 +31,7 @@ const Login = ({ setUsername, setLoggedIn, loggedIn, setToken }) => {
   console.log(user);
 
   return (
-    <div>
+    <div id="login-container">
       {loggedIn ? (
         <Navigate to="/newsfeed" />
       ) : (
