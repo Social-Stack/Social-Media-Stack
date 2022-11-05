@@ -10,6 +10,7 @@ import {
   Messages,
   Comments,
   FullpageFriendsLists,
+  Footer,
 } from "./components";
 
 const container = document.getElementById("app");
@@ -86,6 +87,7 @@ const App = () => {
           element={<FullpageFriendsLists token={token} />}
         />
       </Routes>
+      {loggedIn ? null : <Footer />}
     </div>
   );
 };
