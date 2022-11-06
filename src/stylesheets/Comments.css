@@ -69,13 +69,13 @@
   display: flex;
   align-items: center;
   align-self: flex-end;
-  width: 35%;
+  width: fit-content;
 }
 
 .upvote-status:hover {
   cursor: pointer;
 }
 
-.time {
+/* .time {
   padding: 0px 5px;
-}
+} */
