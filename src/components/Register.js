@@ -40,7 +40,7 @@ const Register = ({ setUsername, setLoggedIn, loggedIn, setToken }) => {
 
   console.log(user);
   return (
-    <div>
+    <div id="register-container">
       {loggedIn ? (
         <Navigate to="/newsfeed" />
       ) : (
