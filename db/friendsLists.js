@@ -50,8 +50,28 @@ const getFriendsByUserId = async (id) => {
   }
 };
 
+const getFriendsListByUserId = async (id) => {
+  try {
+    const { rows: friends } = await client.query(`
+        SELECT "friendId"
+        FROM friendslists
+        WHERE "userId"=${id};
+        `);
+    const friendsIdArr = [];
+    for(let i = 0; i< friends.length; i++){
+      const friend = friends[i]
+      friendsIdArr.push(friend.friendId)
+    }
+    return friendsIdArr;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 module.exports = {
   addFriends,
   removeFriend,
   getFriendsByUserId,
+  getFriendsListByUserId
 };

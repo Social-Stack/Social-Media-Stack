@@ -4,7 +4,7 @@
 //add points for recency
 
 const { getCommentsByPostId } = require("./comments");
-const { getFriendsByUserId } = require("./friendsLists");
+const { getFriendsListByUserId } = require("./friendsLists");
 const { getPostById } = require("./posts");
 const { getPostUpvotesById } = require("./post_upvotes");
 
@@ -12,9 +12,9 @@ const { getPostUpvotesById } = require("./post_upvotes");
 
 
 const comparePoints = (a, b) => {
-    if (a.points < b.points) {
+    if (a.points > b.points) {
       return -1;
-    } else if (a.points > b.points) {
+    } else if (a.points < b.points) {
       return 1;
     } else {
       return 0;
@@ -23,12 +23,12 @@ const comparePoints = (a, b) => {
 
 
 const sortPostsArray = async(postsArr, userId) => {
-    const friends = await getFriendsByUserId(userId);
+    const friends = await getFriendsListByUserId(userId);
     for(let i = 0; i < postsArr.length; i++){
         let points = 0
         const currPost = postsArr[i];
         const postContent = await getPostById(currPost.id);
-        if(friends.contains(postContent.userId)){
+        if(friends.includes(postContent.userId)){
             points += 15
         }
         const comments = await getCommentsByPostId(currPost.id)
