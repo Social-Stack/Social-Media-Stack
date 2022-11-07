@@ -26,7 +26,7 @@ const Profile = (props) => {
         userPosts.map((post, i) => {
           return (
             <div>
-              <h4>{post.text}</h4>
+              <p>{post.text}</p>
             </div>
           );
         })}
