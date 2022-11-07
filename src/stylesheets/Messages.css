@@ -13,6 +13,7 @@
 
 .single-message-time{
     font-size: 8px;
+    padding-bottom: 3px;
 }
 
 textarea {
@@ -30,6 +31,7 @@ textarea {
     display: flex;
     justify-content: center;
 }
+
 #chatbox{
     font-family: 'Open Sans', sans-serif;
     flex-direction: column;
@@ -104,7 +106,14 @@ textarea {
     margin-bottom: 5px;
 	color:#8495a3;
 	position:relative;
+    /* max-width: 80%; */
     width:100%;
+}
+
+.message{
+    max-width: 80%;
+
+
 }
 
 .my-message{
@@ -160,6 +169,7 @@ textarea {
 	height:60px;
 	border-top:1px solid #e7ebee;	
 	border-bottom:1px solid #e7ebee;	
+    margin-top: 25px;
     padding: 10px 0px 10px;
 	background:#fff;
 }
@@ -177,4 +187,9 @@ textarea {
 
 .fa-message:hover{
     cursor: pointer;
+}
+
+#right{
+    display: flex;
+    justify-content: flex-end;
 }

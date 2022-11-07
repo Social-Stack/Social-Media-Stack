@@ -150,7 +150,6 @@ const Messages = (props) => {
                                 </div>
                               </div>
                               <div className="single-message-time"> {time}</div>
-                              <br />
                             </div>
                           </div>
                         );
@@ -167,6 +166,7 @@ const Messages = (props) => {
                       <textarea
                         className="message-input"
                         type="text"
+                        maxLength={255}
                         placeholder="Enter message here"
                         value={text}
                         onChange={(event) => {
