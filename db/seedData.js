@@ -8,7 +8,7 @@ const {
   getUserByEmail,
   addFriends,
 } = require("./");
-const { createComment } = require("./comments");
+const { createComment, updateComment } = require("./comments");
 const { addUpvoteToComment } = require("./comment_upvotes");
 
 const createTables = async () => {
@@ -75,7 +75,8 @@ const createTablePosts = async () => {
                "userId" INTEGER REFERENCES users(id),
                text VARCHAR(255) NOT NULL,
                "isPublic" BOOLEAN DEFAULT false NOT NULL,
-               time TIMESTAMPTZ NOT NULL
+               time TIMESTAMPTZ NOT NULL,
+               "updateTime" TIMESTAMPTZ DEFAULT null
             );
         `);
   } catch (error) {
@@ -106,7 +107,8 @@ const createTableComments = async () => {
         "authorId" INTEGER REFERENCES users(id),
         "postId" INTEGER REFERENCES posts(id),
         time TIMESTAMPTZ NOT NULL,
-        text VARCHAR(400) NOT NULL
+        text VARCHAR(400) NOT NULL,
+        "updateTime" TIMESTAMPTZ DEFAULT null
       );
     `);
   } catch (error) {
@@ -288,6 +290,16 @@ const createInitialComments = async () => {
 
     console.log(
       chalk.yellowBright("SEEDED COMMENTS: ", comment1, comment2, comment3)
+    );
+    
+    const updatedComment = await updateComment({
+      commentId: comment1.id,
+      time: new Date(),
+      text: "What a neat update."
+    });
+
+    console.log(
+      "UPDATED COMMENT: ", updatedComment
     );
     console.log(chalk.green("FINISHED CREATING COMMENTS!"));
   } catch (error) {

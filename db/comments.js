@@ -27,7 +27,7 @@ const updateComment = async ({ commentId, time, text }) => {
     } = await client.query(
       `
       UPDATE comments
-      SET time = $1,
+      SET "updateTime" = $1,
         text = $2
       WHERE id = ${commentId}
       RETURNING *;
