@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from "react";
 import { NewComment, Comments } from "./";
 import timeAgo from "node-time-ago"
+import "../stylesheets/SinglePost.css"
 
 
 const SinglePost = ({post, token}) => {
@@ -17,20 +18,8 @@ const SinglePost = ({post, token}) => {
     //     loadComments();
     // },[reloadComTrigger])
 
-
-    const tempStyle = {
-        border:'solid',
-        width: '800px',
-        margin:'5px',
-        display:'flex',
-        flexDirection:'column'
-    }
-
-    //dont mind the bad style just focusing on functionality
-
-
     return (
-        <div style={tempStyle}>
+        <div id="post-wrapper">
             <div style={{display:'flex'}}>
                 <img id="profile-pic" src={post.profilePic} />
                 {/* <img style ={{height:'50', width:'50'}} src={require(`./Assets/defaultPic.png`)}></img> offline mode for Fred in the sky */}

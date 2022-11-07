@@ -11,6 +11,7 @@ import {
  } from "../api";
 import "../stylesheets/Comments.css";
 import timeAgo from "node-time-ago"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Comments = ({
   postId,
@@ -79,21 +80,7 @@ const Comments = ({
           postComments.length ?
           postComments.map(comment => {
             return (
-              <div id="comments-wrapper">
-                <div id="comment-header">
-                    <div id="author-info" key={comment.id}>
-                      <img id="comment-prof-pic" src={comment.picUrl} width="25px" height="25px"></img>
-                      <h6>{comment.authorName}</h6>
-                    </div>
-                    {comment.authorId == userId ?
-                    <div id="edit-del-btns">
-                      <h6 id="edit-btn" onClick={() => editOnClick(comment.text, comment.id)}>Edit</h6>
-                      <pre> | </pre>
-                      <h6 id="delete-btn" onClick={() => deleteOnClick(comment.id)}>Delete</h6>
-                    </div>
-                    : <div id="edit-del-btns"></div>
-                    }
-                </div>
+              <div id="comments-wrapper" key={comment.id}>
                 <div id="comment-body">
                   {
                     editingStatus.editing && editingStatus.commentId === comment.id ?
@@ -107,38 +94,53 @@ const Comments = ({
                     :
                     confirmDelete.warning && confirmDelete.commentId === comment.id ?
                     <>
-                      <body>{comment.text}</body>
+                      <div id="comment-text">
+                        <h6>{comment.authorName} {comment.lastname}</h6>
+                        <main>{comment.text}</main>
+                      </div>
                       <div id="delete-warning">Are you sure?</div>
                       <button onClick={() => handleDelete(comment.id)}>Yes</button>
                       <button onClick={() => removeWarning()}>No</button>
                     </>
-                    : 
-                    <body>{comment.text}</body>
+                    :
+                    <>
+                      <div id="comment-text">
+                        <h6>{comment.authorName} {comment.lastname}</h6>
+                        <main>{comment.text}</main>
+                      </div>
+                    </>
                   }
                 </div>
                 <div id="comment-footer">
                   <div className="upvotes">
-                    <div id={`user-has-upvoted-${comment.userHasUpvoted}`}
+                    <FontAwesomeIcon id={`user-has-upvoted-${comment.userHasUpvoted}`}
+                    icon="fa-solid fa-arrow-up"
                     className='upvote-status'
-                    onClick={(e) => upvoteHandler(e.currentTarget.id, comment.id)}>
-                    </div>{comment.upvotes}
+                    onClick={(e) => upvoteHandler(e.currentTarget.id, comment.id)}
+                    />{comment.upvotes}
                   </div>
                   <pre> | </pre>
                   <div className="time">
-                    <div>Posted</div>
                     <div>{timeAgo(comment.time)}</div>
                   </div>
                   {
                     comment.updateTime ?
                     <>
                       <pre> | </pre>
-                      <div className="update-time">
-                        <div>Updated</div> 
-                        <div>{timeAgo(comment.updateTime)}</div>
-                      </div>
+                      <div className="update-time">Edited</div>
                     </>
                     : null
                   }
+                  <div id="author-info">
+                  {comment.authorId == userId ?
+                  <div id="edit-del-btns">
+                    <h6 id="edit-btn" onClick={() => editOnClick(comment.text, comment.id)}>Edit</h6>
+                    <pre> | </pre>
+                    <h6 id="delete-btn" onClick={() => deleteOnClick(comment.id)}>Delete</h6>
+                  </div>
+                  : <div id="edit-del-btns"></div>
+                  }
+                  </div>
                 </div>
               </div>
             )

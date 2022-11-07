@@ -1,0 +1,8 @@
+#post-wrapper {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  margin: 8px 12px;
+  width:100%;
+  background-color: white;
+}
