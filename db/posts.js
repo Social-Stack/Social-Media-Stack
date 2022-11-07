@@ -20,10 +20,13 @@ const createPost = async ({ userId, text, time, isPublic = false }) => {
 };
 
 const getPostsByUserId = async (id) => {
+  console.log('running here')
   try {
     const { rows: posts } = await client.query(`
-    SELECT *
+    SELECT posts.*, U.firstname, U.lastname, U."picUrl" as "profilePic"
     FROM posts
+    INNER JOIN users U
+    ON U.id = posts."userId"
     WHERE "userId" = ${id};
     `);
     return posts;
@@ -38,9 +41,11 @@ const getPostById = async (id) => {
     const {
       rows: [post],
     } = await client.query(`
-    SELECT *
-    FROM posts P
-    WHERE P.id = ${id};
+    SELECT posts.*, U.firstname, U.lastname, U."picUrl" as "profilePic"
+    FROM posts
+    INNER JOIN users U
+    ON U.id = posts."userId"
+    WHERE posts.id = ${id};
     `);
     return post;
   } catch (error) {
@@ -52,8 +57,7 @@ const getPostById = async (id) => {
 const getAllPublicPosts = async () => {
   try {
     const { rows: posts } = await client.query(`
-    SELECT posts.*, 
-      U.firstname, U.lastname, U."picUrl" as "profilePic"
+    SELECT posts.*, U.firstname, U.lastname, U."picUrl" as "profilePic"
     FROM posts
     INNER JOIN users U
     ON U.id = posts."userId"
