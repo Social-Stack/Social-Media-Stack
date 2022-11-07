@@ -28,7 +28,9 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
       {loggedIn ? (
         <div>
           <nav id="header-links">
-            <img id="profile-pic" src={picture} />
+            <Link to="/profile">
+              <img id="profile-pic" src={picture} />
+            </Link>
             {/* <Link to="/profile">Profile</Link> | {""} */}
             {/* {isAdmin ? <Link to="admin">Admin | {""}</Link> : null} */}
             {/* <div> */}

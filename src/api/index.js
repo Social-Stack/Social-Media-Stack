@@ -49,9 +49,25 @@ export const loginUser = async (user) => {
   }
 };
 
+//posts
 export const getAllPublicPosts = async (token) => {
   try {
     const response = await fetch(`${BASE_URL}/posts/public`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getPostsByUserId = async (token, userId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/posts/me`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -90,8 +106,8 @@ export const getCommentsByPostId = async (postId, token) => {
     const response = await fetch(`${BASE_URL}/comments/${postId}`, {
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
     const result = await response.json();
     return result;
@@ -100,6 +116,7 @@ export const getCommentsByPostId = async (postId, token) => {
   }
 };
 
+//comments
 export const newComment = async (token, postId, time, text) => {
   try {
     const response = await fetch(`${BASE_URL}/comments/${postId}`, {
@@ -131,14 +148,14 @@ export const editComment = async (commentId, text, token) => {
       body: JSON.stringify({
         text,
         time: new Date(),
-      })
+      }),
     });
     const result = response.json();
     return result;
   } catch (error) {
     return error;
   }
-}
+};
 
 export const removeComment = async (commentId, token) => {
   try {
@@ -150,7 +167,7 @@ export const removeComment = async (commentId, token) => {
       },
     });
     const result = await response.json();
-    console.log("RESULT DEL", result)
+    console.log("RESULT DEL", result);
     return result;
   } catch (error) {
     console.error(error);
@@ -163,18 +180,18 @@ export const addUpvoteToComment = async (commentId, token) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        id: commentId
-      })
+        id: commentId,
+      }),
     });
     const result = response.json();
     return result;
   } catch (error) {
     return error;
   }
-}
+};
 
 export const removeUpvoteFromComment = async (commentId, token) => {
   try {
@@ -182,11 +199,11 @@ export const removeUpvoteFromComment = async (commentId, token) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        id: commentId
-      })
+        id: commentId,
+      }),
     });
     const result = response.json();
     return result;

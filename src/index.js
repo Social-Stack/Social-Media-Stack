@@ -15,6 +15,7 @@ import {
   Comments,
   FullpageFriendsLists,
   Footer,
+  Profile,
 } from "./components";
 
 const container = document.getElementById("app");
@@ -90,6 +91,7 @@ const App = () => {
           path="/friendslists"
           element={<FullpageFriendsLists token={token} />}
         />
+        <Route path="/profile" element={<Profile token={token} />} />
       </Routes>
       {loggedIn ? null : <Footer />}
     </div>
