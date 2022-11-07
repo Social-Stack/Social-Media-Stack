@@ -27,10 +27,12 @@ const NewsFeed = ({ token }) => {
   const fetchPosts = async () => {
     const newPostsArr = [];
     const getPublicPosts = await getAllPublicPosts(token);
-    //const getFriendPosts
+    // //const getFriendPosts
     getPublicPosts[0] && newPostsArr.push(...getPublicPosts);
     console.log(newPostsArr);
-    setAllPublic(newPostsArr);
+    const feed = await getNewsFeed(token);
+    console.log('feed',feed)
+    setAllPublic(feed);
   };
   const helpFunction = async() => {
     console.log(await getNewsFeed(token))
