@@ -21,6 +21,7 @@ const Comments = ({
   const userId = localStorage.getItem("userId");
   const [postComments, setPostComments] = useState([]);
   const [editingStatus, setEditingStatus] = useState({ editing: false, commentId: 0 });
+  const [confirmDelete, setConfirmDelete] = useState({ warning: false, commentId: 0 });
   const [editText, setEditText] = useState("")
 
   const fetchComments = async() => {
@@ -53,9 +54,18 @@ const Comments = ({
     setReloadComTrigger(!reloadComTrigger)
   }
 
+  const deleteOnClick = (commentId) => {
+    setConfirmDelete({ warning: true, commentId });
+  }
+
   const handleDelete = async(commentId) => {
     await removeComment(commentId, token);
+    setConfirmDelete({ warning: false, commentId: 0 })
     setReloadComTrigger(!reloadComTrigger);
+  }
+
+  const removeWarning = () => {
+    setConfirmDelete({ warning: false, commentId: 0 })
   }
   
   useEffect(() => {
@@ -79,9 +89,9 @@ const Comments = ({
                     <div id="edit-del-btns">
                       <h6 id="edit-btn" onClick={() => editOnClick(comment.text, comment.id)}>Edit</h6>
                       <pre> | </pre>
-                      <h6 id="delete-btn" onClick={() => handleDelete(comment.id)}>Delete</h6>
-                    </div> :
-                    <div id="edit-del-btns"></div>
+                      <h6 id="delete-btn" onClick={() => deleteOnClick(comment.id)}>Delete</h6>
+                    </div>
+                    : <div id="edit-del-btns"></div>
                     }
                 </div>
                 <div id="comment-body">
@@ -89,13 +99,21 @@ const Comments = ({
                     editingStatus.editing && editingStatus.commentId === comment.id ?
                     <form onSubmit={(e) => handleEdit(e, comment.id)}>
                       <textarea
-                      placeholder={comment.text} 
+                      value={editText} 
                       onChange={(e) => setEditText(e.target.value)}>
                       </textarea>
                       <button id="edit-submit">Submit</button>
                     </form>
                     :
-                  <body>{comment.text}</body>
+                    confirmDelete.warning && confirmDelete.commentId === comment.id ?
+                    <>
+                      <body>{comment.text}</body>
+                      <div id="delete-warning">Are you sure?</div>
+                      <button onClick={() => handleDelete(comment.id)}>Yes</button>
+                      <button onClick={() => removeWarning()}>No</button>
+                    </>
+                    : 
+                    <body>{comment.text}</body>
                   }
                 </div>
                 <div id="comment-footer">
@@ -105,7 +123,22 @@ const Comments = ({
                     onClick={(e) => upvoteHandler(e.currentTarget.id, comment.id)}>
                     </div>{comment.upvotes}
                   </div>
-                  <div className="time">| {timeAgo(comment.time)}</div>
+                  <pre> | </pre>
+                  <div className="time">
+                    <div>Posted</div>
+                    <div>{timeAgo(comment.time)}</div>
+                  </div>
+                  {
+                    comment.updateTime ?
+                    <>
+                      <pre> | </pre>
+                      <div className="update-time">
+                        <div>Updated</div> 
+                        <div>{timeAgo(comment.updateTime)}</div>
+                      </div>
+                    </>
+                    : null
+                  }
                 </div>
               </div>
             )

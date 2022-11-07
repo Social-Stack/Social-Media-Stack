@@ -116,7 +116,7 @@ router.patch("/update/:postId", requireUser, async (req, res, next) => {
         message: "You must be the original author of this post",
       });
     } else {
-      const editedPost = await editPostById({ id: postId, text, isPublic });
+      const editedPost = await editPostById({ id: postId, text, isPublic, updateTime: new Date() });
       res.send({
         editedPost,
         success: "You've successfully edited a post!",
