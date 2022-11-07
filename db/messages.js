@@ -65,7 +65,7 @@ const getAllMessages = async (userId) => {
   try {
     const { rows } = await client.query(
       `
-    SELECT messages.*, users.username AS sendingUsername, users.firstname AS sendingFirstname, users.lastname AS sendingLastname
+    SELECT messages.*, users.username AS sendingUsername, users.firstname AS sendingFirstname, users.lastname AS sendingLastname, users."picUrl" AS sendingProfilePic
     FROM messages
     JOIN users
       ON messages."sendingUserId" = users.id
