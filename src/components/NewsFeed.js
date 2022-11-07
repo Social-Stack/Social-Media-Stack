@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllPublicPosts, getMyUserInfo, getMyFriends } from "../api";
+import { getAllPublicPosts, getMyUserInfo, getMyFriends, getNewsFeed } from "../api";
 import NewPost from "./NewPost";
 import SinglePost from "./SinglePost";
 import "../stylesheets/NewsFeed.css";
@@ -32,10 +32,13 @@ const NewsFeed = ({ token }) => {
     console.log(newPostsArr);
     setAllPublic(newPostsArr);
   };
+  const helpFunction = async() => {
+    console.log(await getNewsFeed(token))
+  }
 
   return (
     <>
-      <button onClick={() => console.log(token)}>helper</button>
+      <button onClick={() => helpFunction()}>helper</button>
       <NewPost
         token={token}
         loadingTrigger={loadingTrigger}
