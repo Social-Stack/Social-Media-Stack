@@ -10,6 +10,7 @@ const {
   removePostById,
   getFriendsByUserId,
 } = require("../db");
+const { sortPostsArray } = require("../db/algosort");
 
 const { requireUser } = require("./utils");
 
@@ -40,6 +41,36 @@ router.get("/public", requireUser, async (req, res, next) => {
     const allPublicPosts = await getAllPublicPosts();
     if (allPublicPosts) {
       res.send(allPublicPosts);
+    } else {
+      next({
+        error: "NoPostsExistError",
+        message: "No posts to display",
+      });
+    }
+  } catch ({ error, message }) {
+    next({ error, message });
+  }
+});
+router.get("/newsfeed", requireUser, async (req, res, next) => {
+  try {
+    const { id: userId } = req.user;
+
+    const allPosts = await getAllPublicPosts();
+    const friends = await getFriendsByUserId(userId);
+    for(let i = 0; i < friends.length; i++){
+      const { friendId } = friends[i]
+      const friendsPosts = await getPostsByUserId(friendId)
+      for(let i = 0; i< friendsPosts.length; i++){
+        const post = friendsPosts[i];
+        if(!post.isPublic){
+          allPosts.push(post)
+        }
+      }
+    }
+    const sortedPosts = await sortPostsArray(allPosts, userId);
+
+    if (sortedPosts) {
+      res.send(sortedPosts);
     } else {
       next({
         error: "NoPostsExistError",
