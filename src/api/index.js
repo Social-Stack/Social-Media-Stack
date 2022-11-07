@@ -100,9 +100,14 @@ export const newPost = async (token, _text, _time, _isPublic) => {
   }
 };
 
-export const getCommentsByPostId = async (postId) => {
+export const getCommentsByPostId = async (postId, token) => {
   try {
-    const response = await fetch(`${BASE_URL}/comments/${postId}`);
+    const response = await fetch(`${BASE_URL}/comments/${postId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    });
     const result = await response.json();
     return result;
   } catch (error) {
@@ -130,7 +135,27 @@ export const newComment = async (token, postId, time, text) => {
   }
 };
 
-export const removeComment = async (token, commentId) => {
+export const editComment = async (commentId, text, token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/comments/${commentId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        text,
+        time: new Date(),
+      })
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    return error;
+  }
+}
+
+export const removeComment = async (commentId, token) => {
   try {
     const response = await fetch(`${BASE_URL}/comments/${commentId}`, {
       method: "DELETE",
@@ -140,26 +165,50 @@ export const removeComment = async (token, commentId) => {
       },
     });
     const result = await response.json();
+    console.log("RESULT DEL", result)
     return result;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const getCommentUpvotesById = async (id, token) => {
+export const addUpvoteToComment = async (commentId, token) => {
   try {
-    const response = await fetch(`${BASE_URL}/comment_upvotes/${id}`, {
+    const response = await fetch(`${BASE_URL}/comment_upvotes/add`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
-      }
+      },
+      body: JSON.stringify({
+        id: commentId
+      })
     });
-    const { comments } = await response.json();
-    return comments;
+    const result = response.json();
+    return result;
   } catch (error) {
     return error;
   }
 }
+
+export const removeUpvoteFromComment = async (commentId, token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/comment_upvotes/remove`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        id: commentId
+      })
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
 
 export const getAllMyMessages = async (token, userId) => {
   try {
@@ -208,6 +257,28 @@ export const getFriendMessages = async (token, friendUserId) => {
   }
 };
 
+export const sendMessage = async (recipientUserId, time, text, token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/messages/new`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        recipientUserId,
+        text,
+        time,
+      }),
+    });
+    const result = await response.json();
+    console.log("SEND MESSAGE RESULT", result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getMyFriends = async (token, userId) => {
   try {
     const response = await fetch(`${BASE_URL}/friendsLists`, {
@@ -218,5 +289,23 @@ export const getMyFriends = async (token, userId) => {
     });
     const result = response.json();
     return result;
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteMessage = async (token, messageId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/messages/${messageId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
 };

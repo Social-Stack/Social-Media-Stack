@@ -20,7 +20,7 @@ const SinglePost = ({post, token}) => {
 
     const tempStyle = {
         border:'solid',
-        width:'500px',
+        width: '800px',
         margin:'5px',
         display:'flex',
         flexDirection:'column'
@@ -43,6 +43,8 @@ const SinglePost = ({post, token}) => {
             <div>
             <Comments 
             postId={post.id}
+            reloadComTrigger={reloadComTrigger}
+            setReloadComTrigger={setReloadComTrigger}
             />
             </div>
             <NewComment

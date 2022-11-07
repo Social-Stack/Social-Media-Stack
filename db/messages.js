@@ -27,13 +27,16 @@ const getMessagesBetweenUsers = async (loggedInUserId, friendUserId) => {
   try {
     const { rows: messages } = await client.query(
       `
-        SELECT *
+        SELECT messages.*, users.firstname AS sendingfirstname
         FROM messages
+        JOIN users
+          ON messages."sendingUserId" = users.id
         WHERE "sendingUserId" = $1 AND "recipientUserId" = $2 OR
         "sendingUserId" = $2 AND "recipientUserId" = $1;
         `,
       [loggedInUserId, friendUserId]
     );
+    console.log("MESSAGES ", messages);
     return messages;
   } catch (error) {
     console.error(error);
@@ -49,6 +52,8 @@ const deleteMessageById = async (messageId) => {
         WHERE id = ${messageId}
         RETURNING *;
         `);
+    console.log("deletedMessage", [deletedMessage]);
+    // console.log("ROWS", rows);
     return deletedMessage;
   } catch (error) {
     console.error(error);
@@ -60,7 +65,7 @@ const getAllMessages = async (userId) => {
   try {
     const { rows } = await client.query(
       `
-    SELECT messages.*, users.username AS sendingUsername, users.firstname AS sendingFirstname, users.lastname AS sendingLastname
+    SELECT messages.*, users.username AS sendingUsername, users.firstname AS sendingFirstname, users.lastname AS sendingLastname, users."picUrl" AS sendingProfilePic
     FROM messages
     JOIN users
       ON messages."sendingUserId" = users.id
@@ -76,9 +81,26 @@ const getAllMessages = async (userId) => {
   }
 };
 
+const getMessageById = async (messageId) => {
+  try {
+    const { rows } = await client.query(
+      `
+      SELECT *
+      FROM messages
+      WHERE messages.id = ${messageId};
+      `
+    );
+    return rows;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 module.exports = {
   createMessage,
   getMessagesBetweenUsers,
   deleteMessageById,
   getAllMessages,
+  getMessageById,
 };

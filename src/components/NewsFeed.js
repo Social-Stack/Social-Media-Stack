@@ -12,11 +12,11 @@ const NewsFeed = ({ token }) => {
 
   useEffect(() => {
     fetchPosts();
-  }, [loadingTrigger, token]);
-
-  useEffect(() => {
     getAllFriends();
-  }, []);
+  }, [loadingTrigger, token]);
+  
+  // useEffect(() => {
+  // }, []);
 
   const getAllFriends = async () => {
     const { id } = await getMyUserInfo(token);
@@ -56,14 +56,16 @@ const NewsFeed = ({ token }) => {
           <div id="side-panel">
             <h3 id="side-panel-title">Friends</h3>
             <div id="side-panel-friends">
-              {friends.map((friend, i) => {
+              {friends
+                ? friends.map((friend, i) => {
                 return (
                   <div id="side-panel-friend" key={i}>
                     <img id="friend-img" height="50px" src={friend.picUrl} />
                     <p>{friend.username}</p>
                   </div>
                 );
-              })}
+                })
+              : null}
             </div>
           </div>
         </div>
