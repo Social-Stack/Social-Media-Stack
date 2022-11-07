@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+
 .single-message-expanded{
    height: auto;
    max-height: 100px;
@@ -8,6 +11,170 @@
     overflow: hidden;
 }
 
+.single-message-time{
+    font-size: 8px;
+}
+
 textarea {
     resize: none;
+}
+
+#recent-message{
+    font-size: 12px;
+    font-style: italic;
+    padding-top: 5px;
+    text-overflow: ellipsis;
+    color: #8198ac;
+}
+#outer{
+    display: flex;
+    justify-content: center;
+}
+#chatbox{
+    font-family: 'Open Sans', sans-serif;
+    flex-direction: column;
+	width:300px;
+	background:#fff;
+    padding:10px;
+	border-radius:6px;
+	overflow: auto;    /* change to scroll if needed*/
+	height:484px;
+    border-style:groove;
+}
+
+.friend{
+	height:70px;
+	border-bottom:1px solid #e7ebee;		
+	position:relative;
+}
+
+.friend:hover{
+	background:#f1f4f6;
+	cursor:pointer;
+}
+
+.friend img{
+	width:40px;
+	border-radius:50%;
+	margin:15px;
+	float:left;
+}
+
+.friend p{
+	padding:15px 0 0 0;			
+	float:left;
+	width:180px;
+}
+
+.friend p strong{
+    display: flex;
+  font-weight:600;
+  font-size:15px;
+	color:#000000;  
+
+}
+
+.friend p span{
+	font-size:13px;
+	font-weight:400;
+	color:#aab8c2;
+}
+
+.friend .status{
+	background:#26c281;
+	border-radius:50%;	
+	width:9px;
+	height:9px;
+	position:absolute;
+	top:31px;
+	right:17px;
+}
+
+.friend .status.away{background:#ffce54;}
+
+.friend .status.inactive{background:#eaeef0;}
+
+.bubble{	
+    display:flex;
+	background:#f0f4f7;
+	font-size:13px;
+	font-weight:600;
+	padding:12px 5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+	color:#8495a3;
+	position:relative;
+    width:100%;
+}
+
+.my-message{
+    display: flex;
+    max-width: 100%;
+    justify-content: flex-end;
+}
+
+.my-message .bubble{
+    background: #d0e9da;
+    border-radius:10px 10px 0px 10px;
+    color: #738b71;
+}
+
+.my-message .fa-trash{
+    margin-left: 30px;
+}
+
+.my-message .single-message-time{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.friends-message{    
+    display: flex;
+}
+
+.friends-message .bubble{
+    border-radius:10px 10px 10px 0px;
+    margin-right: 30px;
+
+}
+
+.inline-message {
+    display: flex;
+    align-items: baseline;
+}
+
+.fa-trash{
+    color: grey;
+    font-size: x-small;
+    margin-right: 5px;
+}
+
+.fa-trash:hover{
+    color:#000000;
+    cursor:pointer;
+}
+
+#sendmessage{
+    display: flex;
+    justify-content: space-around;
+	height:60px;
+	border-top:1px solid #e7ebee;	
+	border-bottom:1px solid #e7ebee;	
+    padding: 10px 0px 10px;
+	background:#fff;
+}
+
+.message-input{
+    width: 85%;
+    padding: 5px;
+}
+
+#sendmessage button{
+    background-color: #fff;
+    border:none;
+    font-size: large;
+}
+
+.fa-message:hover{
+    cursor: pointer;
 }

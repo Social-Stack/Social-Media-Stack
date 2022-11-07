@@ -1,3 +1,7 @@
+import ReactDOM from "react-dom";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { faTrash, faMessage } from "@fortawesome/free-solid-svg-icons";
 import { createRoot } from "react-dom/client";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -91,7 +95,7 @@ const App = () => {
     </div>
   );
 };
-
+library.add(fab, faTrash, faMessage);
 root.render(
   <Router>
     <App />

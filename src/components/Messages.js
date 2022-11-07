@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { fatrash, faComment, faMessage } from "@fortawesome/fontawesome-free";
 import {
   getAllMyMessages,
   getMyUserInfo,
@@ -8,11 +9,14 @@ import {
 } from "../api";
 import Conversation from "./Conversation";
 import "../stylesheets/Messages.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Messages = (props) => {
   // const { token } = props;
   const token = localStorage.getItem("token");
   const [allMessages, setAllMessages] = useState([]);
+  const [admin, setAdmin] = useState(false);
+  const [myId, setMyId] = useState("");
   const [conversation, setConversation] = useState([]);
   const [selected, setSelected] = useState(null);
   // const [loadingTrigger, setLoadingTrigger] = useState(true);
@@ -20,10 +24,13 @@ const Messages = (props) => {
 
   useEffect(() => {
     const getChatlist = async () => {
-      const { id } = await getMyUserInfo(token);
+      const { id, isAdmin } = await getMyUserInfo(token);
+      setMyId(id);
+      setAdmin(isAdmin);
       const myMessages = await getAllMyMessages(token, id);
       setAllMessages(myMessages.allMyMessages);
     };
+
     getChatlist();
   }, []);
 
@@ -42,6 +49,7 @@ const Messages = (props) => {
       return setSelected(null);
     }
     setSelected(i);
+    setText("");
     // setLoadingTrigger(!loadingTrigger);
   };
 
@@ -67,115 +75,118 @@ const Messages = (props) => {
   return (
     <div>
       <h1 id="messages-heading">Messages</h1>
-      {/* 
-      <div>
-        {result.map((groupedMessages, i) => {
-          return (
-            <>
-              <div>Message from: {groupedMessages[0].sendingusername}</div>
-              {groupedMessages.map((singleMessage) => {
-                return (
-                  <div className="single-message">
-                    <div className="single-message-text">
-                      {singleMessage.text}
-                    </div>
-                    <div className="single-message-time">
-                      {singleMessage.time}
-                    </div>
-                    <br />
-                  </div>
-                );
-              })}
-            </>
-          );
-        })}
-      </div> */}
+      <div id="outer">
+        <div id="chatbox">
+          {result.map((groupedMessage, i) => {
+            const friendUserId = groupedMessage[0].sendingUserId;
+            return (
+              <div className="single-message">
+                <div
+                  className="friend"
+                  onClick={() => handleClick(friendUserId, i)}
+                >
+                  <img src={groupedMessage[0].sendingprofilepic} />
 
-      <div>
-        {result.map((groupedMessage, i) => {
-          const friendUserId = groupedMessage[0].sendingUserId;
-          return (
-            <div className="single-message">
-              <div className="single-message-sender">
-                {" "}
-                Conversation with {groupedMessage[0].sendingfirstname}
-              </div>
-              <button onClick={() => handleClick(friendUserId, i)}>
-                {selected === i ? (
-                  <span>Collapse Conversation</span>
-                ) : (
-                  <span>View Conversation</span>
-                )}
-              </button>
-              <div className="expanded-messages">
-                {selected
-                  ? conversation.map((singleMessage) => {
-                      const date = new Date(singleMessage.time);
-                      const time = date.toLocaleString();
-                      return (
-                        <>
+                  {/* <div className="single-message-sender">
+                  {" "} */}
+                  <p>
+                    <strong className="single-message-sender">
+                      {groupedMessage[0].sendingfirstname}{" "}
+                      {groupedMessage[0].sendinglastname}{" "}
+                    </strong>
+                  </p>
+                  <p id="recent-message">
+                    {groupedMessage[groupedMessage.length - 1].text}
+                  </p>
+                  <div
+                    className={
+                      friendUserId % 2 == 0 ? "status available" : "status away"
+                    }
+                  ></div>
+                </div>
+                <div className="expanded-messages">
+                  {selected
+                    ? conversation.map((singleMessage) => {
+                        const date = new Date(singleMessage.time);
+                        const time = date.toLocaleString([], {
+                          month: "2-digit",
+                          day: "2-digit",
+                          year: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        });
+                        return (
                           <div
                             className={
-                              selected === i
-                                ? "single-message-expanded"
-                                : "single-message-collapsed"
+                              singleMessage.sendingUserId === friendUserId
+                                ? "friends-message message"
+                                : "my-message message"
                             }
                           >
-                            <div className="single-message-sender">
-                              From: {singleMessage.sendingfirstname}
+                            <div
+                              className={
+                                selected === i
+                                  ? "single-message-expanded"
+                                  : "single-message-collapsed"
+                              }
+                            >
+                              <div className="inline-message">
+                                {admin ||
+                                singleMessage.sendingUserId === myId ? (
+                                  <span>
+                                    <FontAwesomeIcon
+                                      icon="fa-solid fa-trash"
+                                      onClick={() =>
+                                        handleDelete(
+                                          singleMessage.id,
+                                          friendUserId
+                                        )
+                                      }
+                                    />
+                                  </span>
+                                ) : null}
+                                <div className="single-message-text bubble">
+                                  {singleMessage.text}{" "}
+                                </div>
+                              </div>
+                              <div className="single-message-time"> {time}</div>
+                              <br />
                             </div>
-                            <div className="single-message-text">
-                              {singleMessage.text}{" "}
-                              {/* <span
-                                onClick={() => handleDelete(singleMessage.id)}
-                              >
-                                x
-                              </span> */}
-                              <button
-                                onClick={() =>
-                                  handleDelete(singleMessage.id, friendUserId)
-                                }
-                              >
-                                x
-                              </button>
-                            </div>
-                            <div className="single-message-time"> {time}</div>
-                            <br />
                           </div>
-                        </>
-                      );
-                    })
-                  : null}
-                <div
-                  className={
-                    selected === i
-                      ? "single-message-expanded"
-                      : "single-message-collapsed"
-                  }
-                >
-                  <textarea
-                    type="text"
-                    placeholder="Enter message here"
-                    value={text}
-                    onChange={(event) => {
-                      setText(event.target.value);
-                    }}
-                  ></textarea>
-                  <div>
-                    <button
-                      disabled={!text}
-                      onClick={() => handleSend(friendUserId)}
-                    >
-                      Send
-                    </button>
+                        );
+                      })
+                    : null}
+                  <div
+                    className={
+                      selected === i
+                        ? "single-message-expanded"
+                        : "single-message-collapsed"
+                    }
+                  >
+                    <div id="sendmessage">
+                      <textarea
+                        className="message-input"
+                        type="text"
+                        placeholder="Enter message here"
+                        value={text}
+                        onChange={(event) => {
+                          setText(event.target.value);
+                        }}
+                      />
+                      <button
+                        // id="send"
+                        disabled={!text}
+                        onClick={() => handleSend(friendUserId)}
+                      >
+                        <FontAwesomeIcon icon="fa-solid fa-message" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-              <br />
-              {/* <textarea className="message-input" type="text"></textarea> */}
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );
