@@ -17,7 +17,6 @@ const Profile = (props) => {
       const { id } = await getMyUserInfo(token);
       const posts = await getPostsByUserId(token, id);
       const friends = await getMyFriends(token, id);
-      console.log("posts", posts);
       setUserInfo(info);
       setUserPosts(posts);
       setUserFriends(friends.friendsLists);
@@ -41,7 +40,9 @@ const Profile = (props) => {
           return (
             <div>
               <img height="80px" src={friend.picUrl} />
-              <h3>{friend.firstname}</h3>
+              <h3>
+                {friend.firstname} {friend.lastname}
+              </h3>
             </div>
           );
         })}
