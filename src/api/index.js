@@ -64,6 +64,21 @@ export const getAllPublicPosts = async (token) => {
   }
 };
 
+export const getNewsFeed = async (token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/posts/newsfeed`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const newPost = async (token, _text, _time, _isPublic) => {
   try {
     const response = await fetch(`${BASE_URL}/posts/new`, {
