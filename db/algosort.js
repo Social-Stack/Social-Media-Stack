@@ -24,7 +24,6 @@ const comparePoints = (a, b) => {
 
 const sortPostsArray = async(postsArr, userId) => {
     const friends = await getFriendsListByUserId(userId);
-    console.log(friends)
     for(let i = 0; i < postsArr.length; i++){
         let points = 0
         const currPost = postsArr[i];
