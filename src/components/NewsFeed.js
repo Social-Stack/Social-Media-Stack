@@ -24,13 +24,13 @@ const NewsFeed = ({ token }) => {
     const feed = await getNewsFeed(token);
     setAllPosts(feed);
   };
-  const helpFunction = async() => {
-    console.log(await getNewsFeed(token))
-  }
+  // const helpFunction = async() => {
+  //   console.log(await getNewsFeed(token))
+  // }
 
   return (
     <>
-      <button onClick={() => helpFunction()}>helper</button>
+      {/* <button onClick={() => helpFunction()}>helper</button> */}
       <NewPost
         token={token}
         loadingTrigger={loadingTrigger}
