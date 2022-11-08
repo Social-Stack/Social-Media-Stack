@@ -1,4 +1,36 @@
-#newCommentTextArea {
-    min-width:480px;
-    max-width: 480px;
+#new-comment-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 32px;
+}
+
+#new-comment-user-pic {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+#new-comment-form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+#new-comment-form > * {
+  font-family: 'Poppins', sans-serif;
+}
+#new-comment-input {
+  font-size: .95rem;
+  width: 95.367%;
+  height: 36px;
+  border: none;
+  background-color: #F5F3F4;
+  padding: 8px 12px;
+  margin: 8px 12px;
+  border-radius: 12px;
+}
+
+#new-comment-input::placeholder {
+  font-family: 'Poppins', sans-serif;
+  color: #161A1D;
 }

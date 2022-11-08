@@ -1,12 +1,18 @@
-import React, {useState} from "react";
-import { newComment } from "../api";
+import React, {useEffect, useState} from "react";
+import { getMyUserInfo, newComment } from "../api";
 
 import "../stylesheets/NewComment.css";
 
 const NewComment = ({token, postId, reloadComTrigger, setReloadComTrigger}) => {
     const [text, setText] = useState('');
+    const [user, setUser] = useState({});
 
-    const placeText = "share your thoughts about this";
+    const placeText = "Share your thoughts...";
+
+    const fetchUserData = async() => {
+      const token = localStorage.getItem("token")
+      setUser(await getMyUserInfo(token))
+    }
 
     const postComment = async(event) => {
         event.preventDefault();
@@ -17,13 +23,25 @@ const NewComment = ({token, postId, reloadComTrigger, setReloadComTrigger}) => {
         setText('')
     }
 
-    //dont mind the bad style just focusing on functionality
+    useEffect(() => {
+      fetchUserData();
+    }, [])
 
     return(
-        <form id='comment-form' onSubmit={(event) => {postComment(event)}}>
-            <textarea id='newCommentTextArea' placeholder={placeText} value={text} onChange={(event)=>setText(event.target.value)}></textarea>
-            <button>Comment</button>
+      <div id="new-comment-wrapper">
+        <img id="new-comment-user-pic" src={user.picUrl}></img>
+        <form
+        id="new-comment-form"
+        onSubmit={(event) => {postComment(event)}}>
+          <input 
+          id='new-comment-input' 
+          placeholder={placeText} 
+          value={text} 
+          onChange={(event)=>setText(event.target.value)}>
+          </input>
+          <input type='submit' style={{display: 'none'}}></input>
         </form>
+      </div>
     )
 }
 

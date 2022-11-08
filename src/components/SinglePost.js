@@ -20,22 +20,21 @@ const SinglePost = ({post, token}) => {
 
     return (
         <div id="post-wrapper">
-            <div style={{display:'flex'}}>
-                <img id="profile-pic" src={post.profilePic} />
-                {/* <img style ={{height:'50', width:'50'}} src={require(`./Assets/defaultPic.png`)}></img> offline mode for Fred in the sky */}
-                <div>
-                    <div>{post.firstname} {post.lastname}</div>
-                    <div>{timeAgo(post.time)}</div>
+            <div id="post-content">
+              <div id="post-author-info">
+                <img id="post-author-profile-pic" src={post.profilePic}/>
+                <div id="name-time-wrapper">
+                  <h4 id="post-author-name">{post.firstname} {post.lastname}</h4>
+                  <div id="post-time">{timeAgo(post.time)}</div>
                 </div>
+              </div>
+              <div id="post-text">{post.text}</div>
             </div>
-            <div>{post.text}</div>
-            <div>
             <Comments 
             postId={post.id}
             reloadComTrigger={reloadComTrigger}
             setReloadComTrigger={setReloadComTrigger}
             />
-            </div>
             <NewComment
             token={token}
             postId={post.id}

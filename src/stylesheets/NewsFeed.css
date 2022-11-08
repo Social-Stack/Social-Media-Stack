@@ -8,7 +8,7 @@
 #posts-container {
   display: flex;
   flex-direction: column;
-  width: fit-content;
+  width: 25%;
 }
 
 #side-panel-container {

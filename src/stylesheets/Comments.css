@@ -4,12 +4,19 @@
   align-content: flex-end;
 }
 
-#comment-header {
+#comments-wrapper > * {
+  font-family: 'Poppins', sans-serif;
+}
+
+#comment-body {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 30px;
-  width: 100%;
+}
+
+#comment-author-profile-pic {
+  margin-top: 12px;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
 }
 
 #comment-text {
@@ -21,6 +28,67 @@
   margin: 8px 12px;
 }
 
+#comment-edit-form-wrapper {
+  display: block;
+  padding: 8px 12px;
+  width: 95.367%;
+  border-radius: 25px;
+  margin: 8px 12px;
+}
+
+#comment-edit-form {
+  width: 95.367%;
+}
+
+#comment-edit-input {
+  font-family: 'Poppins', sans-serif;
+  border: none;
+  outline: none;
+  font-size: .95rem;
+  width: 105.367%;
+  height: 76px;
+  border: none;
+  background-color: #F5F3F4;
+  padding: 8px 12px;
+  border-radius: 25px;
+}
+
+#comment-edit-input::-webkit-scrollbar {
+  display: none;
+}
+
+#comment-editing-warning {
+  color: #E5383B;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+#comment-text-with-warning {
+  display: flex;
+  flex-direction: column;
+}
+
+#comment-delete-confirm-wrapper {
+  padding-left: 8px;
+  margin-left: 8px;
+}
+
+#comment-delete-confirmation {
+  display: flex;
+  justify-content: space-evenly;
+  width: 107.57px;
+  margin-bottom: 10px;
+}
+
+#comment-delete-confirmation > * {
+  font-weight: bold;
+}
+
+#comment-delete-confirmation > div:hover {
+  cursor: pointer;
+  color: red;
+}
+
 #author-info {
   display: flex;
   align-items: center;
@@ -28,12 +96,6 @@
 
 #comment-prof-pic {
   padding-right: 15px;
-}
-
-#edit-del-btns {
-  display: flex;
-  align-items: center;
-  padding-right: 10px;
 }
 
 #edit-btn:hover {
@@ -51,35 +113,78 @@
 .upvotes {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 2rem;
   font-weight: bold;
-  color: purple;
+  font-size: 18px;
+  color: #E5383B;
   height: 25px;
-  padding: 0px 5px;
+  padding-right: 16px;
 }
 
 #user-has-upvoted-false {
   color: grey;
-  height: 25px;
-  width: 25px;
+  height: 16px;
+  width: 16px;
 }
 
 #user-has-upvoted-true {
-  color: purple;
-  height: 25px;
-  width: 25px;
+  color: #E5383B;
+  height: 16px;
+  width: 16px;
 }
 
 #comment-footer {
   display: flex;
   align-items: center;
   align-self: flex-start;
+  height: 20px;
   width: fit-content;
+  margin-left: 44px;
+}
+
+#edit-del-btns {
+  display: flex;
+  width: 5rem;
+  justify-content: space-between;
+  margin-left: 14rem;
+  padding-right: 10px;
+  align-items: center;
+}
+
+#delete-btn {
+  color: #A4161A;
+}
+
+#delete-btn:hover {
+  text-decoration: underline;
+}
+
+#edit-btn:hover {
+  text-decoration: underline;
 }
 
 .upvote-status:hover {
   cursor: pointer;
 }
 
-/* .time {
-  padding: 0px 5px;
-} */
+#comment-time-container {
+  display: flex;
+  justify-content: space-between;
+  width: 7.5rem;
+}
+
+#edited {
+  color: #E5383B;
+}
+
+#edited:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#comment-time-container > * {
+  font-size: 12px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');

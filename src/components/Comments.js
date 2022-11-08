@@ -55,6 +55,12 @@ const Comments = ({
     setReloadComTrigger(!reloadComTrigger)
   }
 
+  const handleKeyDown = (e, commentId) => {
+    if (e.key == 'Enter' && e.shiftKey == false) {
+      handleEdit(e, commentId);
+    }
+  }
+
   const deleteOnClick = (commentId) => {
     setConfirmDelete({ warning: true, commentId });
   }
@@ -75,79 +81,95 @@ const Comments = ({
 
   return (
     <>
-      <h5>Comments</h5>
-        {
-          postComments.length ?
-          postComments.map(comment => {
-            return (
-              <div id="comments-wrapper" key={comment.id}>
-                <div id="comment-body">
-                  {
-                    editingStatus.editing && editingStatus.commentId === comment.id ?
-                    <form onSubmit={(e) => handleEdit(e, comment.id)}>
+      {
+        postComments.length ?
+        postComments.map(comment => {
+          return (
+            <div id="comments-wrapper" key={comment.id}>
+              <div id="comment-body">
+              <img id="comment-author-profile-pic" src={comment.picUrl}></img>
+                {
+                  editingStatus.editing && editingStatus.commentId === comment.id ?
+                  <div id="comment-edit-form-wrapper">
+                    <div id="comment-editing-warning">Editing</div>
+                    <form 
+                    onSubmit={(e) => handleEdit(e, comment.id)}
+                    id="comment-edit-form">
                       <textarea
+                      id="comment-edit-input"
                       value={editText} 
-                      onChange={(e) => setEditText(e.target.value)}>
+                      onChange={(e) => setEditText(e.target.value)}
+                      onKeyDown={(e) => handleKeyDown(e, comment.id)}
+                      >
                       </textarea>
-                      <button id="edit-submit">Submit</button>
                     </form>
-                    :
-                    confirmDelete.warning && confirmDelete.commentId === comment.id ?
-                    <>
-                      <div id="comment-text">
-                        <h6>{comment.authorName} {comment.lastname}</h6>
-                        <main>{comment.text}</main>
-                      </div>
+                  </div>
+                  :
+                  confirmDelete.warning && confirmDelete.commentId === comment.id ?
+                  <div id="comment-text-with-warning">
+                    <div id="comment-text">
+                      <h5>{comment.authorName} {comment.lastname}</h5>
+                      <main>{comment.text}</main>
+                    </div>
+                    <div id="comment-delete-confirm-wrapper">
                       <div id="delete-warning">Are you sure?</div>
-                      <button onClick={() => handleDelete(comment.id)}>Yes</button>
-                      <button onClick={() => removeWarning()}>No</button>
-                    </>
-                    :
-                    <>
-                      <div id="comment-text">
-                        <h6>{comment.authorName} {comment.lastname}</h6>
-                        <main>{comment.text}</main>
+                      <div id="comment-delete-confirmation">
+                        <div onClick={() => handleDelete(comment.id)}>Yes</div>
+                        <div onClick={() => removeWarning()}>No</div>
                       </div>
-                    </>
-                  }
+                    </div>
+                  </div>
+                  :
+                  <>
+                    <div id="comment-text">
+                      <h5>{comment.authorName} {comment.lastname}</h5>
+                      <main>{comment.text}</main>
+                    </div>
+                  </>
+                }
+              </div>
+              <div id="comment-footer">
+                <div className="upvotes">
+                  <FontAwesomeIcon id={`user-has-upvoted-${comment.userHasUpvoted}`}
+                  icon="fa-solid fa-arrow-up"
+                  className='upvote-status'
+                  onClick={(e) => upvoteHandler(e.currentTarget.id, comment.id)}
+                  />
+                  <div>{comment.upvotes}</div>
                 </div>
-                <div id="comment-footer">
-                  <div className="upvotes">
-                    <FontAwesomeIcon id={`user-has-upvoted-${comment.userHasUpvoted}`}
-                    icon="fa-solid fa-arrow-up"
-                    className='upvote-status'
-                    onClick={(e) => upvoteHandler(e.currentTarget.id, comment.id)}
-                    />{comment.upvotes}
-                  </div>
-                  <pre> | </pre>
-                  <div className="time">
-                    <div>{timeAgo(comment.time)}</div>
-                  </div>
+                <div id="comment-time-container">
+                  <div id="comment-time">{timeAgo(comment.time)}</div>
+                {
+                  comment.updateTime ?
+                  <div id="edited">Edited</div>
+                  : null
+                }
+                </div>
+                <div id="edit-del-btns">
                   {
-                    comment.updateTime ?
-                    <>
-                      <pre> | </pre>
-                      <div className="update-time">Edited</div>
-                    </>
-                    : null
-                  }
-                  <div id="author-info">
-                  {comment.authorId == userId ?
-                  <div id="edit-del-btns">
-                    <h6 id="edit-btn" onClick={() => editOnClick(comment.text, comment.id)}>Edit</h6>
-                    <pre> | </pre>
+                  comment.authorId == userId 
+                  && editingStatus.editing 
+                  && editingStatus.commentId === comment.id ?
+                  <>
+                    <h6 id="edit-btn" onClick={() => editOnClick(comment.text, comment.id)}>Cancel</h6>
                     <h6 id="delete-btn" onClick={() => deleteOnClick(comment.id)}>Delete</h6>
-                  </div>
+                  </>
+                  :
+                  comment.authorId == userId ?
+                  <>
+                    <h6 id="edit-btn" onClick={() => editOnClick(comment.text, comment.id)}>Edit</h6>
+                    <h6 id="delete-btn" onClick={() => deleteOnClick(comment.id)}>Delete</h6>
+                  </>
                   : <div id="edit-del-btns"></div>
                   }
-                  </div>
                 </div>
               </div>
-            )
-          })
-          :
-          <h6>No comments for this post</h6>
-          }
+            </div>
+          )
+        })
+        :
+        <h6>No comments for this post</h6>
+        }
     </>
   )
 }
