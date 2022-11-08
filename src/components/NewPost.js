@@ -20,11 +20,12 @@ const NewPost = ({token, loadingTrigger, setLoadingTrigger}) => {
     //dont mind the bad style just focusing on functionality
 
     return (
+      <div id='new-post-wrapper'>
         <div id="newPostBox">
-            <form onSubmit={(event) => {handleSubmit(event)}}>
+            <form id='new-post-form' onSubmit={(event) => {handleSubmit(event)}}>
                 <textarea id="newPostTextBox" type='text' placeholder="What's on your mind?" value={text} onChange={(event) => setText(event.target.value)}/>
                 <div id="newPostBottomBar">
-                    <label>Visibility: </label>
+                    <label id="post-visibility-text">Visibility: </label>
                     <select
                         value={visibility}
                         onChange={(event) => {handleVisibility(event.target.value)}}>
@@ -34,8 +35,8 @@ const NewPost = ({token, loadingTrigger, setLoadingTrigger}) => {
                     <button type="submit" id="postButton">Post!</button>
                 </div>
             </form>
-
         </div>
+      </div>
     )
 }
 

@@ -36,13 +36,15 @@ const NewsFeed = ({ token }) => {
         loadingTrigger={loadingTrigger}
         setLoadingTrigger={setLoadingTrigger}
       />
-      <div id="newsfeed-container">
-        <div id="posts-container">
-          {allPosts[0]
-            ? allPosts.map((post, i) => {
-                return <SinglePost key={i} post={post} token={token} />;
-              })
-            : null}
+      <div id="main-content-container">
+        <div id="newsfeed-container">
+          <div id="posts-container">
+            {allPosts[0]
+              ? allPosts.map((post, i) => {
+                  return <SinglePost key={i} post={post} token={token} />;
+                })
+              : null}
+          </div>
         </div>
         <div id="side-panel-container">
           <div id="side-panel">
