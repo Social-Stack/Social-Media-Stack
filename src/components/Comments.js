@@ -129,7 +129,8 @@ const Comments = ({
                 }
               </div>
               <div id="comment-footer">
-                <div className="upvotes">
+                <div id="upvote-time-wrapper">
+                  <div className="upvotes">
                   <FontAwesomeIcon id={`user-has-upvoted-${comment.userHasUpvoted}`}
                   icon="fa-solid fa-arrow-up"
                   className='upvote-status'
@@ -144,6 +145,7 @@ const Comments = ({
                   <div id="edited">Edited</div>
                   : null
                 }
+                </div>
                 </div>
                 <div id="edit-del-btns">
                   {

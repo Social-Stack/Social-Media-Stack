@@ -24,25 +24,27 @@ const NewsFeed = ({ token }) => {
     const feed = await getNewsFeed(token);
     setAllPosts(feed);
   };
-  const helpFunction = async() => {
-    console.log(await getNewsFeed(token))
-  }
+  // const helpFunction = async() => {
+  //   console.log(await getNewsFeed(token))
+  // }
 
   return (
     <>
-      <button onClick={() => helpFunction()}>helper</button>
+      {/* <button onClick={() => helpFunction()}>helper</button> */}
       <NewPost
         token={token}
         loadingTrigger={loadingTrigger}
         setLoadingTrigger={setLoadingTrigger}
       />
-      <div id="newsfeed-container">
-        <div id="posts-container">
-          {allPosts[0]
-            ? allPosts.map((post, i) => {
-                return <SinglePost key={i} post={post} token={token} />;
-              })
-            : null}
+      <div id="main-content-container">
+        <div id="newsfeed-container">
+          <div id="posts-container">
+            {allPosts[0]
+              ? allPosts.map((post, i) => {
+                  return <SinglePost key={i} post={post} token={token} />;
+                })
+              : null}
+          </div>
         </div>
         <div id="side-panel-container">
           <div id="side-panel">

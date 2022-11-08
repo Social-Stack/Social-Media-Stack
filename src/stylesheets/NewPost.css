@@ -1,24 +1,51 @@
+#new-post-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-right: 150px;
+  width: 95%;
+}
+
 #newPostBox {
     display:flex;
-    flex-direction: column;
-    border: solid;
-    border-radius: 10px;
-    border-width: 1;
-    width: 500px;
-    margin: 2px;
-
+    justify-content: center;
+    border-radius: 5px;
+    box-shadow: 1px 1px 4px 1px #161A1D;
+    width: 29.7%;
+    margin: 12px 8px;
+    padding: 12px 8px;
 }
+
+#new-post-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+#new-post-form > * {
+  font-family: 'Poppins', sans-serif;
+}
+
 #newPostTextBox{
-    min-width: 480px;
-    max-width: 480px;
-    min-height: 120;
-    max-height: 120;
-    height: 120px;
+    width: 95.367%;
+    height: 72px;
+    padding: 12px 8px;
     margin: 5px;
+    font-size: 16px;
+}
+
+#newPostTextBox::placeholder{
+  font-family: 'Poppins', sans-serif;
+}
+
+#post-visibility-text {
+  margin-left: 5px;
+  margin-right: 10px;
 }
 #postButton{
     background-color: aquamarine;
-    width: 250;
+    width: 150;
     height: 30;
     margin-left: auto;
     margin-right: 2px;
@@ -26,4 +53,6 @@
 #newPostBottomBar{
     display: flex;
     flex-direction: row;
+    align-items: center;
+    width: 95%;
 }
