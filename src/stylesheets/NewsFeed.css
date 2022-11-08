@@ -7,18 +7,18 @@
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-  flex-grow: 1;
+  width: 100%;
 }
 
 #posts-container {
   display: flex;
   flex-direction: column;
-  width: 30%;
+  align-items: center;
+  width: 33%;
 }
 
 #side-panel-container {
   display: flex;
-  justify-content: center;
   height: 300px;
   width: 150px;
   flex-wrap: wrap;
