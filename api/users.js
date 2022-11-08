@@ -7,6 +7,9 @@ const {
   getUserById,
   getUserByEmail,
   authenticateUser,
+  getFriendsByUserId,
+  getPostsByUsername,
+  isMyFriend,
 } = require("../db");
 const { requireUser } = require("./utils");
 
@@ -166,7 +169,7 @@ usersRouter.patch("/:username/edit", requireUser, async (req, res, next) => {
           delete userInputs.confirmPassword;
         }
         await updateUser(userInputs);
-        delete userInputs.id
+        delete userInputs.id;
         res.send({
           userInputs,
           success: `Successfully updated ${username}'s profile!`,
@@ -183,6 +186,29 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
   try {
     const user = await getUserByUsername(username);
     res.send(user);
+  } catch ({ error, message }) {
+    next({ error, message });
+  }
+});
+
+usersRouter.get("/profile/:username", requireUser, async (req, res, next) => {
+  const { username } = req.params;
+  const { id } = req.user;
+  try {
+    const user = await getUserByUsername(username);
+    const friendList = await getFriendsByUserId(user.id);
+    console.log("what is friendsList", friendList);
+    const posts = await getPostsByUsername(username);
+    if (user.username === username) {
+      res.send({ user, friendList, posts });
+    } else if (await isMyFriend(id, username)) {
+      res.send({ user, friendList, posts });
+    } else {
+      next({
+        error: "UnauthorizedError",
+        message: "You are not authorized to perform this function!",
+      });
+    }
   } catch ({ error, message }) {
     next({ error, message });
   }
