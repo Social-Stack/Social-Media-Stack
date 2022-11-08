@@ -23,11 +23,11 @@ const FullpageFriendsLists = (props) => {
         {friends.map((friend, i) => {
           return (
             <div id="friend-list" key={i}>
-              <a href="#">
+              <a href="/profile">
                 <img id="friend-img" height="80px" src={friend.picUrl} />
               </a>
               <h3 id="friend-name">
-                <a href="#">
+                <a href="/profile">
                   {friend.firstname} {friend.lastname}
                 </a>
               </h3>
