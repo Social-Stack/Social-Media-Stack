@@ -20,8 +20,33 @@ const createPost = async ({ userId, text, time, isPublic = false }) => {
 };
 
 const getPostsByUserId = async (id) => {
-  console.log('running here')
   try {
+    const { rows: posts } = await client.query(`
+    SELECT posts.*, U.firstname, U.lastname, U."picUrl" as "profilePic"
+    FROM posts
+    INNER JOIN users U
+    ON U.id = posts."userId"
+    WHERE "userId" = ${id};
+    `);
+    return posts;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const getPostsByUsername = async (username) => {
+  //optimize this later
+  try {
+    console.log("running getPostsByUsername", username);
+    const {
+      rows: [{ id }],
+    } = await client.query(`
+    SELECT *
+    FROM users
+    WHERE username = '${username}';
+    `);
+    console.log("id", id);
     const { rows: posts } = await client.query(`
     SELECT posts.*, U.firstname, U.lastname, U."picUrl" as "profilePic"
     FROM posts
@@ -63,7 +88,7 @@ const getAllPublicPosts = async () => {
     ON U.id = posts."userId"
     WHERE "isPublic" = true;
     `);
-    console.log("POSTS", posts)
+    console.log("POSTS", posts);
     return posts;
   } catch (error) {
     console.error(error);
@@ -71,11 +96,11 @@ const getAllPublicPosts = async () => {
   }
 };
 
-const editPostById = async ({id, ...fields}) => {
+const editPostById = async ({ id, ...fields }) => {
   try {
     const setString = Object.keys(fields)
-    .map((key, idx) => `"${key}" = $${idx+1}`)
-    .join(", ");
+      .map((key, idx) => `"${key}" = $${idx + 1}`)
+      .join(", ");
 
     const {
       rows: [post],
@@ -95,13 +120,15 @@ const editPostById = async ({id, ...fields}) => {
   }
 };
 
-const removePostById = async(id) => {
-  try{
-    const { rows: [post] } = await client.query(`
+const removePostById = async (id) => {
+  try {
+    const {
+      rows: [post],
+    } = await client.query(`
       DELETE FROM posts
       WHERE id = ${id}
       RETURNING *;
-    `)
+    `);
     return post;
   } catch (error) {
     console.error(error);
@@ -112,8 +139,9 @@ const removePostById = async(id) => {
 module.exports = {
   createPost,
   getPostsByUserId,
+  getPostsByUsername,
   getPostById,
   getAllPublicPosts,
   editPostById,
-  removePostById
+  removePostById,
 };

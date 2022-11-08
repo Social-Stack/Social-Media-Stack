@@ -49,6 +49,23 @@ export const loginUser = async (user) => {
   }
 };
 
+//profile
+
+export const getProfileData = async (token, username) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/profile/${username}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 //posts
 export const getAllPublicPosts = async (token) => {
   try {
