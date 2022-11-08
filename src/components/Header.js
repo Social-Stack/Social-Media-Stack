@@ -29,7 +29,7 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
       {loggedIn ? (
         <div>
           <nav id="header-links">
-            <Link to="/profile">
+            <Link to={`/profile/${username}`}>
               <img id="profile-pic" src={picture} />
             </Link>
             {/* <Link to="/profile">Profile</Link> | {""} */}

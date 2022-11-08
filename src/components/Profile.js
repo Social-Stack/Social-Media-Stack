@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
-import { getMyFriends, getMyUserInfo, getPostsByUserId } from "../api";
+import {
+  getMyFriends,
+  getMyUserInfo,
+  getPostsByUserId,
+  getProfileData,
+} from "../api";
 import SinglePost from "./SinglePost";
 import NewPost from "./NewPost";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const Profile = (props) => {
   const [userInfo, setUserInfo] = useState({});
@@ -11,18 +16,27 @@ const Profile = (props) => {
   const [loadingTrigger, setLoadingTrigger] = useState(true);
   const token = localStorage.getItem("token");
 
+  const { username } = useParams();
   useEffect(() => {
     const getUserInfo = async () => {
-      const info = await getMyUserInfo(token);
-      const { id } = await getMyUserInfo(token);
-      const posts = await getPostsByUserId(token, id);
-      const friends = await getMyFriends(token, id);
-      setUserInfo(info);
-      setUserPosts(posts);
-      setUserFriends(friends.friendsLists);
+      //   const info = await getMyUserInfo(token);
+      //   const { id } = await getMyUserInfo(token);
+      //   const posts = await getPostsByUserId(token, id);
+      //   const friends = await getMyFriends(token, id);
+      const userProfile = await getProfileData(token, username);
+      //   setUserInfo(info);
+      //   setUserPosts(posts);
+      //   setUserFriends(friends.friendsLists);
+      setUserInfo(userProfile.user);
+      setUserPosts(userProfile.posts);
+      setUserFriends(userProfile.friendList);
     };
     getUserInfo();
   }, []);
+
+  const onClick = async () => {
+    console.log(await getProfileData(token, username));
+  };
   return (
     <div id="profile-container">
       <div id="userinfo-container">
@@ -34,6 +48,7 @@ const Profile = (props) => {
         <Link to="/friendslists">
           <button>friends</button>
         </Link>
+        <button onClick={onClick}>Helper</button>
       </div>
       <div id="friends-container">
         {userFriends.map((friend, i) => {
