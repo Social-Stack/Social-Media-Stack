@@ -7,3 +7,4 @@ export { default as Messages } from "./Messages";
 export { default as Comments } from "./Comments";
 export { default as NewComment } from "./NewComment";
 export { default as FullpageFriendsLists } from "./FullpageFriendsLists";
+export { default as Profile } from "./Profile";
