@@ -137,9 +137,10 @@
 #comment-footer {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   align-self: flex-start;
   height: 20px;
-  width: fit-content;
+  width: 90%;
   margin-left: 44px;
 }
 
@@ -147,8 +148,12 @@
   display: flex;
   width: 5rem;
   justify-content: space-between;
-  margin-left: 14rem;
   padding-right: 10px;
+  align-items: center;
+}
+
+#upvote-time-wrapper {
+  display: flex;
   align-items: center;
 }
 
