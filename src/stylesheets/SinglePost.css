@@ -1,0 +1,43 @@
+#post-wrapper {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  margin: 8px 12px;
+  padding: 8px 12px;
+  width:100%;
+  background-color: white;
+}
+
+#post-wrapper > * {
+  font-family: 'Poppins', sans-serif;
+}
+
+#post-content {
+  display: flex;
+  flex-direction: column;
+}
+
+#post-author-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 7.5rem;
+}
+
+#post-author-profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+#post-time {
+  font-size: 12px;
+}
+
+#post-text {
+  margin: 16px 4px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #B1A7A6;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
