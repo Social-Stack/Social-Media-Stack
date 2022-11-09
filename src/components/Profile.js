@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import {
-  getMyFriends,
-  getMyUserInfo,
-  getPostsByUserId,
+  // getMyFriends,
+  // getMyUserInfo,
+  // getPostsByUserId,
   getProfileData,
 } from "../api";
 import SinglePost from "./SinglePost";
 import NewPost from "./NewPost";
 import { Link, useParams } from "react-router-dom";
 
-const Profile = (props) => {
+const Profile = () => {
   const [userInfo, setUserInfo] = useState({});
   const [userPosts, setUserPosts] = useState([]);
   const [userFriends, setUserFriends] = useState([]);
@@ -45,7 +45,7 @@ const Profile = (props) => {
           {userInfo.firstname} {userInfo.lastname}
         </h1>
         <p>{String(userFriends.length)} friends</p>
-        <Link to="/friendslists">
+        <Link to={`/friendslists/${userInfo.username}`}>
           <button>friends</button>
         </Link>
         <button onClick={onClick}>Helper</button>
@@ -53,7 +53,7 @@ const Profile = (props) => {
       <div id="friends-container">
         {userFriends.map((friend, i) => {
           return (
-            <div>
+            <div key={i}>
               <img height="80px" src={friend.picUrl} />
               <h3>
                 {friend.firstname} {friend.lastname}

@@ -315,7 +315,7 @@ export const sendMessage = async (recipientUserId, time, text, token) => {
 
 export const getMyFriends = async (token, userId) => {
   try {
-    const response = await fetch(`${BASE_URL}/friendsLists`, {
+    const response = await fetch(`${BASE_URL}/friendsLists/${userId}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

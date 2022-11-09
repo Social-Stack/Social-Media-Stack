@@ -92,7 +92,7 @@ const App = () => {
         />
         <Route path="/messages" element={<Messages token={token} />} />
         <Route
-          path="/friendslists"
+          path="/friendslists/:username"
           element={<FullpageFriendsLists token={token} />}
         />
         <Route path="/profile/:username" element={<Profile token={token} />} />
