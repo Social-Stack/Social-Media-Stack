@@ -54,3 +54,14 @@
 #user-fullname {
   margin-left: 20px;
 }
+
+#friends-btn {
+  background-color: #f5f3f4;
+  border: none;
+  border-bottom: #e5383b;
+}
+
+#profile-info {
+  display: flex;
+  align-items: center;
+}

@@ -26,11 +26,13 @@ const Profile = () => {
   return (
     <div id="profile-container">
       <div id="userinfo-container">
-        <img id="user-image" height="150px" src={userInfo.picUrl} />
-        <h1 id="user-fullname">
-          {userInfo.firstname} {userInfo.lastname}
-        </h1>
-        <p>{String(userFriends.length)} friends</p>
+        <div id="profile-info">
+          <img id="user-image" height="150px" src={userInfo.picUrl} />
+          <h1 id="user-fullname">
+            {userInfo.firstname} {userInfo.lastname}
+          </h1>
+          <p>{String(userFriends.length)} friends</p>
+        </div>
         <Link to={`/friendslists/${userInfo.username}`}>
           <button id="friends-btn">friends</button>
         </Link>
