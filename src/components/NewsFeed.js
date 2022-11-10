@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getAllPublicPosts, getMyUserInfo, getMyFriends } from "../api";
+import { getAllPublicPosts, getMyUserInfo, getMyFriends, getNewsFeed } from "../api";
 import NewPost from "./NewPost";
 import SinglePost from "./SinglePost";
 import "../stylesheets/NewsFeed.css";
 
 const NewsFeed = ({ token }) => {
-  const [friendsPosts, setFriendsPosts] = useState([]);
-  const [allPublic, setAllPublic] = useState([]);
+  const [allPosts, setAllPosts] = useState([]);
   const [loadingTrigger, setLoadingTrigger] = useState(true);
   const [friends, setFriends] = useState([]);
 
@@ -15,9 +14,6 @@ const NewsFeed = ({ token }) => {
     getAllFriends();
   }, [loadingTrigger, token]);
   
-  // useEffect(() => {
-  // }, []);
-
   const getAllFriends = async () => {
     const { id } = await getMyUserInfo(token);
     const myFriends = await getMyFriends(token, id);
@@ -25,29 +21,30 @@ const NewsFeed = ({ token }) => {
   };
 
   const fetchPosts = async () => {
-    const newPostsArr = [];
-    const getPublicPosts = await getAllPublicPosts(token);
-    //const getFriendPosts
-    getPublicPosts[0] && newPostsArr.push(...getPublicPosts);
-    console.log(newPostsArr);
-    setAllPublic(newPostsArr);
+    const feed = await getNewsFeed(token);
+    setAllPosts(feed);
   };
+  // const helpFunction = async() => {
+  //   console.log(await getNewsFeed(token))
+  // }
 
   return (
     <>
-      <button onClick={() => console.log(token)}>helper</button>
+      {/* <button onClick={() => helpFunction()}>helper</button> */}
       <NewPost
         token={token}
         loadingTrigger={loadingTrigger}
         setLoadingTrigger={setLoadingTrigger}
       />
-      <div id="newsfeed-container">
-        <div id="posts-container">
-          {allPublic[0]
-            ? allPublic.map((post, i) => {
-                return <SinglePost key={i} post={post} token={token} />;
-              })
-            : null}
+      <div id="main-content-container">
+        <div id="newsfeed-container">
+          <div id="posts-container">
+            {allPosts[0]
+              ? allPosts.map((post, i) => {
+                  return <SinglePost key={i} post={post} token={token} />;
+                })
+              : null}
+          </div>
         </div>
         <div id="side-panel-container">
           <div id="side-panel">

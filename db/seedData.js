@@ -5,11 +5,12 @@ const {
   createUser,
   createPost,
   createMessage,
-  getUserByEmail,
   addFriends,
 } = require("./");
 const { createComment, updateComment } = require("./comments");
 const { addUpvoteToComment } = require("./comment_upvotes");
+const { requestFriend, acceptFriend } = require("./friendRequests");
+const { getNotisByUserId, seenByNotiId } = require("./notifications");
 
 const createTables = async () => {
   console.log(chalk.green("BUILDING TABLES..."));
@@ -20,7 +21,9 @@ const createTables = async () => {
     await createTableComments();
     await createTableCommentUpvotes();
     await createTableMessages();
+    await createTableFriendRequests();
     await createTableFriendsLists();
+    await createTableNotifications();
 
     console.log(chalk.green("FINISHED BUILDING TABLES"));
   } catch (error) {
@@ -33,7 +36,9 @@ const dropTables = async () => {
   console.log(chalk.green("DROPPING TABLES..."));
   try {
     await client.query(`
+        DROP TABLE IF EXISTS notifications;
         DROP TABLE IF EXISTS friendslists;
+        DROP TABLE IF EXISTS friendrequests;
         DROP TABLE IF EXISTS messages;
         DROP TABLE IF EXISTS comment_upvotes;
         DROP TABLE IF EXISTS comments;
@@ -147,6 +152,20 @@ const createTableMessages = async () => {
     throw error;
   }
 };
+const createTableFriendRequests = async () => {
+  try {
+    await client.query(`
+            CREATE TABLE friendrequests(
+                "userId" INTEGER REFERENCES users(id),
+                "requestedFriendId" INTEGER REFERENCES users(id),
+                UNIQUE ("userId", "requestedFriendId")
+            );
+        `);
+  } catch (error) {
+    console.error(chalk.red("error during create friendsrequests table"));
+    throw error;
+  }
+};
 const createTableFriendsLists = async () => {
   try {
     await client.query(`
@@ -161,6 +180,26 @@ const createTableFriendsLists = async () => {
     throw error;
   }
 };
+const createTableNotifications = async () => {
+  try {
+    await client.query(`
+            CREATE TABLE notifications(
+                id SERIAL PRIMARY KEY,
+                "userId" INTEGER REFERENCES users(id),
+                type VARCHAR(40) NOT NULL,
+                text VARCHAR(255) NOT NULL,
+                url VARCHAR(255) DEFAULT NULL,
+                seen boolean DEFAULT false
+            );
+        `);
+  } catch (error) {
+    console.error(chalk.red("error during create notifications table"));
+    throw error;
+  }
+};
+
+
+//data
 
 const createInitialUsers = async () => {
   console.log(chalk.green("CREATING INITIAL USERS..."));
@@ -425,14 +464,15 @@ const createInitialFriendsList = async () => {
   try {
     const friendsList1 = await addFriends(1, 2);
     const friendsList2 = await addFriends(1, 3);
-    const friendsList3 = await addFriends(2, 3);
+    //const friendsList3 = await addFriends(2, 3);
+    const friend3 = await requestFriend(2,3);
 
     console.log(
       chalk.yellowBright(
         "SEEDED FRIENDSLIST",
         friendsList1,
         friendsList2,
-        friendsList3
+        //friendsList3
       )
     );
 
@@ -455,6 +495,9 @@ const rebuildDB = async () => {
     await createInitialCommentUpvotes();
     await createInitialMessages();
     await createInitialFriendsList();
+    console.log(await getNotisByUserId(3));
+    await acceptFriend(2,3);
+
   } catch (error) {
     console.error(chalk.red("error rebuilding the db!", error));
     throw error;

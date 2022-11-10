@@ -4,6 +4,7 @@ import Conversation from "./Conversation";
 import "../stylesheets/Messages.css";
 import timeAgo from "node-time-ago";
 
+
 const Messages = () => {
   const token = localStorage.getItem("token");
   const [allMessages, setAllMessages] = useState([]);
@@ -24,6 +25,7 @@ const Messages = () => {
       const myMessages = await getAllMyMessages(token, id);
       setAllMessages(myMessages.allMyMessages);
     };
+
     getChatlist();
   }, [loadingTrigger]);
 

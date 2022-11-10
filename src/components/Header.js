@@ -9,6 +9,7 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("profile pic");
+    localStorage.removeItem("userId");
     setToken("");
     setLoggedIn(false);
     setUsername("");
@@ -28,7 +29,9 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
       {loggedIn ? (
         <div>
           <nav id="header-links">
-            <img id="profile-pic" src={picture} />
+            <Link to={`/profile/${username}`}>
+              <img id="profile-pic" src={picture} />
+            </Link>
             {/* <Link to="/profile">Profile</Link> | {""} */}
             {/* {isAdmin ? <Link to="admin">Admin | {""}</Link> : null} */}
             {/* <div> */}

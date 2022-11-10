@@ -73,12 +73,11 @@ friendsRouter.delete("/:friendId", requireUser, async (req, res, next) => {
   }
 });
 
-friendsRouter.get("/", requireUser, async (req, res, next) => {
+friendsRouter.get("/:userId", requireUser, async (req, res, next) => {
   try {
-    const { id: userId } = req.user;
+    const { userId } = req.params;
 
     const friendsLists = await getFriendsByUserId(userId);
-    console.log("friendsLists", friendsLists);
     if (friendsLists[0]) {
       res.send({
         friendsLists,

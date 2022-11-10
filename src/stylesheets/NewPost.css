@@ -1,29 +1,104 @@
+#new-post-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 #newPostBox {
     display:flex;
-    flex-direction: column;
-    border: solid;
-    border-radius: 10px;
-    border-width: 1;
-    width: 500px;
-    margin: 2px;
+    justify-content: center;
+    border-radius: 5px;
+    box-shadow: 1px 1px 4px 1px #161A1D;
+    width: 33%;
+    min-width: 400px;
+    background-color: white;
+    float: inline-end;
+    margin: 8px 12px;
+    padding: 8px 12px;
+}
 
+#spacer-div {
+  display: flex;
+  justify-self: flex-end;
+  width: 150px;
 }
+
+#newsfeed-upper-wrapper {
+  display: flex;
+}
+
+#new-post-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+#new-post-form > * {
+  font-family: 'Poppins', sans-serif;
+}
+
 #newPostTextBox{
-    min-width: 480px;
-    max-width: 480px;
-    min-height: 120;
-    max-height: 120;
-    height: 120px;
-    margin: 5px;
+    width: 95%;
+    height: 96px;
+    padding: 12px 8px;
+    border: none;
+    outline: none;
+    margin: 12px 8px;
+    font-size: 16px;
+    border-radius: 12px;
+    background-color: #F5F3F4;
 }
-#postButton{
-    background-color: aquamarine;
-    width: 250;
-    height: 30;
-    margin-left: auto;
-    margin-right: 2px;
+
+#newPostTextBox::placeholder{
+  font-family: 'Poppins', sans-serif;
 }
+
+#post-visibility-selector {
+  font-family: 'Poppins', sans-serif;
+  border-radius: 5px;
+  height: 30px;
+  background-color: #D3D3D3;
+  color: black;
+  padding: 0px 12px;
+}
+
+#post-visibility-selector:hover {
+  cursor: pointer;
+}
+
+#post-visibility-selector:focus {
+  outline: none;
+}
+
+#post-visibility-text {
+  font-family: 'Poppins', sans-serif;
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
+#post-button{
+  background-color: #E5383B;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  width: 150;
+  height: 30;
+  margin-left: 12px;
+  margin-right: 2px;
+  border-radius: 5px;
+}
+
+#post-button:hover {
+  background-color: #e5383b8a;
+  color: black;
+  cursor: pointer;
+}
+
 #newPostBottomBar{
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 95%;
 }

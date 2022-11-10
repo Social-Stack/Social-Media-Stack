@@ -1,7 +1,11 @@
 import ReactDOM from "react-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
-import { faTrash, faMessage } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrash,
+  faMessage,
+  faArrowUp,
+} from "@fortawesome/free-solid-svg-icons";
 import { createRoot } from "react-dom/client";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -15,6 +19,7 @@ import {
   Comments,
   FullpageFriendsLists,
   Footer,
+  Profile,
 } from "./components";
 
 const container = document.getElementById("app");
@@ -87,15 +92,17 @@ const App = () => {
         />
         <Route path="/messages" element={<Messages token={token} />} />
         <Route
-          path="/friendslists"
+          path="/friendslists/:username"
           element={<FullpageFriendsLists token={token} />}
         />
+        <Route path="/profile/:username" element={<Profile token={token} />} />
       </Routes>
       {loggedIn ? null : <Footer />}
     </div>
   );
 };
-library.add(fab, faTrash, faMessage);
+
+library.add(fab, faTrash, faMessage, faArrowUp);
 root.render(
   <Router>
     <App />

@@ -49,9 +49,57 @@ export const loginUser = async (user) => {
   }
 };
 
+//profile
+
+export const getProfileData = async (token, username) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/profile/${username}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+//posts
 export const getAllPublicPosts = async (token) => {
   try {
     const response = await fetch(`${BASE_URL}/posts/public`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getNewsFeed = async (token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/posts/newsfeed`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getPostsByUserId = async (token, userId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/posts/me`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -100,6 +148,7 @@ export const getCommentsByPostId = async (postId, token) => {
   }
 };
 
+//comments
 export const newComment = async (token, postId, time, text) => {
   try {
     const response = await fetch(`${BASE_URL}/comments/${postId}`, {
@@ -257,7 +306,6 @@ export const sendMessage = async (recipientUserId, time, text, token) => {
       }),
     });
     const result = await response.json();
-    console.log("SEND MESSAGE RESULT", result);
     return result;
   } catch (error) {
     console.error(error);
@@ -266,7 +314,7 @@ export const sendMessage = async (recipientUserId, time, text, token) => {
 
 export const getMyFriends = async (token, userId) => {
   try {
-    const response = await fetch(`${BASE_URL}/friendsLists`, {
+    const response = await fetch(`${BASE_URL}/friendsLists/${userId}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -278,6 +326,22 @@ export const getMyFriends = async (token, userId) => {
     console.error(error);
   }
 };
+
+export const requestFriend = async (token, requestedFriendId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/friendRequests/new/${requestedFriendId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export const deleteMessage = async (token, messageId) => {
   try {
@@ -299,6 +363,38 @@ export const deleteMessage = async (token, messageId) => {
 export const getAFriend = async (token, friendId) => {
   try {
     const response = await fetch(`${BASE_URL}/users/${friendId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getAllMyNotifications = async (token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/notifications/me`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+export const seenNotification = async (token, notiId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/notifications/${notiId}`, {
+      method:"POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
