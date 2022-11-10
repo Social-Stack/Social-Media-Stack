@@ -47,9 +47,24 @@ const getNotisByUserId = async(userId) => {
     }
 };
 
+const getUnseenNotisByUserId = async(userId) => {
+    try {
+        const { rows: notis } = await client.query(`
+        SELECT *
+        FROM notifications
+        WHERE "userId"=${userId} AND seen = false;
+        `);
+        return notis;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 
 module.exports = {
     createFriendReqNoti,
     seenByNotiId,
-    getNotisByUserId
+    getNotisByUserId,
+    getUnseenNotisByUserId
 };

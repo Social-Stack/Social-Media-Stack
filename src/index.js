@@ -15,6 +15,7 @@ import {
   Register,
   Login,
   NewsFeed,
+  NotificationPage,
   Messages,
   Comments,
   FullpageFriendsLists,
@@ -41,10 +42,12 @@ const App = () => {
       setUsername(usernameExists);
     }
   }, []);
+  
 
   return (
     <div>
       <Header
+        token={token}
         setToken={setToken}
         setLoggedIn={setLoggedIn}
         loggedIn={loggedIn}
@@ -90,6 +93,7 @@ const App = () => {
           path="/newsfeed"
           element={<NewsFeed token={token} element={<Comments />} />}
         />
+        <Route path="/notifications" element={<NotificationPage token={token} />} />
         <Route path="/messages" element={<Messages token={token} />} />
         <Route
           path="/friendslists/:username"

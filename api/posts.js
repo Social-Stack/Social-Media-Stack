@@ -67,6 +67,13 @@ router.get("/newsfeed", requireUser, async (req, res, next) => {
         }
       }
     }
+    const myPosts = await getPostsByUserId(userId)
+      for(let i = 0; i< myPosts.length; i++){
+        const post = myPosts[i];
+        if(!post.isPublic){
+          allPosts.push(post)
+        }
+      }
     const sortedPosts = await sortPostsArray(allPosts, userId);
 
     if (sortedPosts) {
