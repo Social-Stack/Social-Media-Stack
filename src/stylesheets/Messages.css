@@ -16,14 +16,10 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
 .single-message-time{
     font-size: 12px;
     /* padding-bottom: 3px; */
-}
-
-.single-message-time{
-    font-size: 8px;
-    padding-bottom: 3px;
 }
 
 textarea {
