@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../stylesheets/Header.css";
+import NotificationIcon from "./NotificationIcon";
 
-const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
+const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken, token }) => {
   // const navigate = useNavigate();
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const logout = () => {
@@ -32,14 +33,10 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
             <Link to={`/profile/${username}`}>
               <img id="profile-pic" src={picture} />
             </Link>
-            {/* <Link to="/profile">Profile</Link> | {""} */}
-            {/* {isAdmin ? <Link to="admin">Admin | {""}</Link> : null} */}
-            {/* <div> */}
-            {/* <img id="profile-pic" src={require(`./Assets/defaultPic.png`)} /> offline mode for Fred in the sky */}
-            {/* </div> */}
             <Link to="/messages">Messages </Link>
+            <Link to="/notifications"><NotificationIcon token={token}/></Link>
             <Link to="/login" onClick={logout}>
-              Logout {username}
+              Logout
             </Link>
           </nav>
         </div>
@@ -71,8 +68,9 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background-color: #a4161a;
             /* background-color: rgb(240, 3, 3); */
-            height: 10%;
+            height: 8%;
             /* text-decoration: none; */
           }
           
@@ -80,8 +78,9 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            color: black;
+            // color: #f5f3f4; 
             font-family: "Barlow", sans-serif;
+            
           }
           
           #header-links:last-child {
@@ -90,17 +89,20 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
           
           #header-links a {
             text-decoration: none;
-            color: black;
+            color: #f5f3f4;
             padding: 0px 5px;
           }
           
           #logo {
             padding-left: 10px;
             text-decoration: none;
-            color: black;
+            color: #FFFFFF;
             font-family: "Poppins", sans-serif;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 30px;
+            // background: -webkit-linear-gradient(120deg, #FFFFFF, #333, #FFFFFF, #333);
+            // -webkit-background-clip: text;
+            // -webkit-text-fill-color: transparent;
           }
           
           .hamburger {

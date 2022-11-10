@@ -1,8 +1,10 @@
 //friends +15
 //upvotes +1
+//own post +2
 //comments +2
-//add points for recency
+//add points for recency +20
 
+const { post } = require("../api/friendRequest");
 const { getCommentsByPostId } = require("./comments");
 const { getFriendsListByUserId } = require("./friendsLists");
 const { getPostById } = require("./posts");
@@ -30,6 +32,9 @@ const sortPostsArray = async(postsArr, userId) => {
         const postContent = await getPostById(currPost.id);
         if(friends.includes(postContent.userId)){
             points += 15
+        }
+        if(post.userId === userId){
+          points += 2
         }
         const comments = await getCommentsByPostId(currPost.id)
         points += comments.length;

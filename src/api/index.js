@@ -306,7 +306,6 @@ export const sendMessage = async (recipientUserId, time, text, token) => {
       }),
     });
     const result = await response.json();
-    console.log("SEND MESSAGE RESULT", result);
     return result;
   } catch (error) {
     console.error(error);
@@ -321,12 +320,28 @@ export const getMyFriends = async (token, userId) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    const result = response.json();
+    const result = await response.json();
     return result;
   } catch (error) {
     console.error(error);
   }
 };
+
+export const requestFriend = async (token, requestedFriendId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/friendRequests/new/${requestedFriendId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export const deleteMessage = async (token, messageId) => {
   try {
@@ -338,8 +353,71 @@ export const deleteMessage = async (token, messageId) => {
       },
     });
     const result = await response.json();
+    console.log("DELETE RESULT", result);
     return result;
   } catch (error) {
     console.error(error);
   }
 };
+
+export const getAFriend = async (token, friendId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/${friendId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getAllMyNotifications = async (token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/notifications/me`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getUnseenNotifications = async (token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/notifications/unseen`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const seeNotification = async (token, notiId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/notifications/${notiId}`, {
+      method:"POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
