@@ -78,7 +78,6 @@ friendsRouter.get("/:userId", requireUser, async (req, res, next) => {
     const { userId } = req.params;
 
     const friendsLists = await getFriendsByUserId(userId);
-    console.log("friendsLists", friendsLists);
     if (friendsLists[0]) {
       res.send({
         friendsLists,
