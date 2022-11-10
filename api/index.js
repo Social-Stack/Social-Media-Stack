@@ -43,6 +43,9 @@ apiRouter.use("/posts", postsRouter);
 const messagesRouter = require("./messages");
 apiRouter.use("/messages", messagesRouter);
 
+const friendRequestsRouter = require("./friendRequest");
+apiRouter.use("/friendRequests", friendRequestsRouter);
+
 const friendsListsRouter = require("./friendsLists");
 apiRouter.use("/friendsLists", friendsListsRouter);
 
@@ -51,6 +54,9 @@ apiRouter.use("/friendsLists", friendsListsRouter);
 
 const commentsRouter = require("./comments");
 apiRouter.use("/comments", commentsRouter);
+
+const notificationsRouter = require("./notifications");
+apiRouter.use("/notifications", notificationsRouter);
 
 const commentUpvotesRouter = require("./comment_upvotes");
 apiRouter.use("/comment_upvotes", commentUpvotesRouter);
