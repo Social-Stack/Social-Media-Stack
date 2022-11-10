@@ -3,7 +3,7 @@ import { getAllMyMessages, getMyUserInfo, getAFriend } from "../api";
 import Conversation from "./Conversation";
 import "../stylesheets/Messages.css";
 import timeAgo from "node-time-ago";
-
+import SearchBar from "./SearchBar";
 
 const Messages = () => {
   const token = localStorage.getItem("token");
@@ -55,7 +55,9 @@ const Messages = () => {
         <div id="chatbox">
           <h1 id="messages-heading">Chats</h1>
           <br />
-          <div>search bar here</div>
+          <div>
+            <SearchBar />
+          </div>
           <br />
           {!result.length ? (
             <h2>Search for a friend and start chatting!</h2>
@@ -76,7 +78,9 @@ const Messages = () => {
                       </strong>
                     </p>
                     <p id="recent-message">
-                      {groupedMessage[groupedMessage.length - 1].text}{" "}
+                      {groupedMessage[groupedMessage.length - 1].text
+                        .slice(0, 12)
+                        .concat("...")}{" "}
                       {timeAgo(groupedMessage[groupedMessage.length - 1].time)}
                     </p>
                     <div
