@@ -7,7 +7,7 @@ const createUser = async ({
   username,
   password,
   email,
-  picUrl = "https://i.ibb.co/ZJjmKmj/person-icon-red-3.png",
+  picUrl = "https://i.ibb.co/LY0hMGq/person-icon-red-3-edit.jpg",
   isAdmin = false,
 }) => {
   try {

@@ -6,6 +6,7 @@
 
 #newPostBox {
     display:flex;
+    flex-direction: column;
     justify-content: center;
     border-radius: 5px;
     box-shadow: 1px 1px 4px 1px #161A1D;
@@ -27,6 +28,11 @@
   display: flex;
 }
 
+#user-welcome {
+  font-family: 'Poppins', sans-serif;
+  margin-left: 12px;
+}
+
 #new-post-form {
   display: flex;
   flex-direction: column;
@@ -40,16 +46,17 @@
 }
 
 #newPostTextBox{
-    width: 95%;
+    width: 97.5%;
     height: 96px;
     padding: 12px 8px;
     border: none;
     outline: none;
-    margin: 12px 8px;
+    margin: 12px 0px;
     font-size: 16px;
     border-radius: 12px;
     background-color: #F5F3F4;
 }
+
 
 #newPostTextBox::placeholder{
   font-family: 'Poppins', sans-serif;
@@ -100,5 +107,5 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    width: 95%;
+    width: 97.5%;
 }
