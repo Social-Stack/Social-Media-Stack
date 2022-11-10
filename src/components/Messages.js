@@ -94,14 +94,15 @@ const Messages = () => {
           {!result.length ? (
             <h2 id="no-message">You have no messages</h2>
           ) : (
-            <>
+            <div id="message-body">
               <div id="friend-header">
                 <img className="friend" src={friendInfo.picUrl} />
-                <span>{friendInfo.firstname}</span>{" "}
-                <span>{friendInfo.lastname}</span>
+                <strong>
+                  <span>{friendInfo.firstname} </span>
+                  <span>{friendInfo.lastname}</span>
+                </strong>
               </div>
               <div id="message-container">
-                <div id="friend-header"></div>
                 <Conversation
                   friendId={friendId}
                   selected={selected}
@@ -113,7 +114,7 @@ const Messages = () => {
                   setLoadingTrigger={setLoadingTrigger}
                 />
               </div>
-            </>
+            </div>
           )}
         </>
         {/* <div id="message-container">
