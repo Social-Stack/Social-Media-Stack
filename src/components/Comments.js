@@ -97,7 +97,7 @@ const Comments = ({
                     id="comment-edit-form">
                       <textarea
                       id="comment-edit-input"
-                      value={editText} 
+                      value={editText}
                       onChange={(e) => setEditText(e.target.value)}
                       onKeyDown={(e) => handleKeyDown(e, comment.id)}
                       >
@@ -109,7 +109,7 @@ const Comments = ({
                   <div id="comment-text-with-warning">
                     <div id="comment-text">
                       <h5>{comment.authorName} {comment.lastname}</h5>
-                      <main>{comment.text}</main>
+                      <main id="comment-main">{comment.text}</main>
                     </div>
                     <div id="comment-delete-confirm-wrapper">
                       <div id="delete-warning">Are you sure?</div>
@@ -123,7 +123,7 @@ const Comments = ({
                   <>
                     <div id="comment-text">
                       <h5>{comment.authorName} {comment.lastname}</h5>
-                      <main>{comment.text}</main>
+                      <main id="comment-main">{comment.text}</main>
                     </div>
                   </>
                 }
