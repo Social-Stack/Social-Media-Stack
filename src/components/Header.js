@@ -23,7 +23,7 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
 
   return (
     <div className="header">
-      <Link id="logo" to="/newsfeed">
+      <Link id="logo" to={loggedIn ? "/newsfeed" : "/"}>
         Social Stack
       </Link>
       {loggedIn ? (
