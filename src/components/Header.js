@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../stylesheets/Header.css";
+import NotificationIcon from "./NotificationIcon";
 
-const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
+const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken, token }) => {
   // const navigate = useNavigate();
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const logout = () => {
@@ -32,14 +33,10 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
             <Link to={`/profile/${username}`}>
               <img id="profile-pic" src={picture} />
             </Link>
-            {/* <Link to="/profile">Profile</Link> | {""} */}
-            {/* {isAdmin ? <Link to="admin">Admin | {""}</Link> : null} */}
-            {/* <div> */}
-            {/* <img id="profile-pic" src={require(`./Assets/defaultPic.png`)} /> offline mode for Fred in the sky */}
-            {/* </div> */}
             <Link to="/messages">Messages </Link>
+            <Link to="/notifications"><NotificationIcon token={token}/></Link>
             <Link to="/login" onClick={logout}>
-              Logout {username}
+              Logout
             </Link>
           </nav>
         </div>

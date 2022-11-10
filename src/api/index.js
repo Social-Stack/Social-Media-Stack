@@ -365,6 +365,21 @@ export const getAllMyNotifications = async (token) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+      }
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getUnseenNotifications = async (token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/notifications/unseen`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
     const result = await response.json();
@@ -374,8 +389,7 @@ export const getAllMyNotifications = async (token) => {
   }
 };
 
-
-export const seenNotification = async (token, notiId) => {
+export const seeNotification = async (token, notiId) => {
   try {
     const response = await fetch(`${BASE_URL}/notifications/${notiId}`, {
       method:"POST",
@@ -390,3 +404,4 @@ export const seenNotification = async (token, notiId) => {
     console.error(error);
   }
 };
+
