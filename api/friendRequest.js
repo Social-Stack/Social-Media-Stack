@@ -1,5 +1,7 @@
 const express = require("express");
 const { requestFriend } = require("../db/friendRequests");
+const { requireUser } = require("./utils");
+
 const friendRequestsRouter = express.Router();
 
 friendRequestsRouter.post("/new/:id", requireUser, async(req, res, next) => {
