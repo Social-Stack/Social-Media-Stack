@@ -78,7 +78,7 @@ const createTablePosts = async () => {
             CREATE TABLE posts(
                id SERIAL PRIMARY KEY,
                "userId" INTEGER REFERENCES users(id),
-               text VARCHAR(255) NOT NULL,
+               text VARCHAR(1020) NOT NULL,
                "isPublic" BOOLEAN DEFAULT false NOT NULL,
                time TIMESTAMPTZ NOT NULL,
                "updateTime" TIMESTAMPTZ DEFAULT null
@@ -112,7 +112,7 @@ const createTableComments = async () => {
         "authorId" INTEGER REFERENCES users(id),
         "postId" INTEGER REFERENCES posts(id),
         time TIMESTAMPTZ NOT NULL,
-        text VARCHAR(1200) NOT NULL,
+        text VARCHAR(2040) NOT NULL,
         "updateTime" TIMESTAMPTZ DEFAULT null
       );
     `);
@@ -624,7 +624,7 @@ const createInitialCommentUpvotes = async () => {
 
     const seedCommentUpvote7 = {
       commentId: 3,
-      userId: 9,
+      userId: 3,
     };
 
     const seedCommentUpvote8 = {
