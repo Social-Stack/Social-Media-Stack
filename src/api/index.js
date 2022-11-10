@@ -353,6 +353,22 @@ export const deleteMessage = async (token, messageId) => {
       },
     });
     const result = await response.json();
+    console.log("DELETE RESULT", result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getAFriend = async (token, friendId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/${friendId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
     return result;
   } catch (error) {
     console.error(error);

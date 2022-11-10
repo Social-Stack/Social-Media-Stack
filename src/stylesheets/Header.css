@@ -6,24 +6,24 @@
   border-radius: 50%;
   margin-right: 5px;
 }
-
-.header {
+/*  */
+/* .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: rgb(240, 3, 3); */
-/* height: 10%; */
-/* text-decoration: none; */
-/* } */
-
-/* #header-links {
+  background-color: #a4161a; 
+height: 10%;
+text-decoration: none;
+} */
+/*
+#header-links {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   color: black;
   font-family: "Barlow", sans-serif;
 }
-
+ 
 #header-links:last-child {
   padding-right: 10px;
 }

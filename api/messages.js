@@ -72,7 +72,7 @@ messagesRouter.delete("/:messageId", requireUser, async (req, res, next) => {
         message: "That message does not exist",
       });
     } else if (
-      (messageToDelete && messageToDelete[0].id === userId) ||
+      (messageToDelete && messageToDelete[0].sendingUserId === userId) ||
       isAdmin
     ) {
       const deletedMessage = await deleteMessageById(messageId);

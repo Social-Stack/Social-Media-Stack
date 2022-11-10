@@ -191,6 +191,17 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
   }
 });
 
+usersRouter.get("/:friendId", requireUser, async (req, res, next) => {
+  const { friendId: id } = req.params;
+  console.log("REQ.PARAMS FRIEND ID", id);
+  try {
+    const user = await getUserById(id);
+    res.send(user);
+  } catch ({ error, message }) {
+    next({ error, message });
+  }
+});
+
 usersRouter.get("/profile/:username", requireUser, async (req, res, next) => {
   const { username } = req.params;
   const { id } = req.user;

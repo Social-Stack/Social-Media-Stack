@@ -101,6 +101,7 @@ const App = () => {
     </div>
   );
 };
+
 library.add(fab, faTrash, faMessage, faArrowUp);
 root.render(
   <Router>
