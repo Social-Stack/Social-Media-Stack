@@ -90,8 +90,8 @@ export const getCommentsByPostId = async (postId, token) => {
     const response = await fetch(`${BASE_URL}/comments/${postId}`, {
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
     const result = await response.json();
     return result;
@@ -131,14 +131,14 @@ export const editComment = async (commentId, text, token) => {
       body: JSON.stringify({
         text,
         time: new Date(),
-      })
+      }),
     });
     const result = response.json();
     return result;
   } catch (error) {
     return error;
   }
-}
+};
 
 export const removeComment = async (commentId, token) => {
   try {
@@ -150,7 +150,7 @@ export const removeComment = async (commentId, token) => {
       },
     });
     const result = await response.json();
-    console.log("RESULT DEL", result)
+    console.log("RESULT DEL", result);
     return result;
   } catch (error) {
     console.error(error);
@@ -163,18 +163,18 @@ export const addUpvoteToComment = async (commentId, token) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        id: commentId
-      })
+        id: commentId,
+      }),
     });
     const result = response.json();
     return result;
   } catch (error) {
     return error;
   }
-}
+};
 
 export const removeUpvoteFromComment = async (commentId, token) => {
   try {
@@ -182,11 +182,11 @@ export const removeUpvoteFromComment = async (commentId, token) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        id: commentId
-      })
+        id: commentId,
+      }),
     });
     const result = response.json();
     return result;
@@ -283,6 +283,22 @@ export const deleteMessage = async (token, messageId) => {
   try {
     const response = await fetch(`${BASE_URL}/messages/${messageId}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    console.log("DELETE RESULT", result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getAFriend = async (token, friendId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/${friendId}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

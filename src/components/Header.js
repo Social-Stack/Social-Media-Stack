@@ -68,8 +68,9 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background-color: #a4161a;
             /* background-color: rgb(240, 3, 3); */
-            height: 10%;
+            height: 8%;
             /* text-decoration: none; */
           }
           
@@ -77,8 +78,9 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            color: black;
+            // color: #f5f3f4; 
             font-family: "Barlow", sans-serif;
+            
           }
           
           #header-links:last-child {
@@ -87,17 +89,20 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
           
           #header-links a {
             text-decoration: none;
-            color: black;
+            color: #f5f3f4;
             padding: 0px 5px;
           }
           
           #logo {
             padding-left: 10px;
             text-decoration: none;
-            color: black;
+            color: #FFFFFF;
             font-family: "Poppins", sans-serif;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 30px;
+            // background: -webkit-linear-gradient(120deg, #FFFFFF, #333, #FFFFFF, #333);
+            // -webkit-background-clip: text;
+            // -webkit-text-fill-color: transparent;
           }
           
           .hamburger {

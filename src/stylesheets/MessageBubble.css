@@ -1,19 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
 
-/* .single-message-expanded{
+.single-message-expanded{
    height: auto;
    max-height: 100px;
-} */
+}
 
-/* .single-message-collapsed{
+.single-message-collapsed{
     max-height: 0;
     overflow: hidden;
-} */
+}
 
 .single-message-time{
-    font-size: 12px;
-    /* padding-bottom: 3px; */
+    font-size: 8px;
+    padding-bottom: 3px;
 }
 
 textarea {
@@ -29,25 +29,7 @@ textarea {
 }
 #outer{
     display: flex;
-    border-style:groove;
-    border-radius: 6px;
-
-}
-
-#chat-container{
-    display:flex;
     justify-content: center;
-    height:80%;
-    width: 80%;
-    margin:auto;
-    margin-top: 20px;
-}
-
-#message-container{
-    display: flex;
-    flex-direction: column-reverse;
-    overflow: auto;
-    width: 800px;
 }
 
 #chatbox{
@@ -56,23 +38,17 @@ textarea {
 	width:300px;
 	background:#fff;
     padding:10px;
-	overflow: auto; 
-	height:auto;
-    /* border-style:groove; */
-    border-right: solid 1px black;
+	border-radius:6px;
+	overflow: auto;    
+	height:484px;
+    border-style:groove;
 }
 
-#outer h2{
+#chatbox h2{
     text-align: center;
    font-style: italic;
    color: #D3D3D3
-}
 
-#no-message{
-    display: flex;  
-    justify-content: center;
-    align-items: center;
-    width: 800px;
 }
 
 .friend{
@@ -130,21 +106,19 @@ textarea {
 .bubble{	
     display:flex;
 	background:#f0f4f7;
-	font-size:18px;
-	/* font-weight:500; */
+	font-size:13px;
+	font-weight:600;
 	padding:12px 5px;
     margin-top: 10px;
     margin-bottom: 5px;
 	color:#8495a3;
 	position:relative;
-    /* max-width: 80%; */
     width:100%;
 }
 
 .message{
     max-width: 80%;
-    padding-left: 10px;
-    padding-right: 10px;
+
 
 }
 
@@ -188,7 +162,6 @@ textarea {
     color: grey;
     font-size: x-small;
     margin-right: 5px;
-    
 }
 
 .fa-trash:hover{
@@ -225,4 +198,4 @@ textarea {
 #right{
     display: flex;
     justify-content: flex-end;
-}
+} */

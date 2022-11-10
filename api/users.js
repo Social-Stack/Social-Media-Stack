@@ -166,7 +166,7 @@ usersRouter.patch("/:username/edit", requireUser, async (req, res, next) => {
           delete userInputs.confirmPassword;
         }
         await updateUser(userInputs);
-        delete userInputs.id
+        delete userInputs.id;
         res.send({
           userInputs,
           success: `Successfully updated ${username}'s profile!`,
@@ -182,6 +182,17 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
   const { username } = req.user;
   try {
     const user = await getUserByUsername(username);
+    res.send(user);
+  } catch ({ error, message }) {
+    next({ error, message });
+  }
+});
+
+usersRouter.get("/:friendId", requireUser, async (req, res, next) => {
+  const { friendId: id } = req.params;
+  console.log("REQ.PARAMS FRIEND ID", id);
+  try {
+    const user = await getUserById(id);
     res.send(user);
   } catch ({ error, message }) {
     next({ error, message });
