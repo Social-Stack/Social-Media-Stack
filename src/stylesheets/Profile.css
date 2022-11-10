@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow&family=Poppins:wght@600&display=swap");
+
+#profile-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+#profile-posts-container {
+  width: 33%;
+  margin-left: 15px;
+}
+
+#profile-main-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#friends-profile-container {
+  display: flex;
+  justify-content: center;
+  max-height: 300px;
+  background-color: white;
+  width: 25%;
+  border-radius: 5px;
+  margin-top: 10px;
+  box-shadow: 1px 1px 4px 1px #161a1d;
+}
+
+#friend-wrapper {
+  display: flex;
+  padding-top: 45px;
+  padding-left: 25px;
+  padding-right: 25px;
+  max-height: 110px;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+}
+
+#friend-wrapper img {
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+#newsfeed-upper-wrapper {
+  display: flex;
+}
+
+#user-image {
+  border-radius: 100%;
+}
+
+#user-fullname {
+  margin-left: 20px;
+}
+
+#friends-btn {
+  background-color: #f5f3f4;
+  border: none;
+  border-bottom: #e5383b;
+}
+
+#profile-info {
+  display: flex;
+  align-items: center;
+}

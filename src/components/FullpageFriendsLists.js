@@ -34,13 +34,6 @@ const FullpageFriendsLists = () => {
                     {friend.firstname} {friend.lastname}
                   </Link>
                 </h3>
-                <button
-                  onClick={() => {
-                    console.log(friend);
-                  }}
-                >
-                  Helper
-                </button>
               </div>
             );
           })}
