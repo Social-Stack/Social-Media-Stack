@@ -117,25 +117,6 @@ const Messages = () => {
             </div>
           )}
         </>
-        {/* <div id="message-container">
-          {!result.length ? (
-            <h2 id="no-message">You have no messages</h2>
-          ) : (
-            <>
-              <div id="friend-header"></div>
-              <Conversation
-                friendId={friendId}
-                selected={selected}
-                admin={admin}
-                myId={myId}
-                text={text}
-                setText={setText}
-                loadingTrigger={loadingTrigger}
-                setLoadingTrigger={setLoadingTrigger}
-              />
-            </>
-          )}
-        </div> */}
       </div>
     </div>
   );

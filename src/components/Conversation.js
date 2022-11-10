@@ -3,7 +3,6 @@ import { getFriendMessages, deleteMessage, sendMessage } from "../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import timeAgo from "node-time-ago";
 
-//IGNORE EVERYTHING IN THIS FILE, IT HASN'T BEEN IMPLEMENTED YET
 const Conversation = (props) => {
   const token = localStorage.getItem("token");
   const {
