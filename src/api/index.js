@@ -320,7 +320,7 @@ export const getMyFriends = async (token, userId) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    const result = response.json();
+    const result = await response.json();
     return result;
   } catch (error) {
     console.error(error);
