@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { getUnseenNotifications } from "../api";
+import { getUnseenNotifications } from "../../api";
 
 
 const NotificationIcon = ({token}) => {

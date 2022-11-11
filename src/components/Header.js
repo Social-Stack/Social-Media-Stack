@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../stylesheets/Header.css";
-import NotificationIcon from "./NotificationIcon";
+import NotificationIcon from "./Notifications/NotificationIcon";
 
 const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken, token }) => {
   // const navigate = useNavigate();
