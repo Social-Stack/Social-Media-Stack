@@ -342,6 +342,21 @@ export const requestFriend = async (token, requestedFriendId) => {
     console.error(error);
   }
 }
+export const acceptFriend = async (token, newFriendId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/friendsLists/${newFriendId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export const deleteMessage = async (token, messageId) => {
   try {

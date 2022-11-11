@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getAllMyNotifications } from "../api";
-import NotificationSingleItem from "./NotificationSingleItem";
+import { getAllMyNotifications } from "../../api";
+import NotificationItemHandler from "./NotificationItemHandler";
 
 
 const NotificationPage = ({token}) => {
@@ -23,8 +23,9 @@ const NotificationPage = ({token}) => {
             {notifications.length ? 
             notifications.map((notification) => {
                 return (
-                    <NotificationSingleItem
+                    <NotificationItemHandler
                     key={notification.id}
+                    token={token}
                     notification={notification}/>
                 )
             })
