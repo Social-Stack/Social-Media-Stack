@@ -56,10 +56,10 @@ const Messages = () => {
           <h1 id="messages-heading">Chats</h1>
           <br />
           <div>
-            <SearchBar />
+            <SearchBar myId={myId} setFriendInfo={setFriendInfo} />
           </div>
           <br />
-          {!result.length ? (
+          {!result.length || friendInfo ? (
             <h2>Search for a friend and start chatting!</h2>
           ) : (
             result.map((groupedMessage, i) => {
@@ -110,6 +110,7 @@ const Messages = () => {
               </div>
               <div id="message-container">
                 <Conversation
+                  friendInfo={friendInfo}
                   friendId={friendId}
                   selected={selected}
                   admin={admin}

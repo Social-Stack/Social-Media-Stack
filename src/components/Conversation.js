@@ -6,6 +6,7 @@ import timeAgo from "node-time-ago";
 const Conversation = (props) => {
   const token = localStorage.getItem("token");
   const {
+    friendInfo,
     friendId,
     selected,
     admin,
@@ -88,7 +89,7 @@ const Conversation = (props) => {
               }}
             />
             <button
-              disabled={!text || !friendId}
+              disabled={!text || !friendId || !friendInfo}
               onClick={() => handleSend(friendId)}
             >
               <FontAwesomeIcon icon="fa-solid fa-message" />

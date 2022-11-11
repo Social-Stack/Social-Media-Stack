@@ -314,6 +314,7 @@ export const sendMessage = async (recipientUserId, time, text, token) => {
 
 export const getMyFriends = async (token, userId) => {
   try {
+    console.log("USERID", userId);
     const response = await fetch(`${BASE_URL}/friendsLists/${userId}`, {
       headers: {
         "Content-Type": "application/json",
@@ -329,19 +330,22 @@ export const getMyFriends = async (token, userId) => {
 
 export const requestFriend = async (token, requestedFriendId) => {
   try {
-    const response = await fetch(`${BASE_URL}/friendRequests/new/${requestedFriendId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+    const response = await fetch(
+      `${BASE_URL}/friendRequests/new/${requestedFriendId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
-    });
+    );
     const result = await response.json();
     return result;
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 export const deleteMessage = async (token, messageId) => {
   try {
@@ -381,7 +385,7 @@ export const getAllMyNotifications = async (token) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-      }
+      },
     });
     const result = await response.json();
     return result;
@@ -408,7 +412,7 @@ export const getUnseenNotifications = async (token) => {
 export const seeNotification = async (token, notiId) => {
   try {
     const response = await fetch(`${BASE_URL}/notifications/${notiId}`, {
-      method:"POST",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -420,4 +424,3 @@ export const seeNotification = async (token, notiId) => {
     console.error(error);
   }
 };
-
