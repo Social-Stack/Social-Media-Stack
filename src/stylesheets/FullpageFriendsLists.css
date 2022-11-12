@@ -3,12 +3,14 @@
 #friendslists-page-title {
   font-family: "Roboto", sans-serif;
   text-align: center;
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 
 #friends-container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 #friend-list {
   background-color: white;
@@ -17,6 +19,7 @@
   display: flex;
   width: 40%;
   padding: 20px;
+  margin-bottom: 20px;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
