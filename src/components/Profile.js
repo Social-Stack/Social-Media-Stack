@@ -21,35 +21,58 @@ const Profile = () => {
       setUserFriends(userProfile.friendList);
     };
     getUserInfo();
-  }, [loadingTrigger]);
+  }, [loadingTrigger, username]);
 
   return (
     <div id="profile-container">
       <div id="userinfo-container">
         <div id="profile-info">
           <img id="user-image" height="150px" src={userInfo.picUrl} />
-          <h1 id="user-fullname">
-            {userInfo.firstname} {userInfo.lastname}
-          </h1>
-          <p>{String(userFriends.length)} friends</p>
+          <div id="user">
+            <h1 id="user-fullname">
+              {userInfo.firstname} {userInfo.lastname}
+            </h1>
+            <p id="friend-num">{String(userFriends.length)} friends</p>
+          </div>
         </div>
-        <Link to={`/friendslists/${userInfo.username}`}>
+        <Link id="link-friends" to={`/friendslists/${userInfo.username}`}>
           <button id="friends-btn">friends</button>
         </Link>
       </div>
       <div id="profile-main-wrapper">
-        <div id="friends-profile-container">
-          {userFriends.map((friend, i) => {
-            return (
-              <div key={i} id="friend-wrapper">
-                <img height="80px" src={friend.picUrl} />
-                <h3>
-                  {friend.firstname} {friend.lastname}
-                </h3>
-              </div>
-            );
-          })}
-        </div>
+        {userFriends.length === 1 ? (
+          <div id="friends-profile-container-single">
+            <h3 id="friends-profile-title">Friends</h3>
+            {userFriends.map((friend, i) => {
+              return (
+                <div key={i} id="friend-wrapper-single">
+                  <Link to={`/profile/${friend.username}`}>
+                    <img height="80px" src={friend.picUrl} />
+                  </Link>
+                  <h3>
+                    {friend.firstname} {friend.lastname}
+                  </h3>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div id="friends-profile-container">
+            <h3 id="friends-profile-title">Friends</h3>
+            {userFriends.map((friend, i) => {
+              return (
+                <div key={i} id="friend-wrapper">
+                  <Link to={`/profile/${friend.username}`}>
+                    <img height="80px" src={friend.picUrl} />
+                  </Link>
+                  <h3>
+                    {friend.firstname} {friend.lastname}
+                  </h3>
+                </div>
+              );
+            })}
+          </div>
+        )}
         <div id="wrapper-posts">
           <NewPost
             token={token}
