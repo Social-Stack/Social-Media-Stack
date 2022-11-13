@@ -342,16 +342,20 @@ export const requestFriend = async (token, requestedFriendId) => {
     console.error(error);
   }
 }
-export const acceptFriend = async (token, newFriendId) => {
+export const acceptFriend = async (token, newFriendId, notiId) => {
   try {
     const response = await fetch(`${BASE_URL}/friendsLists/${newFriendId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-      }
+      },
+      body: JSON.stringify({
+        notiId
+      }),
     });
     const result = await response.json();
+    console.log(result)
     return result;
   } catch (error) {
     console.error(error);

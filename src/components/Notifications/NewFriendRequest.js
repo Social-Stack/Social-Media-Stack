@@ -1,11 +1,14 @@
 import React from "react";
 import { acceptFriend } from "../../api";
 
-const NewFriendRequest = ({token, notification}) => {
+const NewFriendRequest = ({token, notification, notiTrigger, setNotiTrigger}) => {
 
 
     const acceptFriendButton = async() => {
-        await acceptFriend(token, newFriendId)
+        const friend = await acceptFriend(token, notification.miscId, notification.id)
+        if(friend.success){
+            setNotiTrigger(!notiTrigger)
+        }
     }
 
     const tempStyle = {

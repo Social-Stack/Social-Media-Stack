@@ -1,6 +1,6 @@
 const client = require("./client");
 const { addFriends } = require("./friendsLists");
-const { createFriendReqNoti } = require("./notifications");
+const { createFriendReqNoti, removeNotiById } = require("./notifications");
 const { getUserById } = require("./users");
 
 const requestFriend = async (id1, id2) => {
