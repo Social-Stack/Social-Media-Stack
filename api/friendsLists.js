@@ -8,6 +8,7 @@ const {
   getPostsByUserId,
   getUserById,
 } = require("../db");
+const { removeNotiById } = require("../db/notifications");
 
 const { requireUser } = require("./utils");
 
@@ -15,10 +16,12 @@ friendsRouter.post("/:friendId", requireUser, async (req, res, next) => {
   try {
     const { friendId } = req.params;
     const { id: userId } = req.user;
+    const { notiId } = req.body;
     const validFriend = await getUserById(friendId);
 
     if (validFriend) {
       const newFriend = await addFriends(userId, friendId);
+      await removeNotiById(notiId);
 
       if (typeof newFriend === "number") {
         res.send({

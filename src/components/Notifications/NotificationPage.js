@@ -5,6 +5,7 @@ import NotificationItemHandler from "./NotificationItemHandler";
 
 const NotificationPage = ({token}) => {
     const [notifications, setNotifications] = useState([]);
+    const [notiTrigger, setNotiTrigger] = useState(false);
 
 
     const fetchNotifications = async() => {
@@ -15,7 +16,7 @@ const NotificationPage = ({token}) => {
 
     useEffect(() => {
         fetchNotifications();
-    },[])
+    },[notiTrigger])
 
     return (
         <div>
@@ -24,6 +25,8 @@ const NotificationPage = ({token}) => {
             notifications.map((notification) => {
                 return (
                     <NotificationItemHandler
+                    setNotiTrigger={setNotiTrigger}
+                    notiTrigger={notiTrigger}
                     key={notification.id}
                     token={token}
                     notification={notification}/>
