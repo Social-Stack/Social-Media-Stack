@@ -1,15 +1,20 @@
 import React from "react";
-import { acceptFriend } from "../../api";
+import { acceptFriend, denyFriend } from "../../api";
 
 const NewFriendRequest = ({token, notification, notiTrigger, setNotiTrigger}) => {
 
 
     const acceptFriendButton = async() => {
-        const friend = await acceptFriend(token, notification.miscId, notification.id)
+        const friend = await acceptFriend(token, notification.miscId, notification.id);
         if(friend.success){
-            setNotiTrigger(!notiTrigger)
+            setNotiTrigger(!notiTrigger);
         }
-    }
+    };
+
+    const denyFriendButton = async() => {
+        const denial = await denyFriend(token, notification.miscId, notification.id);
+        setNotiTrigger(!notiTrigger);
+    };
 
     const tempStyle = {
         height:'50px'
@@ -20,7 +25,7 @@ const NewFriendRequest = ({token, notification, notiTrigger, setNotiTrigger}) =>
             <button onClick={() => {
                 acceptFriendButton()
             }}>Accept</button>
-            <button>Delete</button>
+            <button onClick={()=>{denyFriendButton()}}>Delete</button>
         </div>
     )
 }

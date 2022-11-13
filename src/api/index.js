@@ -355,8 +355,26 @@ export const acceptFriend = async (token, newFriendId, notiId) => {
       }),
     });
     const result = await response.json();
-    console.log(result)
     return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+export const denyFriend = async (token, requestedFriendId, notiId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/friendRequests/remove`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        requestedFriendId,
+        notiId
+      }),
+    });
+    const result = await response.json();
+    return result; 
   } catch (error) {
     console.error(error);
   }
