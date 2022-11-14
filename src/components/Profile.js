@@ -10,6 +10,7 @@ const Profile = () => {
   const [userPosts, setUserPosts] = useState([]);
   const [userFriends, setUserFriends] = useState([]);
   const [loadingTrigger, setLoadingTrigger] = useState(true);
+  const [reloadPostTrigger, setReloadPostTrigger] = useState(false);
   const token = localStorage.getItem("token");
 
   const { username } = useParams();
@@ -21,6 +22,7 @@ const Profile = () => {
       setUserFriends(userProfile.friendList);
     };
     getUserInfo();
+    setReloadPostTrigger(!reloadPostTrigger);
   }, [loadingTrigger, username]);
 
   return (
@@ -82,7 +84,7 @@ const Profile = () => {
           <div id="profile-posts-container">
             {userPosts[0] &&
               userPosts.map((post, i) => {
-                return <SinglePost key={i} post={post} token={token} />;
+                return <SinglePost key={i} post={post} token={token} reloadPostTrigger={reloadPostTrigger}/>;
               })}
           </div>
         </div>
