@@ -13,7 +13,7 @@ const NotificationPage = ({token}) => {
     }
 
     const seeAllNotis = async() => {
-        const result = await seeMyNotifications(token);
+        await seeMyNotifications(token);
     }
 
     useEffect(() => {
