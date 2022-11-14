@@ -33,6 +33,21 @@ const seenByNotiId = async(notiId) => {
     }
 };
 
+const seenAllByUserId = async(userId) => {
+    try {
+        const { rows: notification } = await client.query(`
+        UPDATE notifications
+        SET seen = true
+        WHERE "userId"=${userId}
+        RETURNING *;
+        `);
+        return notification;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 const getNotisByUserId = async(userId) => {
     try {
         const { rows: notis } = await client.query(`
@@ -78,6 +93,7 @@ const removeNotiById = async (id) => {
 module.exports = {
     createFriendReqNoti,
     seenByNotiId,
+    seenAllByUserId,
     getNotisByUserId,
     getUnseenNotisByUserId,
     removeNotiById
