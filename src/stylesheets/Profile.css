@@ -21,7 +21,8 @@
 
 #link-friends {
   display: flex;
-  padding-left: 20px;
+  margin-left: 20px;
+  width: fit-content;
   justify-content: flex-start;
   text-decoration: none;
 }
