@@ -1,5 +1,5 @@
 const express = require("express");
-const { getNotisByUserId, getUnseenNotisByUserId } = require("../db/notifications");
+const { getNotisByUserId, getUnseenNotisByUserId, seenAllByUserId } = require("../db/notifications");
 const { requireUser } = require("./utils");
 const notificationsRouter = express.Router();
 
@@ -33,6 +33,16 @@ notificationsRouter.post("/seen/:id", requireUser, async (req, res, next) => {
     } catch ({ error, message }) {
     next({ error, message });
   }
+});
+
+notificationsRouter.post("/seeall", requireUser, async (req, res, next) => {
+  try {
+    const { id } = req.user;
+    const notification = await seenAllByUserId(id);
+    res.send(notification);
+  } catch ({ error, message }) {
+  next({ error, message });
+}
 });
 
 module.exports = notificationsRouter;

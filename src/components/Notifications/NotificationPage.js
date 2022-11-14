@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllMyNotifications } from "../../api";
+import { getAllMyNotifications, seeMyNotifications } from "../../api";
 import NotificationItemHandler from "./NotificationItemHandler";
 
 
@@ -7,15 +7,18 @@ const NotificationPage = ({token}) => {
     const [notifications, setNotifications] = useState([]);
     const [notiTrigger, setNotiTrigger] = useState(false);
 
-
     const fetchNotifications = async() => {
         const notis = await getAllMyNotifications(token);
-        console.log('setting notifications', notis)
         setNotifications(notis);
+    }
+
+    const seeAllNotis = async() => {
+        await seeMyNotifications(token);
     }
 
     useEffect(() => {
         fetchNotifications();
+        setTimeout(seeAllNotis, 500);
     },[notiTrigger])
 
     return (
