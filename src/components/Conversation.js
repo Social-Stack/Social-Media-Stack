@@ -6,6 +6,7 @@ import timeAgo from "node-time-ago";
 const Conversation = (props) => {
   const token = localStorage.getItem("token");
   const {
+    friendInfo,
     friendId,
     selected,
     admin,
@@ -14,8 +15,10 @@ const Conversation = (props) => {
     setText,
     loadingTrigger,
     setLoadingTrigger,
+    conversation,
+    setConversation,
   } = props;
-  const [conversation, setConversation] = useState([]);
+  //   const [conversation, setConversation] = useState([]);
 
   useEffect(() => {
     if (friendId) {
@@ -27,8 +30,14 @@ const Conversation = (props) => {
     }
   }, [friendId, loadingTrigger]);
 
-  const handleSend = async (friendId) => {
-    await sendMessage(friendId, new Date(), text, token);
+  const handleSend = async (friendId, friendInfo) => {
+    if (friendId && friendInfo) {
+      await sendMessage(friendId, new Date(), text, token);
+    } else if (friendId) {
+      await sendMessage(friendId, new Date(), text, token);
+    } else if (friendInfo) {
+      await sendMessage(friendInfo.id, new Date(), text, token);
+    }
     setText("");
     setLoadingTrigger(!loadingTrigger);
   };
@@ -88,8 +97,8 @@ const Conversation = (props) => {
               }}
             />
             <button
-              disabled={!text || !friendId}
-              onClick={() => handleSend(friendId)}
+              disabled={!text || !friendId || !friendInfo}
+              onClick={() => handleSend(friendId, friendInfo)}
             >
               <FontAwesomeIcon icon="fa-solid fa-message" />
             </button>
