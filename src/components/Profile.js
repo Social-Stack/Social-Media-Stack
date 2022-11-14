@@ -20,9 +20,9 @@ const Profile = () => {
       setUserInfo(userProfile.user);
       setUserPosts(userProfile.posts);
       setUserFriends(userProfile.friendList);
+      setReloadPostTrigger(!reloadPostTrigger);
     };
     getUserInfo();
-    setReloadPostTrigger(!reloadPostTrigger);
   }, [loadingTrigger, username]);
 
   return (
