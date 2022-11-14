@@ -67,7 +67,7 @@ const getCommentsByPostId = async(postId, userId = 0) => {
     }
     const { rows: comments } = await client.query(`
       SELECT C.*, 
-        U.firstname AS "authorName", U.lastname, U."picUrl",
+        U.firstname AS "authorName", U.lastname, U.username, U."picUrl",
         (SELECT COUNT(*)::int
         FROM comment_upvotes CU
         WHERE C.id = CU."commentId") AS upvotes,

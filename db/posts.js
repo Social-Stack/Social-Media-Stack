@@ -22,7 +22,7 @@ const createPost = async ({ userId, text, time, isPublic = false }) => {
 const getPostsByUserId = async (id) => {
   try {
     const { rows: posts } = await client.query(`
-    SELECT posts.*, U.firstname, U.lastname, U."picUrl" as "profilePic"
+    SELECT posts.*, U.firstname, U.lastname, U.username, U."picUrl" as "profilePic"
     FROM posts
     INNER JOIN users U
     ON U.id = posts."userId"
@@ -48,7 +48,7 @@ const getPostsByUsername = async (username) => {
     `);
     console.log("id", id);
     const { rows: posts } = await client.query(`
-    SELECT posts.*, U.firstname, U.lastname, U."picUrl" as "profilePic"
+    SELECT posts.*, U.firstname, U.lastname, U.username, U."picUrl" as "profilePic"
     FROM posts
     INNER JOIN users U
     ON U.id = posts."userId"
@@ -66,7 +66,7 @@ const getPostById = async (id) => {
     const {
       rows: [post],
     } = await client.query(`
-    SELECT posts.*, U.firstname, U.lastname, U."picUrl" as "profilePic"
+    SELECT posts.*, U.firstname, U.lastname, U.username, U."picUrl" as "profilePic"
     FROM posts
     INNER JOIN users U
     ON U.id = posts."userId"
@@ -82,7 +82,7 @@ const getPostById = async (id) => {
 const getAllPublicPosts = async () => {
   try {
     const { rows: posts } = await client.query(`
-    SELECT posts.*, U.firstname, U.lastname, U."picUrl" as "profilePic"
+    SELECT posts.*, U.firstname, U.lastname, U.username, U."picUrl" as "profilePic"
     FROM posts
     INNER JOIN users U
     ON U.id = posts."userId"
