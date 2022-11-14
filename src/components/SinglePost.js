@@ -4,7 +4,7 @@ import timeAgo from "node-time-ago"
 import "../stylesheets/SinglePost.css"
 
 
-const SinglePost = ({post, token}) => {
+const SinglePost = ({post, token, reloadPostTrigger}) => {
     // const [comments, setComments] = useState([]);
     const [reloadComTrigger, setReloadComTrigger] = useState(false);
 
@@ -17,6 +17,9 @@ const SinglePost = ({post, token}) => {
     // useEffect(() => {
     //     loadComments();
     // },[reloadComTrigger])
+    useEffect(() => {
+      setReloadComTrigger(!reloadComTrigger);
+    },[reloadPostTrigger])
 
     return (
         <div id="post-wrapper">
