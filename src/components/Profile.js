@@ -45,6 +45,7 @@ const Profile = () => {
         {userFriends.length === 1 ? (
           <div id="friends-profile-container-single">
             <h3 id="friends-profile-title">Friends</h3>
+            <div>
             {userFriends.map((friend, i) => {
               return (
                 <div key={i} id="friend-wrapper-single">
@@ -57,10 +58,12 @@ const Profile = () => {
                 </div>
               );
             })}
+            </div>
           </div>
         ) : (
           <div id="friends-profile-container">
-            <h3 id="friends-profile-title">Friends</h3>
+              <h3 id="friends-profile-title">Friends</h3>
+              <div>
             {userFriends.map((friend, i) => {
               return (
                 <div key={i} id="friend-wrapper">
@@ -73,6 +76,7 @@ const Profile = () => {
                 </div>
               );
             })}
+            </div>
           </div>
         )}
         <div id="wrapper-posts">
