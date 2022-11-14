@@ -2,6 +2,7 @@ import React,{useEffect, useState} from "react";
 import { NewComment, Comments } from "./";
 import timeAgo from "node-time-ago"
 import "../stylesheets/SinglePost.css"
+import { Link } from "react-router-dom";
 
 
 const SinglePost = ({post, token, reloadPostTrigger}) => {
@@ -27,7 +28,7 @@ const SinglePost = ({post, token, reloadPostTrigger}) => {
               <div id="post-author-info">
                 <img id="post-author-profile-pic" src={post.profilePic}/>
                 <div id="name-time-wrapper">
-                  <h4 id="post-author-name">{post.firstname} {post.lastname}</h4>
+                <Link to={`/profile/${post.username}`}><h4 id="post-author-name">{post.firstname} {post.lastname}</h4></Link>
                   <div id="post-time">{timeAgo(post.time)}</div>
                 </div>
               </div>

@@ -12,6 +12,8 @@ import {
 import "../stylesheets/Comments.css";
 import timeAgo from "node-time-ago"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
+
 
 const Comments = ({
   postId,
@@ -122,7 +124,7 @@ const Comments = ({
                   :
                   <>
                     <div id="comment-text">
-                      <h5>{comment.authorName} {comment.lastname}</h5>
+                    <Link to={`/profile/${comment.username}`}><h5>{comment.authorName} {comment.lastname}</h5></Link>
                       <main id="comment-main">{comment.text}</main>
                     </div>
                   </>
