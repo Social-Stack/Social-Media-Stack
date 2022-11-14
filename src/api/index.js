@@ -345,7 +345,46 @@ export const requestFriend = async (token, requestedFriendId) => {
   } catch (error) {
     console.error(error);
   }
-};
+}
+
+export const acceptFriend = async (token, newFriendId, notiId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/friendsLists/${newFriendId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        notiId
+      }),
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export const denyFriend = async (token, requestedFriendId, notiId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/friendRequests/remove`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        requestedFriendId,
+        notiId
+      }),
+    });
+    const result = await response.json();
+    return result; 
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export const deleteMessage = async (token, messageId) => {
   try {

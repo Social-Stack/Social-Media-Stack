@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getAllMyNotifications } from "../api";
-import NotificationSingleItem from "./NotificationSingleItem";
+import { getAllMyNotifications } from "../../api";
+import NotificationItemHandler from "./NotificationItemHandler";
 
 
 const NotificationPage = ({token}) => {
     const [notifications, setNotifications] = useState([]);
+    const [notiTrigger, setNotiTrigger] = useState(false);
 
 
     const fetchNotifications = async() => {
@@ -15,7 +16,7 @@ const NotificationPage = ({token}) => {
 
     useEffect(() => {
         fetchNotifications();
-    },[])
+    },[notiTrigger])
 
     return (
         <div>
@@ -23,8 +24,11 @@ const NotificationPage = ({token}) => {
             {notifications.length ? 
             notifications.map((notification) => {
                 return (
-                    <NotificationSingleItem
+                    <NotificationItemHandler
+                    setNotiTrigger={setNotiTrigger}
+                    notiTrigger={notiTrigger}
                     key={notification.id}
+                    token={token}
                     notification={notification}/>
                 )
             })

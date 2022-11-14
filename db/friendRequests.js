@@ -1,6 +1,6 @@
 const client = require("./client");
 const { addFriends } = require("./friendsLists");
-const { createFriendReqNoti } = require("./notifications");
+const { createFriendReqNoti, removeNotiById } = require("./notifications");
 const { getUserById } = require("./users");
 
 const requestFriend = async (id1, id2) => {
@@ -22,6 +22,18 @@ const requestFriend = async (id1, id2) => {
     console.error(error);
   }
 };
+const denyFriend = async (id1, id2) => {
+  try {
+    const {rows: [denial]} = await client.query(`
+    DELETE FROM friendrequests
+    WHERE "userId"=$1 AND "requestedFriendId"=$2
+    RETURNING *;
+    `,[id1, id2]);
+    return denial;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 const acceptFriend = async (id1, id2) => {
     await addFriends(id1,id2);
@@ -31,5 +43,6 @@ const acceptFriend = async (id1, id2) => {
 
 module.exports = {
     requestFriend,
-    acceptFriend
+    acceptFriend,
+    denyFriend
 }

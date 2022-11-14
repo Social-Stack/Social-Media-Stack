@@ -6,11 +6,11 @@ const createFriendReqNoti = async ({reqUserId, actionUser }) => {
         const type = "friendRequest";
         const url = `profile/${actionUser.username}`;
         const { rows: [notification]} = await client.query(`
-            INSERT INTO notifications ("userId", type, text, url, seen)
-            VALUES ($1, $2, $3, $4, $5)
+            INSERT INTO notifications ("userId", type, text, url, "miscId", seen)
+            VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING *;
             `,
-          [reqUserId, type, text, url, false]);
+          [reqUserId, type, text, url, actionUser.id, false]);
         return notification;
     } catch (error) {
         console.error(error);
@@ -60,11 +60,25 @@ const getUnseenNotisByUserId = async(userId) => {
         throw error;
     }
 };
+const removeNotiById = async (id) => {
+    try {
+        const { rows: [notis] } = await client.query(`
+        DELETE from notifications
+        WHERE id=${id}
+        RETURNING *;
+        `);
+        return notis;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
 
 
 module.exports = {
     createFriendReqNoti,
     seenByNotiId,
     getNotisByUserId,
-    getUnseenNotisByUserId
+    getUnseenNotisByUserId,
+    removeNotiById
 };

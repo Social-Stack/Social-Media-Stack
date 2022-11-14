@@ -189,6 +189,7 @@ const createTableNotifications = async () => {
                 type VARCHAR(40) NOT NULL,
                 text VARCHAR(255) NOT NULL,
                 url VARCHAR(255) DEFAULT NULL,
+                "miscId" INTEGER DEFAULT NULL,
                 seen boolean DEFAULT false
             );
         `);
