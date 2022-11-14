@@ -10,7 +10,7 @@ const Messages = () => {
   const [allMessages, setAllMessages] = useState([]);
   const [admin, setAdmin] = useState(false);
   const [myId, setMyId] = useState("");
-  // const [conversation, setConversation] = useState([]);
+  const [conversation, setConversation] = useState([]);
   const [selected, setSelected] = useState(null);
   const [text, setText] = useState("");
   const [friendId, setFriendId] = useState("");
@@ -24,6 +24,7 @@ const Messages = () => {
       setAdmin(isAdmin);
       const myMessages = await getAllMyMessages(token, id);
       setAllMessages(myMessages.allMyMessages);
+      console.log("MY MESSAGES", myMessages);
     };
 
     getChatlist();
@@ -36,7 +37,7 @@ const Messages = () => {
     groupedMessages[sendingUserId].push(message);
     return groupedMessages;
   }, []);
-
+  console.log("RESULT", result);
   const handleClick = async (friendUserId, i) => {
     setFriendId(friendUserId);
     const friend = await getAFriend(token, friendUserId);
@@ -54,12 +55,17 @@ const Messages = () => {
       <div id="outer">
         <div id="chatbox">
           <h1 id="messages-heading">Chats</h1>
-          <br />
-          <div>
-            <SearchBar myId={myId} setFriendInfo={setFriendInfo} />
+          <div id="search">
+            <SearchBar
+              myId={myId}
+              setFriendInfo={setFriendInfo}
+              setConversation={setConversation}
+              conversation={conversation}
+              setSelected={setSelected}
+              setFriendId={setFriendId}
+            />
           </div>
-          <br />
-          {!result.length || friendInfo ? (
+          {!result.length && friendInfo ? ( //switch if needed
             <h2>Search for a friend and start chatting!</h2>
           ) : (
             result.map((groupedMessage, i) => {
@@ -71,6 +77,7 @@ const Messages = () => {
                     onClick={() => handleClick(friendUserId, i)}
                   >
                     <img src={groupedMessage[0].sendingprofilepic} />
+
                     <p>
                       <strong className="single-message-sender">
                         {groupedMessage[0].sendingfirstname}{" "}
@@ -102,11 +109,16 @@ const Messages = () => {
           ) : (
             <div id="message-body">
               <div id="friend-header">
-                <img className="friend" src={friendInfo.picUrl} />
-                <strong>
-                  <span>{friendInfo.firstname} </span>
-                  <span>{friendInfo.lastname}</span>
-                </strong>
+                {selected ? (
+                  <>
+                    {console.log("FRIENDINFO PIC URL", friendInfo)}
+                    <img className="friend" src={friendInfo.picUrl} />
+                    <strong>
+                      <span>{friendInfo.firstname} </span>
+                      <span>{friendInfo.lastname}</span>
+                    </strong>
+                  </>
+                ) : null}
               </div>
               <div id="message-container">
                 <Conversation
@@ -119,6 +131,8 @@ const Messages = () => {
                   setText={setText}
                   loadingTrigger={loadingTrigger}
                   setLoadingTrigger={setLoadingTrigger}
+                  conversation={conversation}
+                  setConversation={setConversation}
                 />
               </div>
             </div>

@@ -5,6 +5,7 @@ import {
   faTrash,
   faMessage,
   faArrowUp,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { createRoot } from "react-dom/client";
 import { useState, useEffect } from "react";
@@ -42,7 +43,6 @@ const App = () => {
       setUsername(usernameExists);
     }
   }, []);
-  
 
   return (
     <div>
@@ -93,7 +93,10 @@ const App = () => {
           path="/newsfeed"
           element={<NewsFeed token={token} element={<Comments />} />}
         />
-        <Route path="/notifications" element={<NotificationPage token={token} />} />
+        <Route
+          path="/notifications"
+          element={<NotificationPage token={token} />}
+        />
         <Route path="/messages" element={<Messages token={token} />} />
         <Route
           path="/friendslists/:username"
@@ -106,7 +109,7 @@ const App = () => {
   );
 };
 
-library.add(fab, faTrash, faMessage, faArrowUp);
+library.add(fab, faTrash, faMessage, faArrowUp, faMagnifyingGlass);
 root.render(
   <Router>
     <App />
