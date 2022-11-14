@@ -328,10 +328,10 @@ export const getMyFriends = async (token, userId) => {
   }
 };
 
-export const requestFriend = async (token, requestedFriendId) => {
+export const requestFriend = async (token, requestedFriendUsername) => {
   try {
     const response = await fetch(
-      `${BASE_URL}/friendRequests/new/${requestedFriendId}`,
+      `${BASE_URL}/friendRequests/new/${requestedFriendUsername}`,
       {
         method: "POST",
         headers: {
@@ -378,6 +378,21 @@ export const denyFriend = async (token, requestedFriendId, notiId) => {
         requestedFriendId,
         notiId
       }),
+    });
+    const result = await response.json();
+    return result; 
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export const getFriendStatus = async (token, username) => {
+  try {
+    const response = await fetch(`${BASE_URL}/friendsLists/status/${username}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }
     });
     const result = await response.json();
     return result; 

@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
-import { getProfileData } from "../api";
+import { getFriendStatus, getProfileData } from "../api";
 import SinglePost from "./SinglePost";
 import NewPost from "./NewPost";
 import { Link, useParams } from "react-router-dom";
 import "../stylesheets/Profile.css";
+import ProfileFriendButton from "./ProfileFriendButton";
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState({});
   const [userPosts, setUserPosts] = useState([]);
   const [userFriends, setUserFriends] = useState([]);
   const [loadingTrigger, setLoadingTrigger] = useState(true);
+  const [profileReloadTrigger, setProfileReloadTrigger] = useState(false);
   const [reloadPostTrigger, setReloadPostTrigger] = useState(false);
+  const [friendStatus, setFriendStatus] = useState('');
   const token = localStorage.getItem("token");
 
   const { username } = useParams();
@@ -21,9 +24,11 @@ const Profile = () => {
       setUserPosts(userProfile.posts);
       setUserFriends(userProfile.friendList);
       setReloadPostTrigger(!reloadPostTrigger);
+      const {status} = await getFriendStatus(token, username);
+      setFriendStatus(status);
     };
     getUserInfo();
-  }, [loadingTrigger, username]);
+  }, [loadingTrigger, username, profileReloadTrigger]);
 
   return (
     <div id="profile-container">
@@ -35,6 +40,12 @@ const Profile = () => {
               {userInfo.firstname} {userInfo.lastname}
             </h1>
             <p id="friend-num">{String(userFriends.length)} friends</p>
+            <ProfileFriendButton
+              token={token}
+              status={friendStatus}
+              username={username}
+              profileReloadTrigger={profileReloadTrigger}
+              setProfileReloadTrigger={setProfileReloadTrigger}/>
           </div>
         </div>
         <Link id="link-friends" to={`/friendslists/${userInfo.username}`}>
