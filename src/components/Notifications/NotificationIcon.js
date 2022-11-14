@@ -11,9 +11,10 @@ const NotificationIcon = ({token}) => {
         notis.length && setUnseen(notis);
         }
     }
+    
 
     useEffect(() => {
-        getUnseen();
+        setInterval(getUnseen,10000);
     },[token])
 
     return (
