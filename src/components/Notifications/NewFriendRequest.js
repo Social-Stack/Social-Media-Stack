@@ -12,7 +12,7 @@ const NewFriendRequest = ({token, notification, notiTrigger, setNotiTrigger}) =>
     };
 
     const denyFriendButton = async() => {
-        const denial = await denyFriend(token, notification.miscId, notification.id);
+        await denyFriend(token, notification.miscId, notification.id);
         setNotiTrigger(!notiTrigger);
     };
 

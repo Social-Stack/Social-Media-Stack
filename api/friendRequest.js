@@ -1,14 +1,16 @@
 const express = require("express");
+const { getFriendsByUserId, getUserByUsername } = require("../db");
 const { requestFriend, denyFriend } = require("../db/friendRequests");
 const { removeNotiById } = require("../db/notifications");
 const { requireUser } = require("./utils");
 
 const friendRequestsRouter = express.Router();
 
-friendRequestsRouter.post("/new/:id", requireUser, async(req, res, next) => {
+friendRequestsRouter.post("/new/:username", requireUser, async(req, res, next) => {
     try{
         const { id: actionFriendId } = req.user;
-        const { id: requestedFriendId } = req.params;
+        const { username: requestedFriendUsername } = req.params;
+        const { id: requestedFriendId } = await getUserByUsername(requestedFriendUsername)
 
         const request = await requestFriend(actionFriendId, requestedFriendId);
         res.send(request);

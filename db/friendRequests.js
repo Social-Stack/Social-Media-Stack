@@ -1,7 +1,7 @@
 const client = require("./client");
 const { addFriends } = require("./friendsLists");
 const { createFriendReqNoti, removeNotiById } = require("./notifications");
-const { getUserById } = require("./users");
+const { getUserById, getUserByUsername } = require("./users");
 
 const requestFriend = async (id1, id2) => {
   try {
@@ -34,6 +34,32 @@ const denyFriend = async (id1, id2) => {
     console.error(error);
   }
 }
+const myPendingRequestByUsername = async(id, username) => {
+  try {
+    const {id: friendId } = await getUserByUsername(username);
+    const {rows: requests} = await client.query(`
+    SELECT *
+    FROM friendrequests
+    WHERE "userId"=$1 AND "requestedFriendId"=$2;
+    `, [id, friendId]);
+    return requests.length > 0;
+  } catch (error) {
+    console.error(error);
+  }
+}
+const amIPending = async(id, friendUsername) => {
+  try {
+    const {id:friendId } = await getUserByUsername(friendUsername);
+    const {rows: requests} = await client.query(`
+    SELECT *
+    FROM friendrequests
+    WHERE "userId"=$1 AND "requestedFriendId"=$2;
+    `, [friendId, id]);
+    return requests.length > 0;
+  } catch (error){
+    console.error(error)
+  }
+}
 
 const acceptFriend = async (id1, id2) => {
     await addFriends(id1,id2);
@@ -44,5 +70,7 @@ const acceptFriend = async (id1, id2) => {
 module.exports = {
     requestFriend,
     acceptFriend,
-    denyFriend
+    denyFriend,
+    myPendingRequestByUsername,
+    amIPending
 }
