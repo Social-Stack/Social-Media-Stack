@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getFriendStatus, getProfileData } from "../api";
 import SinglePost from "./SinglePost";
 import NewPost from "./NewPost";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "../stylesheets/Profile.css";
 import ProfileFriendButton from "./ProfileFriendButton";
 
@@ -15,6 +15,7 @@ const Profile = () => {
   const [reloadPostTrigger, setReloadPostTrigger] = useState(false);
   const [friendStatus, setFriendStatus] = useState("");
   const token = localStorage.getItem("token");
+  const loggedInUsername = localStorage.getItem("username");
 
   const { username } = useParams();
   useEffect(() => {
@@ -29,6 +30,12 @@ const Profile = () => {
     };
     getUserInfo();
   }, [loadingTrigger, username, profileReloadTrigger]);
+
+  const navigate = useNavigate();
+
+  const messageHandler = () => {
+    navigate("/messages");
+  };
 
   return (
     <div id="profile-container">
@@ -49,9 +56,21 @@ const Profile = () => {
             />
           </div>
         </div>
-        <Link id="link-friends" to={`/friendslists/${userInfo.username}`}>
-          <button id="friends-btn">friends</button>
-        </Link>
+        <div id="profile-btns">
+          <Link id="link-friends" to={`/friendslists/${userInfo.username}`}>
+            <button id="friends-btn">friends</button>
+          </Link>
+          {userInfo.username !== loggedInUsername ? (
+            <button
+              id="message-btn"
+              onClick={() => {
+                messageHandler();
+              }}
+            >
+              Send Message
+            </button>
+          ) : null}
+        </div>
       </div>
       <div id="profile-main-wrapper">
         {userFriends.length === 1 ? (
