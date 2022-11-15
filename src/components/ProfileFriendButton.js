@@ -1,17 +1,15 @@
 import React from "react";
 import { acceptFriend, denyFriend, requestFriend } from "../api";
 
-
-
 const ProfileFriendButton = ({token, status, username, profileReloadTrigger, setProfileReloadTrigger}) => {
 
     const acceptFriendButton = async() => {
-        await acceptFriend(token, notification.miscId, notification.id);
+        await acceptFriend(token, username);
         setProfileReloadTrigger(!profileReloadTrigger);
     };
 
     const denyFriendButton = async() => {
-        await denyFriend(token, notification.miscId, notification.id);
+        await denyFriend(token, username);
         setProfileReloadTrigger(!profileReloadTrigger);
     };
 
@@ -25,7 +23,7 @@ const ProfileFriendButton = ({token, status, username, profileReloadTrigger, set
             {status === 'awaiting You' && <><button onClick={() => {
                 acceptFriendButton()
             }}>Accept</button>
-            <button onClick={()=>{denyFriendButton()}}>Delete</button><>these won't work</></>}
+            <button onClick={()=>{denyFriendButton()}}>Delete</button></>}
             {status === 'request' && <button onClick={() => {
                 requestFriendButton()
             }}>Add Friend</button>}
