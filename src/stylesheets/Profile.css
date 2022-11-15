@@ -90,6 +90,7 @@
   font-family: "Poppins", sans-serif;
   align-items: center;
   flex-direction: column;
+  margin-left: 10px;
 }
 
 #friend-num {
@@ -118,6 +119,57 @@
 #user-fullname {
   margin-left: 20px;
   font-family: "Barlow", sans-serif;
+}
+
+#friend-request-status {
+  margin-left: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+#add-friend-btn {
+  background-color: #e5383b;
+  font-family: "Poppins", sans-serif;
+  color: white;
+  width: 100;
+  height: 30;
+  border-radius: 5px;
+}
+
+#add-friend-btn:hover {
+  background-color: #e5383b8a;
+  color: black;
+  cursor: pointer;
+}
+
+#accept-friend-btn {
+  background-color: #e5383b;
+  font-family: "Poppins", sans-serif;
+  color: white;
+  width: 80;
+  height: 30;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+
+#accept-friend-btn:hover {
+  background-color: #e5383b8a;
+  color: black;
+  cursor: pointer;
+}
+
+#decline-friend-btn {
+  background-color: #000000;
+  font-family: "Poppins", sans-serif;
+  color: white;
+  width: 80;
+  height: 30;
+  border-radius: 5px;
+}
+
+#decline-friend-btn:hover {
+  background-color: #b1a7a6;
+  color: black;
+  cursor: pointer;
 }
 
 #friends-btn {
@@ -185,6 +237,10 @@
     font-family: "Poppins", sans-serif;
   }
 
+  #friend-request-status {
+    font-family: "Poppins", sans-serif;
+  }
+
   #link-friends {
     display: flex;
     /* padding-left: 20px; */
@@ -248,8 +304,16 @@
 
   #friends-profile-title {
     max-height: 30px;
-    margin-left: 25px;
+    margin-left: 0px;
+    margin-right: 0px;
     padding-bottom: 4px;
+    text-align: center;
+  }
+
+  #test-123 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   #friend-wrapper {
@@ -296,19 +360,18 @@
     padding-top: 15px;
     padding-bottom: 15px;
     background-color: white;
-    width: 380px;
+    min-width: 365px;
     border-radius: 5px;
     margin-top: 10px;
     padding-left: 10px;
     box-shadow: 1px 1px 4px 1px #161a1d;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    align-items: center;
   }
 
   #friend-wrapper-single {
     display: flex;
     width: 130px;
-    padding-top: 0px;
+    margin-left: 0px;
     max-height: 110px;
     font-family: "Poppins", sans-serif;
     align-items: center;
