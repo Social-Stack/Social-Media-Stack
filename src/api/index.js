@@ -347,17 +347,14 @@ export const requestFriend = async (token, requestedFriendUsername) => {
   }
 }
 
-export const acceptFriend = async (token, newFriendId, notiId) => {
+export const acceptFriend = async (token, newFriendId) => {
   try {
     const response = await fetch(`${BASE_URL}/friendsLists/${newFriendId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        notiId
-      }),
+      }
     });
     const result = await response.json();
     return result;
@@ -366,7 +363,7 @@ export const acceptFriend = async (token, newFriendId, notiId) => {
   }
 }
 
-export const denyFriend = async (token, requestedFriendId, notiId) => {
+export const denyFriend = async (token, requestedFriendId) => {
   try {
     const response = await fetch(`${BASE_URL}/friendRequests/remove`, {
       method: "DELETE",
@@ -375,8 +372,7 @@ export const denyFriend = async (token, requestedFriendId, notiId) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        requestedFriendId,
-        notiId
+        requestedFriendId
       }),
     });
     const result = await response.json();

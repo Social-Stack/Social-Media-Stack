@@ -8,9 +8,10 @@ const {
   getPostsByUserId,
   getUserById,
   isMyFriend,
+  getUserByUsername,
 } = require("../db");
 const { myPendingRequestByUsername, amIPending } = require("../db/friendRequests");
-const { removeNotiById } = require("../db/notifications");
+const { removeNotiById, getNotiByFriendRequest } = require("../db/notifications");
 
 const { requireUser } = require("./utils");
 
@@ -40,11 +41,17 @@ friendsRouter.get("/status/:username", requireUser, async (req, res, next) => {
 
 friendsRouter.post("/:friendId", requireUser, async (req, res, next) => {
   try {
-    const { friendId } = req.params;
-    const { id: userId } = req.user;
-    const { notiId } = req.body;
-    const validFriend = await getUserById(friendId);
+    let { friendId } = req.params;
+    const isId = Number(friendId);
+    if(!isId){
+      const {id:newId} = await getUserByUsername(friendId);
+      friendId = newId;
+    }
 
+    const { id: userId } = req.user;
+    const { id: notiId } = await getNotiByFriendRequest(userId, friendId);
+    const validFriend = await getUserById(friendId);
+    
     if (validFriend) {
       const newFriend = await addFriends(userId, friendId);
       await removeNotiById(notiId);
