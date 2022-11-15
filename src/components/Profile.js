@@ -13,8 +13,9 @@ const Profile = () => {
   const [loadingTrigger, setLoadingTrigger] = useState(true);
   const [profileReloadTrigger, setProfileReloadTrigger] = useState(false);
   const [reloadPostTrigger, setReloadPostTrigger] = useState(false);
-  const [friendStatus, setFriendStatus] = useState('');
+  const [friendStatus, setFriendStatus] = useState("");
   const token = localStorage.getItem("token");
+  const loggedInUsername = localStorage.getItem("username");
 
   const { username } = useParams();
   useEffect(() => {
@@ -24,11 +25,15 @@ const Profile = () => {
       setUserPosts(userProfile.posts);
       setUserFriends(userProfile.friendList);
       setReloadPostTrigger(!reloadPostTrigger);
-      const {status} = await getFriendStatus(token, username);
+      const { status } = await getFriendStatus(token, username);
       setFriendStatus(status);
     };
     getUserInfo();
   }, [loadingTrigger, username, profileReloadTrigger]);
+
+  const messageHandler = () => {
+    console.log("clicked button");
+  };
 
   return (
     <div id="profile-container">
@@ -45,48 +50,61 @@ const Profile = () => {
               status={friendStatus}
               username={username}
               profileReloadTrigger={profileReloadTrigger}
-              setProfileReloadTrigger={setProfileReloadTrigger}/>
+              setProfileReloadTrigger={setProfileReloadTrigger}
+            />
           </div>
         </div>
-        <Link id="link-friends" to={`/friendslists/${userInfo.username}`}>
-          <button id="friends-btn">friends</button>
-        </Link>
+        <div id="profile-btns">
+          <Link id="link-friends" to={`/friendslists/${userInfo.username}`}>
+            <button id="friends-btn">friends</button>
+          </Link>
+          {userInfo.username !== loggedInUsername ? (
+            <button
+              id="message-btn"
+              onClick={() => {
+                messageHandler();
+              }}
+            >
+              Send Message
+            </button>
+          ) : null}
+        </div>
       </div>
       <div id="profile-main-wrapper">
         {userFriends.length === 1 ? (
           <div id="friends-profile-container-single">
             <h2 id="friends-profile-title">Friends</h2>
             <div id="test-123">
-            {userFriends.map((friend, i) => {
-              return (
-                <div key={i} id="friend-wrapper-single">
-                  <Link to={`/profile/${friend.username}`}>
-                    <img height="80px" src={friend.picUrl} />
-                  </Link>
-                  <h3>
-                    {friend.firstname} {friend.lastname}
-                  </h3>
-                </div>
-              );
-            })}
+              {userFriends.map((friend, i) => {
+                return (
+                  <div key={i} id="friend-wrapper-single">
+                    <Link to={`/profile/${friend.username}`}>
+                      <img height="80px" src={friend.picUrl} />
+                    </Link>
+                    <h3>
+                      {friend.firstname} {friend.lastname}
+                    </h3>
+                  </div>
+                );
+              })}
             </div>
           </div>
         ) : (
           <div id="friends-profile-container">
-              <h2 id="friends-profile-title">Friends</h2>
-              <div id="test-123">
-            {userFriends.map((friend, i) => {
-              return (
-                <div key={i} id="friend-wrapper">
-                  <Link to={`/profile/${friend.username}`}>
-                    <img height="80px" src={friend.picUrl} />
-                  </Link>
-                  <h3>
-                    {friend.firstname} {friend.lastname}
-                  </h3>
-                </div>
-              );
-            })}
+            <h2 id="friends-profile-title">Friends</h2>
+            <div id="test-123">
+              {userFriends.map((friend, i) => {
+                return (
+                  <div key={i} id="friend-wrapper">
+                    <Link to={`/profile/${friend.username}`}>
+                      <img height="80px" src={friend.picUrl} />
+                    </Link>
+                    <h3>
+                      {friend.firstname} {friend.lastname}
+                    </h3>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
@@ -99,7 +117,14 @@ const Profile = () => {
           <div id="profile-posts-container">
             {userPosts[0] &&
               userPosts.map((post, i) => {
-                return <SinglePost key={i} post={post} token={token} reloadPostTrigger={reloadPostTrigger}/>;
+                return (
+                  <SinglePost
+                    key={i}
+                    post={post}
+                    token={token}
+                    reloadPostTrigger={reloadPostTrigger}
+                  />
+                );
               })}
           </div>
         </div>
