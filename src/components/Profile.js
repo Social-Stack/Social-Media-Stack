@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getFriendStatus, getProfileData } from "../api";
 import SinglePost from "./SinglePost";
 import NewPost from "./NewPost";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "../stylesheets/Profile.css";
 import ProfileFriendButton from "./ProfileFriendButton";
 
@@ -31,8 +31,10 @@ const Profile = () => {
     getUserInfo();
   }, [loadingTrigger, username, profileReloadTrigger]);
 
+  const navigate = useNavigate();
+
   const messageHandler = () => {
-    console.log("clicked button");
+    navigate("/messages");
   };
 
   return (

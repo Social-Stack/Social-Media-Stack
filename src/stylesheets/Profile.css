@@ -19,12 +19,32 @@
   flex-direction: column;
 }
 
+#profile-btns {
+  display: flex;
+  justify-content: space-between;
+}
+
 #link-friends {
   display: flex;
   margin-left: 20px;
   width: fit-content;
   justify-content: flex-start;
   text-decoration: none;
+}
+
+#message-btn {
+  background-color: #000000;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  height: fit-content;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#message-btn:hover {
+  background-color: #b1a7a6;
+  color: black;
+  cursor: pointer;
 }
 
 #friends-profile-container {
@@ -228,13 +248,21 @@
   }
 
   #user-fullname {
-    /* margin-left: 20px; */
+    margin-left: 0px;
     font-family: "Barlow", sans-serif;
   }
 
   #friend-num {
-    /* padding-left: 20px; */
+    padding-left: 0px;
     font-family: "Poppins", sans-serif;
+  }
+
+  #profile-btns {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    margin-bottom: 10px;
   }
 
   #friend-request-status {
@@ -243,7 +271,7 @@
 
   #link-friends {
     display: flex;
-    /* padding-left: 20px; */
+    margin-left: 0px;
     justify-content: flex-start;
     text-decoration: none;
   }
@@ -359,6 +387,7 @@
     max-height: 300px;
     padding-top: 15px;
     padding-bottom: 15px;
+    margin-bottom: 10px;
     background-color: white;
     min-width: 365px;
     border-radius: 5px;
