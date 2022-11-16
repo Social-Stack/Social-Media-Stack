@@ -57,7 +57,7 @@
   margin-right: 10px;
 }
 
-@media (max-width: 430px) {
+@media (max-width: 550px) {
   #notifications-title {
     padding-bottom: 10px;
     font-family: "Barlow", sans-serif;
