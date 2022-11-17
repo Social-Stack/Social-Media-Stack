@@ -772,6 +772,13 @@ const createInitialMessages = async () => {
       text: "Redux is for managing state while Context is for passing state to components. You can use either one or both together.",
     };
 
+    const seedMessage16 = {
+      sendingUserId: 7,
+      recipientUserId: 1,
+      time: new Date(),
+      text: "Did you get my message?",
+    };
+
     console.log(
       chalk.blueBright(
         "SEEDING MESSAGES...",
@@ -796,6 +803,7 @@ const createInitialMessages = async () => {
     await createMessage(seedMessage13);
     await createMessage(seedMessage14);
     await createMessage(seedMessage15);
+    await createMessage(seedMessage16);
 
     console.log(
       chalk.yellowBright(
