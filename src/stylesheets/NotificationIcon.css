@@ -1,0 +1,15 @@
+#alert {
+    background-color: aqua;
+    height: 7px;
+    width: 7px;
+    border-radius: 50%;
+    position: absolute;
+    top: 1;
+    right: 2;
+}
+
+#notiIcon {
+    position: relative;
+    height: 16px;
+    width: 16px;
+}
