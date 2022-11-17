@@ -253,7 +253,6 @@ export const getAllMyMessages = async (token, userId) => {
       },
     });
     const result = await response.json();
-    console.log("MESSAGES RESULT", result);
     return result;
   } catch (error) {
     console.error(error);
@@ -284,7 +283,6 @@ export const getFriendMessages = async (token, friendUserId) => {
       },
     });
     const result = await response.json();
-    console.log("SINGLE MESSAGES RESULT", result);
     return result;
   } catch (error) {
     console.error(error);
@@ -314,7 +312,6 @@ export const sendMessage = async (recipientUserId, time, text, token) => {
 
 export const getMyFriends = async (token, userId) => {
   try {
-    console.log("USERID", userId);
     const response = await fetch(`${BASE_URL}/friendsLists/${userId}`, {
       headers: {
         "Content-Type": "application/json",
@@ -345,7 +342,7 @@ export const requestFriend = async (token, requestedFriendUsername) => {
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 export const acceptFriend = async (token, newFriendId) => {
   try {
@@ -354,14 +351,14 @@ export const acceptFriend = async (token, newFriendId) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-      }
+      },
     });
     const result = await response.json();
     return result;
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 export const denyFriend = async (token, requestedFriendId) => {
   try {
@@ -372,30 +369,33 @@ export const denyFriend = async (token, requestedFriendId) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        requestedFriendId
+        requestedFriendId,
       }),
     });
     const result = await response.json();
-    return result; 
+    return result;
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 export const getFriendStatus = async (token, username) => {
   try {
-    const response = await fetch(`${BASE_URL}/friendsLists/status/${username}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+    const response = await fetch(
+      `${BASE_URL}/friendsLists/status/${username}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
-    });
+    );
     const result = await response.json();
-    return result; 
+    return result;
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 export const deleteMessage = async (token, messageId) => {
   try {
@@ -462,7 +462,7 @@ export const getUnseenNotifications = async (token) => {
 export const seeNotification = async (token, notiId) => {
   try {
     const response = await fetch(`${BASE_URL}/notifications/seen/${notiId}`, {
-      method:"POST",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -475,10 +475,10 @@ export const seeNotification = async (token, notiId) => {
   }
 };
 
-export const seeMyNotifications = async(token) => {
+export const seeMyNotifications = async (token) => {
   try {
     const response = await fetch(`${BASE_URL}/notifications/seeall`, {
-      method:"POST",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -488,6 +488,5 @@ export const seeMyNotifications = async(token) => {
     return result;
   } catch (error) {
     console.error(error);
-    
   }
 };

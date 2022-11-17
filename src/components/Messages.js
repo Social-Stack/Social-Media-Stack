@@ -16,7 +16,6 @@ const Messages = () => {
   const [friendId, setFriendId] = useState("");
   const [friendInfo, setFriendInfo] = useState({});
   const [loadingTrigger, setLoadingTrigger] = useState(true);
-  const [friendFound, setFriendFound] = useState(false);
 
   useEffect(() => {
     const getChatlist = async () => {
@@ -25,7 +24,6 @@ const Messages = () => {
       setAdmin(isAdmin);
       const myMessages = await getAllMyMessages(token, id);
       setAllMessages(myMessages.allMyMessages);
-      console.log("MY MESSAGES", myMessages);
     };
 
     getChatlist();
@@ -47,13 +45,10 @@ const Messages = () => {
     return groupedMessages;
   }, []);
 
-  console.log("RESULT", result);
-
   const handleClick = async (friendUserId, i) => {
     setFriendId(friendUserId);
     const friend = await getAFriend(token, friendUserId);
     setFriendInfo(friend);
-    console.log("FRIEND", friend);
     if (selected === i) {
       return setSelected(null);
     }
@@ -88,12 +83,6 @@ const Messages = () => {
                   ? (friendUserId = groupedMessage[0].recipientUserId)
                   : (friendUserId = groupedMessage[0].sendingUserId);
               }
-              // const findFriend = (message) => {
-              //   return message.id === friendId;                        IGNORE ALL THIS COMMENTED OUT CODE FOR NOW
-              // };
-              // const found = groupedMessage.find(findFriend);
-              // console.log("FOUND FRIEND", found);
-              // const friendUserId = groupedMessage[0].sendingUserId;
               return (
                 <div className="single-message">
                   <div
@@ -133,9 +122,8 @@ const Messages = () => {
           ) : (
             <div id="message-body">
               <div id="friend-header">
-                {selected /* && friendFound */ ? (
+                {selected && conversation.length ? (
                   <>
-                    {console.log("FRIENDINFO PIC URL", friendInfo)}
                     <img className="friend" src={friendInfo.picUrl} />
                     <strong>
                       <span>{friendInfo.firstname} </span>
@@ -157,7 +145,6 @@ const Messages = () => {
                   setLoadingTrigger={setLoadingTrigger}
                   conversation={conversation}
                   setConversation={setConversation}
-                  setFriendFound={setFriendFound}
                 />
               </div>
             </div>

@@ -22,8 +22,8 @@ const SinglePost = ({post, token, reloadPostTrigger}) => {
       setReloadComTrigger(!reloadComTrigger);
     },[reloadPostTrigger])
 
-    return (
-        <div id="post-wrapper">
+  return (
+    <div id="post-wrapper">
             <div id="post-content">
               <div id="post-author-info">
                 <img id="post-author-profile-pic" src={post.profilePic}/>

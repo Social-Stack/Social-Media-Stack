@@ -36,7 +36,6 @@ const getMessagesBetweenUsers = async (loggedInUserId, friendUserId) => {
         `,
       [loggedInUserId, friendUserId]
     );
-    console.log("MESSAGES ", messages);
     return messages;
   } catch (error) {
     console.error(error);
@@ -52,8 +51,6 @@ const deleteMessageById = async (messageId) => {
         WHERE id = ${messageId}
         RETURNING *;
         `);
-    console.log("deletedMessage", [deletedMessage]);
-    // console.log("ROWS", rows);
     return deletedMessage;
   } catch (error) {
     console.error(error);
