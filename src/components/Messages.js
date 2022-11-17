@@ -16,7 +16,6 @@ const Messages = () => {
   const [friendId, setFriendId] = useState("");
   const [friendInfo, setFriendInfo] = useState({});
   const [loadingTrigger, setLoadingTrigger] = useState(true);
-  const [friendFound, setFriendFound] = useState(false);
 
   useEffect(() => {
     const getChatlist = async () => {
@@ -46,8 +45,6 @@ const Messages = () => {
     }
     return groupedMessages;
   }, []);
-
-  console.log("RESULT", result);
 
   const handleClick = async (friendUserId, i) => {
     setFriendId(friendUserId);
@@ -88,12 +85,6 @@ const Messages = () => {
                   ? (friendUserId = groupedMessage[0].recipientUserId)
                   : (friendUserId = groupedMessage[0].sendingUserId);
               }
-              // const findFriend = (message) => {
-              //   return message.id === friendId;                        IGNORE ALL THIS COMMENTED OUT CODE FOR NOW
-              // };
-              // const found = groupedMessage.find(findFriend);
-              // console.log("FOUND FRIEND", found);
-              // const friendUserId = groupedMessage[0].sendingUserId;
               return (
                 <div className="single-message">
                   <div
@@ -133,7 +124,7 @@ const Messages = () => {
           ) : (
             <div id="message-body">
               <div id="friend-header">
-                {selected /* && friendFound */ ? (
+                {selected && conversation.length ? (
                   <>
                     {console.log("FRIENDINFO PIC URL", friendInfo)}
                     <img className="friend" src={friendInfo.picUrl} />
@@ -157,7 +148,6 @@ const Messages = () => {
                   setLoadingTrigger={setLoadingTrigger}
                   conversation={conversation}
                   setConversation={setConversation}
-                  setFriendFound={setFriendFound}
                 />
               </div>
             </div>

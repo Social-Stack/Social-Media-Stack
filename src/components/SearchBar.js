@@ -8,7 +8,6 @@ const SearchBar = (props) => {
   const {
     myId,
     setFriendInfo,
-    conversation,
     setConversation,
     setSelected,
     setFriendId,
