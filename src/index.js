@@ -7,6 +7,7 @@ import {
   faArrowUp,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
+import { faBell } from "@fortawesome/free-regular-svg-icons";
 import { createRoot } from "react-dom/client";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -109,7 +110,7 @@ const App = () => {
   );
 };
 
-library.add(fab, faTrash, faMessage, faArrowUp, faMagnifyingGlass);
+library.add(fab, faTrash, faMessage, faArrowUp, faMagnifyingGlass, faBell);
 root.render(
   <Router>
     <App />
