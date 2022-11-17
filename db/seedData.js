@@ -1,12 +1,7 @@
 const client = require("./client");
 const chalk = require("chalk");
 
-const {
-  createUser,
-  createPost,
-  createMessage,
-  addFriends,
-} = require("./");
+const { createUser, createPost, createMessage, addFriends } = require("./");
 const { createComment, updateComment } = require("./comments");
 const { addUpvoteToComment } = require("./comment_upvotes");
 const { requestFriend, acceptFriend } = require("./friendRequests");
@@ -199,7 +194,6 @@ const createTableNotifications = async () => {
   }
 };
 
-
 //data
 
 const createInitialUsers = async () => {
@@ -378,14 +372,14 @@ const createInitialPosts = async () => {
     const post1 = await createPost(seedPost1);
     const post2 = await createPost(seedPost2);
     const post3 = await createPost(seedPost3);
-    await createPost(seedPost4)
-    await createPost(seedPost5)
-    await createPost(seedPost6)
-    await createPost(seedPost7)
-    await createPost(seedPost8)
-    await createPost(seedPost9)
-    await createPost(seedPost10)
-    await createPost(seedPost11)
+    await createPost(seedPost4);
+    await createPost(seedPost5);
+    await createPost(seedPost6);
+    await createPost(seedPost7);
+    await createPost(seedPost8);
+    await createPost(seedPost9);
+    await createPost(seedPost10);
+    await createPost(seedPost11);
 
     console.log(chalk.yellowBright("SEEDED POSTS: ", post1, post2, post3));
     console.log(chalk.green("FINISHED CREATING POSTS!"));
@@ -417,8 +411,8 @@ const createInitialComments = async () => {
       authorId: 5,
       postId: 5,
       time: new Date(),
-      text: "As a child, Marco Schädler played music together with his father. At the age of nine, he became a temporary organist in the parish church of Triesenberg, and in Triesen. He was organist until 1998. From 1982 to 1988, he held a part-time position as a piano teacher at the Liechtenstein Music School. He has been a freelance artist and composer since 1988 (theater and ballet music, masses, orchestras, choral and chamber music, sound installations for film and various performances)."
-    }
+      text: "As a child, Marco Schädler played music together with his father. At the age of nine, he became a temporary organist in the parish church of Triesenberg, and in Triesen. He was organist until 1998. From 1982 to 1988, he held a part-time position as a piano teacher at the Liechtenstein Music School. He has been a freelance artist and composer since 1988 (theater and ballet music, masses, orchestras, choral and chamber music, sound installations for film and various performances).",
+    };
 
     const seedComment4 = {
       authorId: 3,
@@ -440,7 +434,7 @@ const createInitialComments = async () => {
       time: new Date(),
       text: "What the heck?! No way you made this, you stole this code from someone else that stole this code!",
     };
-    
+
     const seedComment7 = {
       authorId: 4,
       postId: 2,
@@ -454,42 +448,42 @@ const createInitialComments = async () => {
       time: new Date(),
       text: "Ain't that just the neatest thing I ever done did see",
     };
-    
+
     const seedComment9 = {
       authorId: 7,
       postId: 10,
       time: new Date(),
       text: "You can tell it's an Aspin by the way it is 🌲",
     };
-    
+
     const seedComment10 = {
       authorId: 4,
       postId: 4,
       time: new Date(),
       text: "An evergreen tree, which keeps green leaves all year round. Depicted as a tall, dark green, cone-shaped tree with shaggy, layered leaves, as a pine or fir, showing a brown trunk.",
     };
-    
+
     const seedComment11 = {
       authorId: 3,
       postId: 9,
       time: new Date(),
       text: "May be decorated in the form of a 🎄 Christmas Tree. May also be used to represent various types of trees, forests, northern climates, nature, winter, and the Christmas season.",
     };
-    
+
     const seedComment12 = {
       authorId: 2,
       postId: 6,
       time: new Date(),
       text: "✨ B E L I E V E ✨ AND YOU SHALL ✨ A C H I E V E ✨",
     };
-    
+
     const seedComment13 = {
       authorId: 6,
       postId: 2,
       time: new Date(),
       text: "Perhaps you have wondered how predictable machines like computers can generate randomness. In reality, most random numbers used in computer programs are pseudo-random, which means they are generated in a predictable fashion using a mathematical formula. This is fine for many purposes, but it may not be random in the way you expect if you're used to dice rolls and lottery drawings.",
     };
-    
+
     const seedComment14 = {
       authorId: 4,
       postId: 9,
@@ -572,16 +566,14 @@ const createInitialComments = async () => {
     console.log(
       chalk.yellowBright("SEEDED COMMENTS: ", comment1, comment2, comment3)
     );
-    
+
     const updatedComment = await updateComment({
       commentId: comment1.id,
       time: new Date(),
-      text: "What a neat update."
+      text: "What a neat update.",
     });
 
-    console.log(
-      "UPDATED COMMENT: ", updatedComment
-    );
+    console.log("UPDATED COMMENT: ", updatedComment);
     console.log(chalk.green("FINISHED CREATING COMMENTS!"));
   } catch (error) {
     console.error(chalk.red("ERROR SEEDING COMMENTS", error));
@@ -642,8 +634,6 @@ const createInitialCommentUpvotes = async () => {
       commentId: 2,
       userId: 5,
     };
-
-
 
     console.log(
       chalk.blueBright(
@@ -709,7 +699,7 @@ const createInitialMessages = async () => {
       sendingUserId: 3,
       recipientUserId: 4,
       time: new Date(),
-      text: "I found this answer by looking in %USERPROFILE%\AppData\Local\rancher-desktop\logs\wsl-exec.log which revealed: WSL 2 requires an update to its kernel component.",
+      text: "I found this answer by looking in %USERPROFILE%AppDataLocal\rancher-desktoplogswsl-exec.log which revealed: WSL 2 requires an update to its kernel component.",
     };
 
     const seedMessage6 = {
@@ -782,6 +772,13 @@ const createInitialMessages = async () => {
       text: "Redux is for managing state while Context is for passing state to components. You can use either one or both together.",
     };
 
+    const seedMessage16 = {
+      sendingUserId: 7,
+      recipientUserId: 1,
+      time: new Date(),
+      text: "Did you get my message?",
+    };
+
     console.log(
       chalk.blueBright(
         "SEEDING MESSAGES...",
@@ -806,6 +803,7 @@ const createInitialMessages = async () => {
     await createMessage(seedMessage13);
     await createMessage(seedMessage14);
     await createMessage(seedMessage15);
+    await createMessage(seedMessage16);
 
     console.log(
       chalk.yellowBright(
@@ -834,18 +832,14 @@ const createInitialFriendsList = async () => {
     await addFriends(7, 4);
     await addFriends(6, 2);
     await addFriends(4, 6);
-    await requestFriend(1,5);
-    await requestFriend(7,5);
-    await requestFriend(6,5);
-    await requestFriend(4,5);
-    await requestFriend(5,3);
+    await requestFriend(1, 5);
+    await requestFriend(7, 5);
+    await requestFriend(6, 5);
+    await requestFriend(4, 5);
+    await requestFriend(5, 3);
 
     console.log(
-      chalk.yellowBright(
-        "SEEDED FRIENDSLIST",
-        friendsList1,
-        friendsList2,
-      )
+      chalk.yellowBright("SEEDED FRIENDSLIST", friendsList1, friendsList2)
     );
 
     console.log(chalk.green("FINISHED CREATING FRIENDSLIST!"));
@@ -867,8 +861,7 @@ const rebuildDB = async () => {
     await createInitialCommentUpvotes();
     await createInitialMessages();
     await createInitialFriendsList();
-    await requestFriend(3,2)
-
+    await requestFriend(3, 2);
   } catch (error) {
     console.error(chalk.red("error rebuilding the db!", error));
     throw error;

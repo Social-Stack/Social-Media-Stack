@@ -69,7 +69,13 @@ const getAllMessages = async (userId) => {
     FROM messages
     JOIN users
       ON messages."sendingUserId" = users.id
-    WHERE "recipientUserId" = $1;
+    WHERE "recipientUserId" = $1
+    union
+    SELECT messages.*, users.username AS sendingUsername, users.firstname AS sendingFirstname, users.lastname AS sendingLastname, users."picUrl" AS sendingProfilePic
+    FROM messages
+    JOIN users
+      ON messages."recipientUserId" = users.id
+    WHERE "sendingUserId" = $1
     `,
       [userId]
     );
