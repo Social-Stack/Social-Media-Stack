@@ -62,7 +62,7 @@ const Header = ({
         <div className="burger burger3" />
       </div>
 
-      <style jsx>
+      <style jsx="true">
         {`
           @import url("https://fonts.googleapis.com/css2?family=Barlow&family=Poppins:wght@600&display=swap");
 
