@@ -98,16 +98,16 @@
   display: inline-block;
   padding: 10px 20px;
   margin-bottom: 10px;
-  background-color: #1bba93;
+  background-color: #e5383b;
   font-size: 17px;
   border: none;
   border-radius: 5px;
-  color: #bcf5e7;
+  color: white;
   cursor: pointer;
 }
 
 .form-btn:hover {
-  background-color: #169c7b;
+  background-color: #e5383b8a;
   color: white;
 }
 
