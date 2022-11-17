@@ -24,7 +24,6 @@ const Messages = () => {
       setAdmin(isAdmin);
       const myMessages = await getAllMyMessages(token, id);
       setAllMessages(myMessages.allMyMessages);
-      console.log("MY MESSAGES", myMessages);
     };
 
     getChatlist();
@@ -50,7 +49,6 @@ const Messages = () => {
     setFriendId(friendUserId);
     const friend = await getAFriend(token, friendUserId);
     setFriendInfo(friend);
-    console.log("FRIEND", friend);
     if (selected === i) {
       return setSelected(null);
     }
@@ -126,7 +124,6 @@ const Messages = () => {
               <div id="friend-header">
                 {selected && conversation.length ? (
                   <>
-                    {console.log("FRIENDINFO PIC URL", friendInfo)}
                     <img className="friend" src={friendInfo.picUrl} />
                     <strong>
                       <span>{friendInfo.firstname} </span>
