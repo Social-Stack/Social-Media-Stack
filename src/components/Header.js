@@ -80,6 +80,7 @@ const Header = ({
             background-color: #a4161a;
             /* background-color: rgb(240, 3, 3); */
             height: 8%;
+            width: 100%;
             /* text-decoration: none; */
           }
           
@@ -117,7 +118,7 @@ const Header = ({
           .hamburger {
             display: none;
             width: 2rem;
-            height: 3rem;
+            height: 50px;
             padding-top: 10px;
             margin-right: 10px;
             /* justify-content: space-around; */
@@ -126,8 +127,8 @@ const Header = ({
           }
           
           .burger {
-            width: 2rem;
-            height: 0.25rem;
+            width: 35px;
+            height: 3px;
             border-radius: 10px;
             background-color: black;
             margin-bottom: 10px;
@@ -154,6 +155,10 @@ const Header = ({
               padding-top: 20px;
               margin-left: 10px;
               z-index: 6;
+            }
+
+            .header {
+              width: 100%;
             }
             
             #header-links {
