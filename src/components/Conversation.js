@@ -17,9 +17,7 @@ const Conversation = (props) => {
     setLoadingTrigger,
     conversation,
     setConversation,
-    setFriendFound,
   } = props;
-  //   const [conversation, setConversation] = useState([]);
 
   useEffect(() => {
     if (friendId) {
@@ -48,20 +46,19 @@ const Conversation = (props) => {
     setLoadingTrigger(!loadingTrigger);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key == "Enter" && event.shiftKey == false) {
+      handleSend(friendId, friendInfo);
+    }
+  };
+
+  const textLength = 255 - text.length;
+
   return (
     <div id="message-container">
       <div className="expanded-messages">
         {selected
           ? conversation.map((singleMessage, i) => {
-              // const findFriend = (message) => {                    IGNORE ALL THIS COMMENTED OUT CODE FOR NOW
-              //   return (
-              //     message.recipientUserId === friendId ||
-              //     message.sendingUserId === friendId
-              //   );
-              // };
-              // const found = conversation.find(findFriend);
-              // console.log("FOUND FOUND FOUND", found);
-              // setFriendFound(found);
               const date = new Date(singleMessage.time);
               const time = date.toLocaleString();
               return (
@@ -94,8 +91,9 @@ const Conversation = (props) => {
               );
             })
           : null}
-        <div>
-          <div id="sendmessage">
+        <div id="sendmessage">
+          <div id="textarea-container">
+            <div id="character-length">Character Length: {textLength}</div>
             <textarea
               className="message-input"
               type="text"
@@ -105,14 +103,15 @@ const Conversation = (props) => {
               onChange={(event) => {
                 setText(event.target.value);
               }}
+              onKeyDown={(e) => handleKeyDown(event)}
             />
-            <button
-              disabled={!text || !friendId || !friendInfo}
-              onClick={() => handleSend(friendId, friendInfo)}
-            >
-              <FontAwesomeIcon icon="fa-solid fa-message" />
-            </button>
           </div>
+          <button
+            disabled={!text || !friendId || !friendInfo}
+            onClick={() => handleSend(friendId, friendInfo)}
+          >
+            <FontAwesomeIcon icon="fa-solid fa-message" />
+          </button>
         </div>
       </div>
     </div>
