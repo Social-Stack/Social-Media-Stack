@@ -5,8 +5,9 @@ import NewPost from "./NewPost";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "../stylesheets/Profile.css";
 import ProfileFriendButton from "./ProfileFriendButton";
+import ProfileMessage from "./ProfileMessage";
 
-const Profile = () => {
+const Profile = ({token}) => {
   const [userInfo, setUserInfo] = useState({});
   const [userPosts, setUserPosts] = useState([]);
   const [userFriends, setUserFriends] = useState([]);
@@ -14,27 +15,25 @@ const Profile = () => {
   const [profileReloadTrigger, setProfileReloadTrigger] = useState(false);
   const [reloadPostTrigger, setReloadPostTrigger] = useState(false);
   const [friendStatus, setFriendStatus] = useState("");
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
   const loggedInUsername = localStorage.getItem("username");
+
+  const [sendingMessage, setSendingMessage] = useState(false);
 
   const { username } = useParams();
   useEffect(() => {
-    const getUserInfo = async () => {
-      const userProfile = await getProfileData(token, username);
-      setUserInfo(userProfile.user);
-      setUserPosts(userProfile.posts);
-      setUserFriends(userProfile.friendList);
-      setReloadPostTrigger(!reloadPostTrigger);
-      const { status } = await getFriendStatus(token, username);
-      setFriendStatus(status);
-    };
-    getUserInfo();
-  }, [loadingTrigger, username, profileReloadTrigger]);
+    setSendingMessage(false)
+    if(token){getUserInfo()};
+  }, [loadingTrigger, username, profileReloadTrigger, token]);
 
-  const navigate = useNavigate();
-
-  const messageHandler = () => {
-    navigate("/messages");
+  const getUserInfo = async () => {
+    const userProfile = await getProfileData(token, username);
+    setUserInfo(userProfile.user);
+    setUserPosts(userProfile.posts);
+    setUserFriends(userProfile.friendList);
+    setReloadPostTrigger(!reloadPostTrigger);
+    const { status } = await getFriendStatus(token, username);
+    setFriendStatus(status);
   };
 
   return (
@@ -60,16 +59,21 @@ const Profile = () => {
           <Link id="link-friends" to={`/friendslists/${userInfo.username}`}>
             <button id="friends-btn">friends</button>
           </Link>
-          {userInfo.username !== loggedInUsername ? (
-            <button
+          {userInfo.username !== loggedInUsername ? 
+            sendingMessage ? <ProfileMessage
+            userInfo={userInfo}
+            token={token}
+            setSendingMessage={setSendingMessage}/>
+            : (<button
               id="message-btn"
               onClick={() => {
-                messageHandler();
+                setSendingMessage(true)
+                // messageHandler();
               }}
             >
               Send Message
             </button>
-          ) : null}
+            ) : null }
         </div>
       </div>
       <div id="profile-main-wrapper">
