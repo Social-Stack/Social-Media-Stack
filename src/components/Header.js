@@ -3,7 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import "../stylesheets/Header.css";
 import NotificationIcon from "./Notifications/NotificationIcon";
 
-const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken, token }) => {
+const Header = ({
+  setLoggedIn,
+  loggedIn,
+  setUsername,
+  username,
+  setToken,
+  token,
+}) => {
   // const navigate = useNavigate();
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const logout = () => {
@@ -34,7 +41,9 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken, token 
               <img id="profile-pic" src={picture} />
             </Link>
             <Link to="/messages">Messages </Link>
-            <Link to="/notifications"><NotificationIcon token={token}/></Link>
+            <Link to="/notifications">
+              <NotificationIcon token={token} />
+            </Link>
             <Link to="/login" onClick={logout}>
               Logout
             </Link>
@@ -160,6 +169,11 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken, token 
               flex-direction: column;
               justify-content: flex-start;
               align-items: flex-start;
+            }
+
+            #header-links a {
+              text-decoration: none;
+              color: #000;
             }
           }
         `}

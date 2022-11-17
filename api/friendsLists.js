@@ -7,18 +7,51 @@ const {
   getFriendsByUserId,
   getPostsByUserId,
   getUserById,
+  isMyFriend,
+  getUserByUsername,
 } = require("../db");
-const { removeNotiById } = require("../db/notifications");
+const { myPendingRequestByUsername, amIPending } = require("../db/friendRequests");
+const { removeNotiById, getNotiByFriendRequest } = require("../db/notifications");
 
 const { requireUser } = require("./utils");
 
+
+friendsRouter.get("/status/:username", requireUser, async (req, res, next) => {
+  try {
+    const user  = req.user;
+    const {username: friendUserName} = req.params;
+    const friendbool = await isMyFriend(user.id, friendUserName)
+    console.log("FRIENDS", friendbool)
+
+    if(user.username === friendUserName){
+      res.send({status:"you"})
+    }else if(await isMyFriend(user.id, friendUserName)){
+      res.send({status:'friend'})
+    }else if( await myPendingRequestByUsername(user.id, friendUserName)){
+      res.send({status:'awaiting response'})
+    }else if(await amIPending(user.id, friendUserName)){
+      res.send({status:'awaiting You'})
+    }else{
+      res.send({status:'request'})
+    }
+  } catch ({ error, message }) {
+    next({ error, message });
+  }
+});
+
 friendsRouter.post("/:friendId", requireUser, async (req, res, next) => {
   try {
-    const { friendId } = req.params;
-    const { id: userId } = req.user;
-    const { notiId } = req.body;
-    const validFriend = await getUserById(friendId);
+    let { friendId } = req.params;
+    const isId = Number(friendId);
+    if(!isId){
+      const {id:newId} = await getUserByUsername(friendId);
+      friendId = newId;
+    }
 
+    const { id: userId } = req.user;
+    const { id: notiId } = await getNotiByFriendRequest(userId, friendId);
+    const validFriend = await getUserById(friendId);
+    
     if (validFriend) {
       const newFriend = await addFriends(userId, friendId);
       await removeNotiById(notiId);

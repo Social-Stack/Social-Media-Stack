@@ -12,6 +12,8 @@ const SearchBar = (props) => {
     setConversation,
     setSelected,
     setFriendId,
+    loadingTrigger,
+    setLoadingTrigger,
   } = props;
   const [searchTerm, setSearchTerm] = useState("");
   const [friends, setFriends] = useState([]);
@@ -37,6 +39,7 @@ const SearchBar = (props) => {
     setConversation(_conversation.messagesBetweenUsers);
     setSelected(true);
     setSearchTerm("");
+    setLoadingTrigger(!loadingTrigger);
   };
 
   return (
@@ -49,7 +52,6 @@ const SearchBar = (props) => {
           setSearchTerm(event.target.value);
         }}
       ></input>
-      {/* <div id="handle"></div> */}
       <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
       <div className="search-results">
         {friends

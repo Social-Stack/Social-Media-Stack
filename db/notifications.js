@@ -62,6 +62,20 @@ const getNotisByUserId = async(userId) => {
     }
 };
 
+const getNotiByFriendRequest = async(userId, friendId)=> {
+    try {
+        const { rows: [noti] } = await client.query(`
+        SELECT *
+        FROM notifications
+        WHERE "userId"=$1 AND "miscId"=$2;
+        `,[userId, friendId]);
+        return noti;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 const getUnseenNotisByUserId = async(userId) => {
     try {
         const { rows: notis } = await client.query(`
@@ -95,6 +109,7 @@ module.exports = {
     seenByNotiId,
     seenAllByUserId,
     getNotisByUserId,
+    getNotiByFriendRequest,
     getUnseenNotisByUserId,
     removeNotiById
 };

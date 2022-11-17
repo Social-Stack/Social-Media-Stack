@@ -32,7 +32,6 @@
 input:not(:placeholder-shown) {
     width: 250px;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 4px 14px 0 #a4161a;
-    /* box-shadow: none; */
 }
 
 .search-results {
@@ -53,13 +52,6 @@ input:not(:placeholder-shown) {
 .fa-magnifying-glass {
     color: #3e3e3e;
     position: relative;
-    margin-left: -22px;
+    margin-left: -23px;
     pointer-events: none;
 }
-
-/* #handle {
-    border-top: 2px solid black;
-    width: 15px;
-    transform: rotate(45deg);
-    position: initial;
-} */

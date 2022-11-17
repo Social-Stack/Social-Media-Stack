@@ -41,4 +41,11 @@
   border-bottom: 1px solid #B1A7A6;
 }
 
+a:link {
+  text-decoration: none!important;
+}
+
+#post-author-name {
+  color: black;
+}
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');

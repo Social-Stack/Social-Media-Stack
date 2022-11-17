@@ -1,14 +1,16 @@
 const express = require("express");
+const { getFriendsByUserId, getUserByUsername } = require("../db");
 const { requestFriend, denyFriend } = require("../db/friendRequests");
-const { removeNotiById } = require("../db/notifications");
+const { removeNotiById, getNotiByFriendRequest } = require("../db/notifications");
 const { requireUser } = require("./utils");
 
 const friendRequestsRouter = express.Router();
 
-friendRequestsRouter.post("/new/:id", requireUser, async(req, res, next) => {
+friendRequestsRouter.post("/new/:username", requireUser, async(req, res, next) => {
     try{
         const { id: actionFriendId } = req.user;
-        const { id: requestedFriendId } = req.params;
+        const { username: requestedFriendUsername } = req.params;
+        const { id: requestedFriendId } = await getUserByUsername(requestedFriendUsername)
 
         const request = await requestFriend(actionFriendId, requestedFriendId);
         res.send(request);
@@ -20,7 +22,15 @@ friendRequestsRouter.post("/new/:id", requireUser, async(req, res, next) => {
 friendRequestsRouter.delete("/remove", requireUser, async(req, res, next) => {
   try{
       const { id: userId} = req.user;
-      const { requestedFriendId, notiId } = req.body;
+      let { requestedFriendId } = req.body;
+      const isId = Number(requestedFriendId);
+      if(!isId){
+        const {id:newId} = await getUserByUsername(requestedFriendId);
+        requestedFriendId = newId;
+      }
+
+      const { id: notiId } = await getNotiByFriendRequest(userId, requestedFriendId);
+
       const request = await denyFriend(requestedFriendId, userId);
       if(request){
         await removeNotiById(notiId);

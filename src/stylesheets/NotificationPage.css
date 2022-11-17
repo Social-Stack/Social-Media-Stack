@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow&family=Poppins:wght@600&display=swap");
+
+#notifications-wrapper {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+#notifications-title {
+  padding-bottom: 10px;
+  font-family: "Barlow", sans-serif;
+}
+
+#notification-items {
+  padding-bottom: 10px;
+}
+
+#accept-btn {
+  background-color: #e5383b;
+  font-family: "Poppins", sans-serif;
+  color: white;
+  width: 80px;
+  height: 25px;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+
+#accept-btn:hover {
+  background-color: #e5383b8a;
+  color: black;
+  cursor: pointer;
+}
+
+#decline-btn {
+  background-color: #000000;
+  font-family: "Poppins", sans-serif;
+  color: white;
+  width: 80px;
+  height: 25px;
+  border-radius: 5px;
+}
+
+#decline-btn:hover {
+  background-color: #b1a7a6;
+  color: black;
+  cursor: pointer;
+}
+
+#friend-request {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: space-between;
+}
+
+#notification-btns {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+@media (max-width: 550px) {
+  #notifications-title {
+    padding-bottom: 10px;
+    font-family: "Barlow", sans-serif;
+    text-align: center;
+  }
+
+  #friend-request {
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+  }
+}

@@ -17,6 +17,7 @@ const Conversation = (props) => {
     setLoadingTrigger,
     conversation,
     setConversation,
+    setFriendFound,
   } = props;
   //   const [conversation, setConversation] = useState([]);
 
@@ -51,7 +52,16 @@ const Conversation = (props) => {
     <div id="message-container">
       <div className="expanded-messages">
         {selected
-          ? conversation.map((singleMessage) => {
+          ? conversation.map((singleMessage, i) => {
+              // const findFriend = (message) => {                    IGNORE ALL THIS COMMENTED OUT CODE FOR NOW
+              //   return (
+              //     message.recipientUserId === friendId ||
+              //     message.sendingUserId === friendId
+              //   );
+              // };
+              // const found = conversation.find(findFriend);
+              // console.log("FOUND FOUND FOUND", found);
+              // setFriendFound(found);
               const date = new Date(singleMessage.time);
               const time = date.toLocaleString();
               return (
