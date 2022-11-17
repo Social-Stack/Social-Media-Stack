@@ -119,7 +119,7 @@
 @media (max-width: 676px) {
   .signup-form {
     font-family: "Roboto", sans-serif;
-    width: 400px;
+    width: 350px;
     margin: 30px auto;
     background: linear-gradient(to right, #ffffff 0%, #fafafa 50%, #ffffff 99%);
     border-radius: 10px;
