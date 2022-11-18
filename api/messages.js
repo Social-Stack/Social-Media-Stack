@@ -35,9 +35,7 @@ messagesRouter.get(
   requireUser,
   async (req, res, next) => {
     const { id: loggedInUserId } = req.user;
-    console.log("REQ.USER", loggedInUserId);
     const { friendUserId } = req.params;
-    console.log("REQ.PARAMS", friendUserId);
 
     const user = await getUserById(loggedInUserId);
     const friend = await getUserById(friendUserId);
@@ -59,14 +57,10 @@ messagesRouter.get(
 messagesRouter.delete("/:messageId", requireUser, async (req, res, next) => {
   try {
     const { messageId } = req.params;
-    console.log("MESSAGE ID", messageId);
     const { id: userId, isAdmin } = req.user;
-    console.log("userId", userId);
 
     const messageToDelete = await getMessageById(messageId);
-    console.log("MESSAGE TO DELETE", messageToDelete);
     if (!messageToDelete[0]) {
-      console.log("INSIDE ELSE IF");
       next({
         error: "MessageDoesNotExistError",
         message: "That message does not exist",
@@ -76,7 +70,6 @@ messagesRouter.delete("/:messageId", requireUser, async (req, res, next) => {
       isAdmin
     ) {
       const deletedMessage = await deleteMessageById(messageId);
-      console.log("DELETED MESSAGE INSIDE", deletedMessage);
       res.send({
         deletedMessage,
         success: "Message deleted!",

@@ -38,7 +38,6 @@ const Register = ({ setUsername, setLoggedIn, loggedIn, setToken }) => {
     setErrorMessage(result.message);
   };
 
-  console.log(user);
   return (
     <div id="register-container">
       {loggedIn ? (
