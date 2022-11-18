@@ -573,7 +573,6 @@ const createInitialComments = async () => {
       text: "What a neat update.",
     });
 
-    console.log("UPDATED COMMENT: ", updatedComment);
     console.log(chalk.green("FINISHED CREATING COMMENTS!"));
   } catch (error) {
     console.error(chalk.red("ERROR SEEDING COMMENTS", error));

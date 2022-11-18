@@ -193,7 +193,6 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
 
 usersRouter.get("/:friendId", requireUser, async (req, res, next) => {
   const { friendId: id } = req.params;
-  console.log("REQ.PARAMS FRIEND ID", id);
   try {
     const user = await getUserById(id);
     res.send(user);
@@ -208,7 +207,6 @@ usersRouter.get("/profile/:username", requireUser, async (req, res, next) => {
   try {
     const user = await getUserByUsername(username);
     const friendList = await getFriendsByUserId(user.id);
-    console.log("what is friendsList", friendList);
     const posts = await getPostsByUsername(username);
     if (user.username === username) {
       res.send({ user, friendList, posts });

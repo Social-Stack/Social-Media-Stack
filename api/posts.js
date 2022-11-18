@@ -160,9 +160,6 @@ router.patch("/update/:postId", requireUser, async (req, res, next) => {
         success: "You've successfully edited a post!",
       });
     }
-    // console.log(
-    //   "IF YOU'RE SEEING THIS...there's a problem with the editPost patch request in api/posts (blame Fred)"
-    // );
   } catch ({ error, message }) {
     next({ error, message });
   }
