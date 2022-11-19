@@ -407,7 +407,6 @@ export const deleteMessage = async (token, messageId) => {
       },
     });
     const result = await response.json();
-    console.log("DELETE RESULT", result);
     return result;
   } catch (error) {
     console.error(error);
