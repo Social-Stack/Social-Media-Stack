@@ -38,7 +38,6 @@ const getPostsByUserId = async (id) => {
 const getPostsByUsername = async (username) => {
   //optimize this later
   try {
-    console.log("running getPostsByUsername", username);
     const {
       rows: [{ id }],
     } = await client.query(`
@@ -46,7 +45,6 @@ const getPostsByUsername = async (username) => {
     FROM users
     WHERE username = '${username}';
     `);
-    console.log("id", id);
     const { rows: posts } = await client.query(`
     SELECT posts.*, U.firstname, U.lastname, U.username, U."picUrl" as "profilePic"
     FROM posts
@@ -88,7 +86,6 @@ const getAllPublicPosts = async () => {
     ON U.id = posts."userId"
     WHERE "isPublic" = true;
     `);
-    console.log("POSTS", posts);
     return posts;
   } catch (error) {
     console.error(error);

@@ -15,10 +15,8 @@ notificationsRouter.get("/me", requireUser, async (req, res, next) => {
 
 notificationsRouter.get("/unseen", requireUser, async (req, res, next) => {
   try {
-    console.log('running api /unseen')
     const { id } = req.user;
     const unseenNotification = await getUnseenNotisByUserId(id);
-    console.log('returning', unseenNotification)
     res.send(unseenNotification);
   } catch ({ error, message }) {
   next({ error, message });

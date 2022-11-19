@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getUnseenNotifications } from "../../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "../../stylesheets/NotificationIcon.css";
+
 
 const NotificationIcon = ({ token }) => {
   const [unseen, setUnseen] = useState([]);
@@ -13,14 +15,17 @@ const NotificationIcon = ({ token }) => {
   };
 
   useEffect(() => {
-    // setInterval(getUnseen, 10000);
+    setInterval(getUnseen,10000);
   }, [token]);
 
   return (
-    <>
-      {unseen.length}
-      <FontAwesomeIcon icon="fa-regular fa-bell" />
-    </>
+    <div id="notiIcon" >
+        {/* {<FontAwesomeIcon icon="fa-regular fa-bell" />} */}
+        {unseen.length > 0 ?
+        <div id="alert"></div>
+        : null}
+        {<FontAwesomeIcon id='bell' icon="fa-regular fa-bell" />}
+    </div>
   );
 };
 export default NotificationIcon;
