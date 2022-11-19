@@ -13,7 +13,7 @@ const NotificationIcon = ({ token }) => {
   };
 
   useEffect(() => {
-    setInterval(getUnseen, 10000);
+    // setInterval(getUnseen, 10000);
   }, [token]);
 
   return (
