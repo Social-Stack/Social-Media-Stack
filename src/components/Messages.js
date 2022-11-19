@@ -16,6 +16,7 @@ const Messages = () => {
   const [friendId, setFriendId] = useState("");
   const [friendInfo, setFriendInfo] = useState({});
   const [loadingTrigger, setLoadingTrigger] = useState(true);
+  const [friendFound, setFriendFound] = useState(false);
 
   useEffect(() => {
     const getChatlist = async () => {
@@ -50,9 +51,11 @@ const Messages = () => {
     const friend = await getAFriend(token, friendUserId);
     setFriendInfo(friend);
     if (selected === i) {
+      console.log("SELECTED IN MESSAGES", selected);
       return setSelected(null);
     }
     setSelected(i);
+    console.log("SELECTED IN MESSAGES", selected);
     setText("");
   };
 
@@ -71,6 +74,9 @@ const Messages = () => {
               setFriendId={setFriendId}
               loadingTrigger={loadingTrigger}
               setLoadingTrigger={setLoadingTrigger}
+              setFriendFound={setFriendFound}
+              friendFound={friendFound}
+              selected={selected}
             />
           </div>
           {!result.length && friendInfo ? ( //switch if needed
@@ -122,7 +128,7 @@ const Messages = () => {
           ) : (
             <div id="message-body">
               <div id="friend-header">
-                {selected && conversation.length ? (
+                {(selected && conversation.length) || friendFound ? (
                   <>
                     <img className="friend" src={friendInfo.picUrl} />
                     <strong>
@@ -145,6 +151,8 @@ const Messages = () => {
                   setLoadingTrigger={setLoadingTrigger}
                   conversation={conversation}
                   setConversation={setConversation}
+                  friendFound={friendFound}
+                  setFriendFound={setFriendFound}
                 />
               </div>
             </div>

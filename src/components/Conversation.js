@@ -17,12 +17,15 @@ const Conversation = (props) => {
     setLoadingTrigger,
     conversation,
     setConversation,
+    setFriendFound,
+    friendFound,
   } = props;
 
   useEffect(() => {
     if (friendId) {
       const getConversation = async () => {
         const _conversation = await getFriendMessages(token, friendId);
+        console.log("_CONVERSATION", _conversation);
         setConversation(_conversation.messagesBetweenUsers);
       };
       getConversation();
@@ -43,11 +46,24 @@ const Conversation = (props) => {
 
   const handleDelete = async (messageId) => {
     await deleteMessage(token, messageId);
+    if (!conversation.length) {
+      await setFriendFound(false);
+    }
+    console.log("CONVERSATION", conversation);
     setLoadingTrigger(!loadingTrigger);
   };
 
   const handleKeyDown = (event) => {
-    if (event.key == "Enter" && event.shiftKey == false) {
+    if (
+      !text ||
+      // !friendId ||
+      // !friendInfo ||
+      // !conversation.length ||
+      !selected ||
+      !friendFound
+    ) {
+      return;
+    } else if (event.key == "Enter" && event.shiftKey == false) {
       handleSend(friendId, friendInfo);
     }
   };
@@ -103,14 +119,24 @@ const Conversation = (props) => {
               onChange={(event) => {
                 setText(event.target.value);
               }}
-              onKeyDown={(e) => handleKeyDown(event)}
+              onKeyDown={(event) => handleKeyDown(event)}
             />
           </div>
           <button
-            disabled={!text || !friendId || !friendInfo}
+            disabled={
+              !text ||
+              !friendId ||
+              !friendInfo ||
+              // !conversation.length ||
+              !selected ||
+              !friendFound
+            }
             onClick={() => handleSend(friendId, friendInfo)}
           >
             <FontAwesomeIcon icon="fa-solid fa-message" />
+            {friendFound ? (
+              <FontAwesomeIcon icon="fa-solid fa-message" />
+            ) : null}
           </button>
         </div>
       </div>
