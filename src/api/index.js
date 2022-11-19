@@ -2,7 +2,6 @@ const BASE_URL = "http://localhost:4000/api";
 
 //Register
 export const registerUser = async (user) => {
-  console.log("USER", user);
   try {
     const response = await fetch(`${BASE_URL}/users/register`, {
       method: "POST",
@@ -20,7 +19,6 @@ export const registerUser = async (user) => {
       }),
     });
     const result = await response.json();
-    console.log("RESULT", result);
     return result;
   } catch (error) {
     console.error(error);
@@ -29,7 +27,6 @@ export const registerUser = async (user) => {
 
 //Login
 export const loginUser = async (user) => {
-  console.log("USER", user);
   try {
     const response = await fetch(`${BASE_URL}/users/login`, {
       method: "POST",
@@ -42,7 +39,6 @@ export const loginUser = async (user) => {
       }),
     });
     const result = await response.json();
-    console.log("RESULT", result);
     return result;
   } catch (error) {
     console.error(error);
@@ -199,7 +195,6 @@ export const removeComment = async (commentId, token) => {
       },
     });
     const result = await response.json();
-    console.log("RESULT DEL", result);
     return result;
   } catch (error) {
     console.error(error);

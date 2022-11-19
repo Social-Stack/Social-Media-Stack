@@ -28,7 +28,6 @@ const Login = ({ setUsername, setLoggedIn, loggedIn, setToken }) => {
     setError(result.error);
     setErrorMessage(result.message);
   };
-  console.log(user);
 
   return (
     <div id="login-container">

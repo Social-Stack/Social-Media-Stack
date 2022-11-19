@@ -21,18 +21,17 @@ friendsRouter.get("/status/:username", requireUser, async (req, res, next) => {
     const user  = req.user;
     const {username: friendUserName} = req.params;
     const friendbool = await isMyFriend(user.id, friendUserName)
-    console.log("FRIENDS", friendbool)
 
     if(user.username === friendUserName){
-      res.send({status:"you"})
+      res.send({status:"you"});
     }else if(await isMyFriend(user.id, friendUserName)){
-      res.send({status:'friend'})
+      res.send({status:'friend'});
     }else if( await myPendingRequestByUsername(user.id, friendUserName)){
-      res.send({status:'awaiting response'})
+      res.send({status:'awaiting response'});
     }else if(await amIPending(user.id, friendUserName)){
-      res.send({status:'awaiting You'})
+      res.send({status:'awaiting You'});
     }else{
-      res.send({status:'request'})
+      res.send({status:'request'});
     }
   } catch ({ error, message }) {
     next({ error, message });
