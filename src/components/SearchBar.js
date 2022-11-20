@@ -23,7 +23,6 @@ const SearchBar = (props) => {
       const getFriendsList = async () => {
         const friendsList = await getMyFriends(token, myId);
         setFriends(friendsList.friendsLists);
-        console.log("FRIENDS LIST", friendsList.friendsLists);
       };
       getFriendsList();
     }
@@ -32,19 +31,12 @@ const SearchBar = (props) => {
   const handleClick = async (friendUserId) => {
     setFriendId(friendUserId);
     const _friend = await getAFriend(token, friendUserId);
-    console.log("_FRIEND", _friend);
     setFriendInfo(_friend);
     const _conversation = await getFriendMessages(token, friendUserId);
-    console.log("_CONVERSATION", _conversation);
-    await setConversation(_conversation.messagesBetweenUsers);
-    await setSelected(friendUserId);
-    console.log("SELECTED", selected);
-    if (!friendFound) {
-      await setFriendFound(friendUserId);
-    }
-    // setFriendFound(friendUserId);
+    setConversation(_conversation.messagesBetweenUsers);
+    setSelected(friendUserId);
+    setFriendFound(friendUserId);
     setSearchTerm("");
-    console.log("IM HERE");
   };
 
   return (

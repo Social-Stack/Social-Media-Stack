@@ -51,11 +51,9 @@ const Messages = () => {
     const friend = await getAFriend(token, friendUserId);
     setFriendInfo(friend);
     if (selected === i) {
-      console.log("SELECTED IN MESSAGES", selected);
       return setSelected(null);
     }
     setSelected(i);
-    console.log("SELECTED IN MESSAGES", selected);
     setText("");
   };
 
