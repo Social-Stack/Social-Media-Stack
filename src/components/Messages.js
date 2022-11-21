@@ -16,7 +16,7 @@ const Messages = () => {
   const [friendId, setFriendId] = useState("");
   const [friendInfo, setFriendInfo] = useState({});
   const [loadingTrigger, setLoadingTrigger] = useState(true);
-  const [friendFound, setFriendFound] = useState(false);
+  const [friendFound, setFriendFound] = useState(true);
 
   useEffect(() => {
     const getChatlist = async () => {
@@ -88,7 +88,7 @@ const Messages = () => {
                   : (friendUserId = groupedMessage[0].sendingUserId);
               }
               return (
-                <div className="single-message">
+                <div key = {i} className="single-message">
                   <div
                     className="friend"
                     onClick={() => handleClick(friendUserId, i)}

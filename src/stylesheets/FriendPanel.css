@@ -1,0 +1,4 @@
+#side-panel-friends {
+    display: flex;
+    flex-direction: column;
+  }

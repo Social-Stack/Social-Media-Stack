@@ -3,6 +3,7 @@ import { getAllPublicPosts, getMyUserInfo, getMyFriends, getNewsFeed } from "../
 import NewPost from "./NewPost";
 import SinglePost from "./SinglePost";
 import "../stylesheets/NewsFeed.css";
+import FriendPanel from "./NewsFeedFriendPanel";
 
 const NewsFeed = ({ token }) => {
   const [allPosts, setAllPosts] = useState([]);
@@ -12,11 +13,13 @@ const NewsFeed = ({ token }) => {
   useEffect(() => {
     fetchPosts();
     getAllFriends();
+    setInterval(getAllFriends, 30000);
   }, [loadingTrigger, token]);
   
   const getAllFriends = async () => {
     const { id } = await getMyUserInfo(token);
     const myFriends = await getMyFriends(token, id);
+    console.log(myFriends)
     setFriends(myFriends.friendsLists);
   };
 
@@ -51,13 +54,19 @@ const NewsFeed = ({ token }) => {
             <h3 id="side-panel-title">Friends</h3>
             <div id="side-panel-friends">
               {friends
-                ? friends.map((friend, i) => {
-                return (
-                  <div id="side-panel-friend" key={i}>
-                    <img id="friend-img" height="50px" src={friend.picUrl} />
-                    <p>{friend.username}</p>
-                  </div>
-                );
+                ? friends.map((friend) => {
+                // return (
+                //   <div id="side-panel-friend" key={i}>
+                //     <img id="friend-img" height="50px" src={friend.picUrl} />
+                //     <div>
+                //       <p>{friend.username}</p>
+                //       <p>{timeAgo(friend.lastActive)}</p>
+                //     </div>
+                //   </div>
+                // );
+                return(
+                <FriendPanel key={friend.id}
+                friend={friend}></FriendPanel>)
                 })
               : null}
             </div>
