@@ -138,6 +138,25 @@ const getUserByEmail = async (email) => {
   }
 };
 
+const updateActive = async(id) => {
+  console.log('update time', id)
+  const time = new Date()
+  const newActive = `"lastActive" = $1`
+  try{
+    const { rows: [user] } = await client.query(`
+    UPDATE users
+    SET "lastActive" = $1
+    WHERE id=${id}
+    RETURNING *;
+    `, [time]);
+    console.log('users return', user)
+    return user;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 const authenticateUser = async ({ username, password }) => {
   if (!username || !password) {
     return;
@@ -172,5 +191,6 @@ module.exports = {
   getUserByUsername,
   getUserById,
   getUserByEmail,
+  updateActive,
   authenticateUser,
 };
