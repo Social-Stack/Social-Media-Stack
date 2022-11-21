@@ -54,8 +54,8 @@ const Conversation = (props) => {
   const handleKeyDown = (event) => {
     if (
       !text ||
-      // !friendId ||
-      // !friendInfo ||
+      !friendId ||
+      !friendInfo ||
       // !conversation.length ||
       !selected ||
       !friendFound

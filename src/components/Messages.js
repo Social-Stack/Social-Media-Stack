@@ -16,7 +16,7 @@ const Messages = () => {
   const [friendId, setFriendId] = useState("");
   const [friendInfo, setFriendInfo] = useState({});
   const [loadingTrigger, setLoadingTrigger] = useState(true);
-  const [friendFound, setFriendFound] = useState(false);
+  const [friendFound, setFriendFound] = useState(true);
 
   useEffect(() => {
     const getChatlist = async () => {
