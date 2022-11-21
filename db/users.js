@@ -141,8 +141,7 @@ const getUserByEmail = async (email) => {
 
 const updateActive = async(id) => {
   console.log('update time', id)
-  const time = new Date()
-  const newActive = `"lastActive" = $1`
+  const time = new Date();
   try{
     const { rows: [user] } = await client.query(`
     UPDATE users
