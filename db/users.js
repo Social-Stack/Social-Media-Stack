@@ -13,17 +13,18 @@ const createUser = async ({
   try {
     const SALT_COUNT = 10;
     const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+    const time = new Date();
 
     const {
       rows: [user],
     } = await client.query(
       `
-        INSERT INTO users (firstname, lastname, username, password, email, "picUrl", "isAdmin")
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        INSERT INTO users (firstname, lastname, username, password, email, "picUrl", "lastActive", "isAdmin")
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         ON CONFLICT (email) DO NOTHING
         RETURNING *;
       `,
-      [firstname, lastname, username, hashedPassword, email, picUrl, isAdmin]
+      [firstname, lastname, username, hashedPassword, email, picUrl, time, isAdmin]
     );
     return user;
   } catch (error) {
