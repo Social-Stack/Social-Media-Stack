@@ -88,7 +88,7 @@ const Messages = () => {
                   : (friendUserId = groupedMessage[0].sendingUserId);
               }
               return (
-                <div className="single-message">
+                <div key = {i} className="single-message">
                   <div
                     className="friend"
                     onClick={() => handleClick(friendUserId, i)}

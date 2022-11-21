@@ -17,6 +17,7 @@ const NewsFeed = ({ token }) => {
   const getAllFriends = async () => {
     const { id } = await getMyUserInfo(token);
     const myFriends = await getMyFriends(token, id);
+    console.log(myFriends)
     setFriends(myFriends.friendsLists);
   };
 

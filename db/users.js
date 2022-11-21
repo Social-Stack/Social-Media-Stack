@@ -13,17 +13,18 @@ const createUser = async ({
   try {
     const SALT_COUNT = 10;
     const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+    const time = new Date();
 
     const {
       rows: [user],
     } = await client.query(
       `
-        INSERT INTO users (firstname, lastname, username, password, email, "picUrl", "isAdmin")
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        INSERT INTO users (firstname, lastname, username, password, email, "picUrl", "lastActive", "isAdmin")
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         ON CONFLICT (email) DO NOTHING
         RETURNING *;
       `,
-      [firstname, lastname, username, hashedPassword, email, picUrl, isAdmin]
+      [firstname, lastname, username, hashedPassword, email, picUrl, time, isAdmin]
     );
     return user;
   } catch (error) {
@@ -138,6 +139,24 @@ const getUserByEmail = async (email) => {
   }
 };
 
+const updateActive = async(id) => {
+  console.log('update time', id)
+  const time = new Date();
+  try{
+    const { rows: [user] } = await client.query(`
+    UPDATE users
+    SET "lastActive" = $1
+    WHERE id=${id}
+    RETURNING *;
+    `, [time]);
+    console.log('users return', user)
+    return user;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 const authenticateUser = async ({ username, password }) => {
   if (!username || !password) {
     return;
@@ -172,5 +191,6 @@ module.exports = {
   getUserByUsername,
   getUserById,
   getUserByEmail,
+  updateActive,
   authenticateUser,
 };
