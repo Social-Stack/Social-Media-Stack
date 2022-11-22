@@ -58,18 +58,33 @@
   width: 95%;
 }
 
+#friend-img {
+  margin-right: 10px;
+}
+
+#fp-status-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+#fp-last-seen {
+  margin-left: 5px;
+}
+
 #side-panel-friend {
   display: flex;
   margin-bottom: 12px;
   background-color: #F5F3F4;
   border-radius: 5px;
   padding: 12px 8px;
-  /* width: 130%; */
 }
 
 #side-panel-friend:hover {
   cursor: pointer;
-  background-color: #e5383b8a;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  margin-bottom: 11px;
+  padding-bottom: 11px;
 }
 
 #friend-name {

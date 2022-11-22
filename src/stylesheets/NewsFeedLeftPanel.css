@@ -1,5 +1,7 @@
 .lp-images {
+  align-self: center;
   width: 35px;
+  height: fit-content;
   background-color: white;
   border-radius: 25%;
 }
@@ -48,7 +50,10 @@
 
 .lp-link-item:hover {
   cursor: pointer;
-  background-color: #e5383b8a;
+  background-color: #FFFFFF;
+  border: 1px solid rgb(128, 128, 128, 0.5);
+  margin-bottom: 11px;
+  padding-bottom: 11px;
 }
 
 .lp-item-text {
@@ -56,4 +61,5 @@
   align-items: center;
   font-weight: bold;
   padding-left: 10px;
+  height: 50px;
 }

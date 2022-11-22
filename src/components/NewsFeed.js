@@ -1,33 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   getAllPublicPosts,
   getMyUserInfo,
   getMyFriends,
-  getNewsFeed,
-} from "../api";
-import NewPost from "./NewPost";
-import SinglePost from "./SinglePost";
+  getNewsFeed
+} from '../api';
+import NewPost from './NewPost';
+import SinglePost from './SinglePost';
 import { NewsFeedLeftPanel } from './NewsFeedLeftPanel';
-import FriendPanel from "./NewsFeedFriendPanel";
-import "../stylesheets/NewsFeed.css";
+import FriendPanel from './NewsFeedFriendPanel';
+import '../stylesheets/NewsFeed.css';
 
 const NewsFeed = ({ token }) => {
   const [allPosts, setAllPosts] = useState([]);
   const [loadingTrigger, setLoadingTrigger] = useState(true);
   const [friends, setFriends] = useState([]);
-  const [width, setWidth] = useState("");
+  const [width, setWidth] = useState('');
   const [friendsTrigger, setFriendsTrigger] = useState(false);
-  
+
   const navigate = useNavigate();
 
-
   useEffect(() => {
-    setWidth("newsfeed-NewPostBox");
+    setWidth('newsfeed-NewPostBox');
     fetchPosts();
     getAllFriends();
     setInterval(getAllFriends, 30000);
   }, [loadingTrigger, token]);
-
 
   const getAllFriends = async () => {
     const { id } = await getMyUserInfo(token);
@@ -46,10 +45,6 @@ const NewsFeed = ({ token }) => {
   // const helpFunction = async() => {
   //   console.log(await getNewsFeed(token))
   // }
-
-  const handleFriendNavigate = username => {
-    navigate(`/profile/${username}`);
-  };
 
   return (
     <>
@@ -75,7 +70,7 @@ const NewsFeed = ({ token }) => {
             <h3 id='side-panel-title'>Friends</h3>
             <div id='side-panel-friends'>
               {friends
-                ? friends.map((friend) => {
+                ? friends.map(friend => {
                     // return (
                     //   <div id="side-panel-friend" key={i}>
                     //     <img id="friend-img" height="50px" src={friend.picUrl} />
@@ -93,7 +88,6 @@ const NewsFeed = ({ token }) => {
                     );
                   })
                 : null}
-
             </div>
           </div>
         </div>
