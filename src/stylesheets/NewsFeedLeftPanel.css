@@ -13,6 +13,7 @@
   flex-direction: column;
   width: 350px;
   padding-right: 12px;
+  margin-top: 8px;
   min-height: 500px;
   height: fit-content;
   max-height: 92vh;

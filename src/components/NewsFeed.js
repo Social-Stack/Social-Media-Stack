@@ -43,14 +43,14 @@ const NewsFeed = ({ token }) => {
   return (
     <>
       {/* <button onClick={() => helpFunction()}>helper</button> */}
-      <NewPost
-        token={token}
-        loadingTrigger={loadingTrigger}
-        setLoadingTrigger={setLoadingTrigger}
-      />
       <div id='main-content-container'>
         <NewsFeedLeftPanel token={token} />
         <div id='newsfeed-container'>
+          <NewPost
+            token={token}
+            loadingTrigger={loadingTrigger}
+            setLoadingTrigger={setLoadingTrigger}
+          />
           <div id='posts-container'>
             {allPosts[0]
               ? allPosts.map((post, i) => {
