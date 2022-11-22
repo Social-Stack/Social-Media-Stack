@@ -45,7 +45,6 @@ const NewPost = ({token, loadingTrigger, setLoadingTrigger}) => {
               </form>
           </div>
         </div>
-        <div id="spacer-div"></div>
       </div>
     )
 }

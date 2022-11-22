@@ -384,7 +384,7 @@ body {
 
   #newPostBox {
     width: 300px;
-    min-width: 75%;
+    min-width: 320px;
   }
 
   #new-post-form {
@@ -392,7 +392,7 @@ body {
   }
 
   #post-wrapper {
-    min-width: fit-content;
+    min-width: 320px;
   }
 
   #friends-profile-container-single {

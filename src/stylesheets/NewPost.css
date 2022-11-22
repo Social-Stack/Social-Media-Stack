@@ -9,19 +9,13 @@
     flex-direction: column;
     justify-content: center;
     border-radius: 5px;
-    box-shadow: 1px 1px 4px 1px #161A1D;
-    width: 33%;
+    box-shadow: 0px 0px 7.5px -2px #161A1D;
+    width: 24.38%;
     min-width: 400px;
     background-color: white;
     float: inline-end;
     margin: 8px 12px;
     padding: 8px 12px;
-}
-
-#spacer-div {
-  display: flex;
-  justify-self: flex-end;
-  width: 150px;
 }
 
 #newsfeed-upper-wrapper {
