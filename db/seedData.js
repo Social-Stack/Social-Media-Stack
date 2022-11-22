@@ -59,6 +59,7 @@ const createTableUsers = async () => {
                 password VARCHAR(255) NOT NULL,
                 email VARCHAR(100) UNIQUE NOT NULL,
                 "picUrl" VARCHAR(255) NOT NULL,
+                "lastActive" TIMESTAMPTZ DEFAULT null,
                 "isAdmin" boolean DEFAULT false
             );
         `);

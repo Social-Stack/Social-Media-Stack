@@ -16,7 +16,7 @@ const Messages = () => {
   const [friendId, setFriendId] = useState("");
   const [friendInfo, setFriendInfo] = useState({});
   const [loadingTrigger, setLoadingTrigger] = useState(true);
-  const [friendFound, setFriendFound] = useState(false);
+  const [friendFound, setFriendFound] = useState(true);
 
   useEffect(() => {
     const getChatlist = async () => {
@@ -81,6 +81,7 @@ const Messages = () => {
             <h2>Search for a friend and start chatting!</h2>
           ) : (
             result.map((groupedMessage, i) => {
+              const activeStatus = timeAgo(groupedMessage[0].active);
               let friendUserId;
               {
                 groupedMessage[0].sendingUserId === myId
@@ -88,7 +89,7 @@ const Messages = () => {
                   : (friendUserId = groupedMessage[0].sendingUserId);
               }
               return (
-                <div className="single-message">
+                <div key={i} className="single-message">
                   <div
                     className="friend"
                     onClick={() => handleClick(friendUserId, i)}
@@ -109,7 +110,13 @@ const Messages = () => {
                     </p>
                     <div
                       className={
-                        friendUserId % 2 == 0
+                        activeStatus.includes("just now") ||
+                        activeStatus.includes("second") ||
+                        activeStatus.includes("a minute ago") ||
+                        activeStatus.includes("2 minutes ago") ||
+                        activeStatus.includes("3 minutes ago") ||
+                        activeStatus.includes("4 minutes ago") ||
+                        activeStatus.includes("5 minutes ago")
                           ? "status available"
                           : "status away"
                       }
@@ -126,7 +133,7 @@ const Messages = () => {
           ) : (
             <div id="message-body">
               <div id="friend-header">
-                {(selected && conversation.length) || friendFound ? (
+                {(selected && conversation.length) || !friendFound ? (
                   <>
                     <img className="friend" src={friendInfo.picUrl} />
                     <strong>

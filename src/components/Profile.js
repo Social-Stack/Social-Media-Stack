@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getFriendStatus, getProfileData } from "../api";
+import { getFriendStatus, getProfileData, requestFriend } from "../api";
 import SinglePost from "./SinglePost";
 import NewPost from "./NewPost";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -7,7 +7,7 @@ import "../stylesheets/Profile.css";
 import ProfileFriendButton from "./ProfileFriendButton";
 import ProfileMessage from "./ProfileMessage";
 
-const Profile = ({token}) => {
+const Profile = ({ token }) => {
   const [userInfo, setUserInfo] = useState({});
   const [userPosts, setUserPosts] = useState([]);
   const [userFriends, setUserFriends] = useState([]);
@@ -20,10 +20,16 @@ const Profile = ({token}) => {
 
   const [sendingMessage, setSendingMessage] = useState(false);
 
+  const [width, setWidth] = useState("");
+
   const { username } = useParams();
+
   useEffect(() => {
-    setSendingMessage(false)
-    if(token){getUserInfo()};
+    setWidth("profile-NewPostBox");
+    setSendingMessage(false);
+    if (token) {
+      getUserInfo();
+    }
   }, [loadingTrigger, username, profileReloadTrigger, token]);
 
   const getUserInfo = async () => {
@@ -59,21 +65,25 @@ const Profile = ({token}) => {
           <Link id="link-friends" to={`/friendslists/${userInfo.username}`}>
             <button id="friends-btn">friends</button>
           </Link>
-          {userInfo.username !== loggedInUsername ? 
-            sendingMessage ? <ProfileMessage
-            userInfo={userInfo}
-            token={token}
-            setSendingMessage={setSendingMessage}/>
-            : (<button
-              id="message-btn"
-              onClick={() => {
-                setSendingMessage(true)
-                // messageHandler();
-              }}
-            >
-              Send Message
-            </button>
-            ) : null }
+          {userInfo.username !== loggedInUsername ? (
+            sendingMessage ? (
+              <ProfileMessage
+                userInfo={userInfo}
+                token={token}
+                setSendingMessage={setSendingMessage}
+              />
+            ) : (
+              <button
+                id="message-btn"
+                onClick={() => {
+                  setSendingMessage(true);
+                  // messageHandler();
+                }}
+              >
+                Send Message
+              </button>
+            )
+          ) : null}
         </div>
       </div>
       <div id="profile-main-wrapper">
@@ -115,11 +125,14 @@ const Profile = ({token}) => {
           </div>
         )}
         <div id="wrapper-posts">
-          <NewPost
-            token={token}
-            loadingTrigger={loadingTrigger}
-            setLoadingTrigger={setLoadingTrigger}
-          />
+          <div id="profile-newPostBox-container">
+            <NewPost
+              token={token}
+              loadingTrigger={loadingTrigger}
+              setLoadingTrigger={setLoadingTrigger}
+              width={width}
+            />
+          </div>
           <div id="profile-posts-container">
             {userPosts[0] &&
               userPosts.map((post, i) => {

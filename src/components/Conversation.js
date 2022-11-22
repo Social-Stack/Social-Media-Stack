@@ -77,6 +77,7 @@ const Conversation = (props) => {
               const time = date.toLocaleString();
               return (
                 <div
+                  key={i}
                   className={
                     singleMessage.sendingUserId === friendId
                       ? "friends-message message"

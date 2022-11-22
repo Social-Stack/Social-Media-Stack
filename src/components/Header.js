@@ -79,7 +79,7 @@ const Header = ({
             align-items: center;
             background-color: #a4161a;
             /* background-color: rgb(240, 3, 3); */
-            height: 68px;
+            height: 72px;
             width: 100%;
             margin-bottom: 10px;
             /* text-decoration: none; */

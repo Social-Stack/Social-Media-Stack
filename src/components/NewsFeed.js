@@ -1,31 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
 import {
   getAllPublicPosts,
   getMyUserInfo,
   getMyFriends,
-  getNewsFeed
-} from '../api';
-import NewPost from './NewPost';
-import SinglePost from './SinglePost';
+  getNewsFeed,
+} from "../api";
+import NewPost from "./NewPost";
+import SinglePost from "./SinglePost";
 import { NewsFeedLeftPanel } from './NewsFeedLeftPanel';
-import '../stylesheets/NewsFeed.css';
+import FriendPanel from "./NewsFeedFriendPanel";
+import "../stylesheets/NewsFeed.css";
 
 const NewsFeed = ({ token }) => {
   const [allPosts, setAllPosts] = useState([]);
   const [loadingTrigger, setLoadingTrigger] = useState(true);
   const [friends, setFriends] = useState([]);
+  const [width, setWidth] = useState("");
+  const [friendsTrigger, setFriendsTrigger] = useState(false);
+  
   const navigate = useNavigate();
 
+
   useEffect(() => {
+    setWidth("newsfeed-NewPostBox");
     fetchPosts();
     getAllFriends();
+    setInterval(getAllFriends, 30000);
   }, [loadingTrigger, token]);
+
 
   const getAllFriends = async () => {
     const { id } = await getMyUserInfo(token);
     const myFriends = await getMyFriends(token, id);
+
+    console.log(myFriends);
+
     setFriends(myFriends.friendsLists);
+    setFriendsTrigger(!friendsTrigger);
   };
 
   const fetchPosts = async () => {
@@ -64,28 +75,25 @@ const NewsFeed = ({ token }) => {
             <h3 id='side-panel-title'>Friends</h3>
             <div id='side-panel-friends'>
               {friends
-                ? friends.map((friend, i) => {
+                ? friends.map((friend) => {
+                    // return (
+                    //   <div id="side-panel-friend" key={i}>
+                    //     <img id="friend-img" height="50px" src={friend.picUrl} />
+                    //     <div>
+                    //       <p>{friend.username}</p>
+                    //       <p>{timeAgo(friend.lastActive)}</p>
+                    //     </div>
+                    //   </div>
+                    // );
                     return (
-                      <div
-                        id='side-panel-friend'
-                        key={i}
-                        onClick={handleFriendNavigate.bind(
-                          null,
-                          friend.username
-                        )}
-                      >
-                        <img
-                          id='friend-img'
-                          height='50px'
-                          src={friend.picUrl}
-                        />
-                        <p id='friend-name'>
-                          {friend.firstname} {friend.lastname}
-                        </p>
-                      </div>
+                      <FriendPanel
+                        key={friend.id}
+                        friend={friend}
+                      ></FriendPanel>
                     );
                   })
                 : null}
+
             </div>
           </div>
         </div>

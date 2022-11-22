@@ -10,6 +10,10 @@
   width: 100%;
 }
 
+.newsfeed-NewPostBox {
+  width: 33%;
+}
+
 #posts-container {
   display: flex;
   flex-direction: column;

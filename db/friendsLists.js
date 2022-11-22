@@ -43,6 +43,9 @@ const getFriendsByUserId = async (id) => {
         ON friendslists."friendId" = users.id
         WHERE "userId"=${id};
         `);
+      for(let i = 0; i< friends.length; i++){
+        delete friends[i].password
+      }
     return friends;
   } catch (error) {
     console.error(error);

@@ -5,17 +5,17 @@
 }
 
 #newPostBox {
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 5px;
-    box-shadow: 0px 0px 7.5px -2px #161A1D;
-    width: 40%;
-    min-width: 400px;
-    background-color: white;
-    float: inline-end;
-    margin: 8px 12px;
-    padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 5px;
+  box-shadow: 0px 0px 7.5px -2px #161a1d;
+  /* width: 40%;
+  min-width: 400px; */
+  background-color: white;
+  float: inline-end;
+  margin: 8px 12px;
+  padding: 8px 12px;
 }
 
 #newsfeed-upper-wrapper {
@@ -23,7 +23,7 @@
 }
 
 #user-welcome {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   margin-left: 12px;
 }
 
@@ -36,31 +36,30 @@
 }
 
 #new-post-form > * {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
-#newPostTextBox{
-    width: 97.5%;
-    height: 96px;
-    padding: 12px 8px;
-    border: none;
-    outline: none;
-    margin: 12px 0px;
-    font-size: 16px;
-    border-radius: 12px;
-    background-color: #F5F3F4;
+#newPostTextBox {
+  width: 97.5%;
+  height: 96px;
+  padding: 12px 8px;
+  border: none;
+  outline: none;
+  margin: 12px 0px;
+  font-size: 16px;
+  border-radius: 12px;
+  background-color: #f5f3f4;
 }
 
-
-#newPostTextBox::placeholder{
-  font-family: 'Poppins', sans-serif;
+#newPostTextBox::placeholder {
+  font-family: "Poppins", sans-serif;
 }
 
 #post-visibility-selector {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   border-radius: 5px;
   height: 30px;
-  background-color: #D3D3D3;
+  background-color: #d3d3d3;
   color: black;
   padding: 0px 12px;
 }
@@ -74,14 +73,14 @@
 }
 
 #post-visibility-text {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   margin-left: 5px;
   margin-right: 10px;
 }
 
-#post-button{
-  background-color: #E5383B;
-  font-family: 'Poppins', sans-serif;
+#post-button {
+  background-color: #e5383b;
+  font-family: "Poppins", sans-serif;
   color: white;
   width: 150;
   height: 30;
@@ -96,10 +95,10 @@
   cursor: pointer;
 }
 
-#newPostBottomBar{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    width: 97.5%;
+#newPostBottomBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 97.5%;
 }

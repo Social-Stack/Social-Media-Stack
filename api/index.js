@@ -5,7 +5,7 @@ const chalk = require("chalk");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 
-const { getUserById } = require("../db");
+const { getUserById, updateActive } = require("../db");
 
 apiRouter.use(async (req, res, next) => {
   const prefix = "Bearer ";
@@ -19,6 +19,7 @@ apiRouter.use(async (req, res, next) => {
       const { id } = jwt.verify(token, JWT_SECRET);
 
       if (id) {
+        updateActive(id);
         req.user = await getUserById(id);
         next();
       }
