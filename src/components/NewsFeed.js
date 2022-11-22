@@ -9,6 +9,7 @@ const NewsFeed = ({ token }) => {
   const [allPosts, setAllPosts] = useState([]);
   const [loadingTrigger, setLoadingTrigger] = useState(true);
   const [friends, setFriends] = useState([]);
+  const [friendsTrigger, setFriendsTrigger] = useState(false);
 
   useEffect(() => {
     fetchPosts();
@@ -19,8 +20,8 @@ const NewsFeed = ({ token }) => {
   const getAllFriends = async () => {
     const { id } = await getMyUserInfo(token);
     const myFriends = await getMyFriends(token, id);
-    console.log(myFriends)
     setFriends(myFriends.friendsLists);
+    setFriendsTrigger(!friendsTrigger);
   };
 
   const fetchPosts = async () => {
@@ -66,7 +67,7 @@ const NewsFeed = ({ token }) => {
                 // );
                 return(
                 <FriendPanel key={friend.id}
-                friend={friend}></FriendPanel>)
+                friend={friend} friendsTrigger={friendsTrigger}></FriendPanel>)
                 })
               : null}
             </div>

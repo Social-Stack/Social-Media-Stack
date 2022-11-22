@@ -2,3 +2,17 @@
     display: flex;
     flex-direction: column;
   }
+
+  .Online {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: #26c281;
+  }
+
+  .Offline {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: #fd9014;
+  }
