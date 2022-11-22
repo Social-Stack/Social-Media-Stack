@@ -32,18 +32,10 @@ body {
   justify-content: space-evenly;
 }
 
-#profile-newPostBox-container {
-  display: flex;
-  /* width: 550px; */
-  margin-left: 25px;
-  flex-direction: column;
-}
-
 #profile-posts-container {
   display: flex;
   flex-direction: row;
   width: 550px;
-  margin-right: 20px;
   flex-direction: column;
 }
 
@@ -403,7 +395,7 @@ body {
 
   #newPostBox {
     width: 300px;
-    min-width: 75%;
+    min-width: 320px;
   }
 
   #new-post-form {
@@ -411,8 +403,7 @@ body {
   }
 
   #post-wrapper {
-    min-width: fit-content;
-    /* width: 75%; */
+    min-width: 320px;
   }
 
   #friends-profile-container-single {
