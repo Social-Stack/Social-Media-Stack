@@ -373,10 +373,10 @@ body {
 
   #profile-posts-container {
     display: flex;
-    margin-left: 23px;
+    /* margin-left: 23px; */
     flex-direction: column;
     align-items: center;
-    width: 150px;
+    /* width: 150px;
   }
 
   #profile-newPostBox-container {
@@ -394,8 +394,8 @@ body {
   }
 
   #newPostBox {
-    width: 300px;
-    min-width: 320px;
+    /* width: 300px; */
+    min-width: 300px;
   }
 
   #new-post-form {
@@ -403,7 +403,7 @@ body {
   }
 
   #post-wrapper {
-    min-width: 320px;
+    min-width: 300px;
   }
 
   #friends-profile-container-single {
