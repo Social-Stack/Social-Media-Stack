@@ -73,9 +73,19 @@ body {
   cursor: pointer;
 }
 
+#message-profile-container {
+  display: flex;
+}
+
+#message-area {
+  border-radius: 5px;
+  padding: 5px;
+  margin-right: 8px;
+  border: none;
+}
+
 #friends-profile-container {
   display: flex;
-  /* max-height: 300px; */
   height: 290px;
   overflow: auto;
   background-color: white;
@@ -85,9 +95,6 @@ body {
   padding: 10px 10px;
   box-shadow: 1px 1px 4px 1px #161a1d;
   flex-direction: column;
-  /* justify-content: space-evenly; */
-  /* align-items: space; */
-  /* flex-wrap: wrap; */
 }
 
 #friends-profile-container-single {
@@ -101,7 +108,6 @@ body {
   padding: 10px;
   box-shadow: 1px 1px 4px 1px #161a1d;
   flex-direction: column;
-  /* flex-wrap: wrap; */
 }
 
 #friends-profile-title {
@@ -115,7 +121,6 @@ body {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  /* justify-content: center; */
 }
 
 #friend-wrapper {
@@ -176,8 +181,8 @@ body {
   background-color: #e5383b;
   font-family: "Poppins", sans-serif;
   color: white;
-  width: 100;
-  height: 30;
+  width: 100px;
+  height: 30px;
   border-radius: 5px;
 }
 
@@ -187,12 +192,27 @@ body {
   cursor: pointer;
 }
 
+#profile-message-sendbtn {
+  background-color: #e5383b;
+  font-family: "Poppins", sans-serif;
+  color: white;
+  width: 80px;
+  margin-right: 8px;
+  border-radius: 5px;
+}
+
+#profile-message-sendbtn:hover {
+  background-color: #e5383b8a;
+  color: black;
+  cursor: pointer;
+}
+
 #accept-friend-btn {
   background-color: #e5383b;
   font-family: "Poppins", sans-serif;
   color: white;
-  width: 80;
-  height: 30;
+  width: 80px;
+  height: 30px;
   margin-right: 5px;
   border-radius: 5px;
 }
@@ -207,12 +227,26 @@ body {
   background-color: #000000;
   font-family: "Poppins", sans-serif;
   color: white;
-  width: 80;
-  height: 30;
+  width: 80px;
+  height: 30px;
   border-radius: 5px;
 }
 
 #decline-friend-btn:hover {
+  background-color: #b1a7a6;
+  color: black;
+  cursor: pointer;
+}
+
+#profile-message-cancelbtn {
+  background-color: #000000;
+  font-family: "Poppins", sans-serif;
+  color: white;
+  width: 80px;
+  border-radius: 5px;
+}
+
+#profile-message-cancelbtn:hover {
   background-color: #b1a7a6;
   color: black;
   cursor: pointer;
@@ -312,9 +346,7 @@ body {
 
   #friends-profile-container {
     display: flex;
-    /* max-height: 300px; */
     background-color: white;
-    /* min-width: 350px; */
     border-radius: 5px;
     padding-top: 10px;
     padding-left: 10px;
@@ -327,7 +359,6 @@ body {
 
   #newsfeed-upper-wrapper {
     display: flex;
-    /* width: 10px; */
     align-items: center;
   }
 
@@ -366,35 +397,23 @@ body {
 
   #spacer-div {
     display: none;
-    /* display: flex;
-    justify-self: flex-end; */
-    /* width: 150px; */
   }
 
   #profile-posts-container {
     display: flex;
-    /* margin-left: 23px; */
     flex-direction: column;
     align-items: center;
-    /* width: 150px;
-  }
-
-  #profile-newPostBox-container {
-    display: flex;
-    /* width: 550px; */
     margin-left: 0px;
     flex-direction: column;
   }
 
   #wrapper-posts {
     display: flex;
-    /* width: 33px; */
     flex-direction: column;
     align-items: center;
   }
 
   #newPostBox {
-    /* width: 300px; */
     min-width: 300px;
   }
 
