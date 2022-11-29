@@ -3,17 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import timeAgo from 'node-time-ago';
 import '../stylesheets/FriendPanel.css';
 
-const FriendPanel = ({ friend, friendsTrigger }) => {
+const FriendPanel = ({ friend }) => {
   const [lastSeen, setLastSeen] = useState('Online');
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    setSeen();
-  }, [friendsTrigger]);
+    setInterval(setSeen,30000);
+  }, []);
 
   const onlineTimes = [
-    'second',
+   'second',
     'a minute ago',
     '2 minutes ago',
     '3 minutes ago',
