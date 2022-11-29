@@ -1,6 +1,8 @@
 #new-post-wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 100%;
 }
 
@@ -16,6 +18,18 @@
   float: inline-end;
   margin: 8px 12px;
   padding: 8px 12px;
+}
+
+#success-msg {
+  padding: 0px 20px;
+  font-weight: bold;
+  background-color: rgb(103, 148, 103);
+}
+
+#error-msg {
+  padding: 0px 20px;
+  font-weight: bold;
+  background-color: rgb(192, 82, 82);
 }
 
 #newsfeed-upper-wrapper {
