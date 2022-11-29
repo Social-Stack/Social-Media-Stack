@@ -81,6 +81,7 @@ const Header = ({
             /* background-color: rgb(240, 3, 3); */
             height: 72px;
             width: 100%;
+            margin-bottom: 10px;
             /* text-decoration: none; */
           }
           
@@ -159,6 +160,7 @@ const Header = ({
 
             .header {
               width: 100%;
+              min-width: 320px;
               height: 48px;
             }
             
