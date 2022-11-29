@@ -78,7 +78,6 @@ const Profile = () => {
                 id='message-btn'
                 onClick={() => {
                   setSendingMessage(true);
-                  // messageHandler();
                 }}
               >
                 Send Message
