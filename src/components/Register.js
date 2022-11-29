@@ -13,8 +13,7 @@ const Register = ({ setUsername, setLoggedIn, loggedIn, setToken }) => {
     username: "",
     password: "",
     confirmPassword: "",
-    email: "",
-    picUrl: "",
+    email: ""
   });
 
   const handleChange = (event) => {
