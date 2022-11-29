@@ -12,30 +12,30 @@ import { NewsFeedLeftPanel } from './NewsFeedLeftPanel';
 import FriendPanel from './NewsFeedFriendPanel';
 import '../stylesheets/NewsFeed.css';
 
-const NewsFeed = ({ token }) => {
+const NewsFeed = () => {
   const [allPosts, setAllPosts] = useState([]);
   const [loadingTrigger, setLoadingTrigger] = useState(true);
   const [friends, setFriends] = useState([]);
   const [width, setWidth] = useState('');
-  const [friendsTrigger, setFriendsTrigger] = useState(false);
-
-  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     setWidth('newsfeed-NewPostBox');
     fetchPosts();
     getAllFriends();
-    setInterval(getAllFriends, 30000);
   }, [loadingTrigger, token]);
 
+
+  useEffect(()=>{
+    setInterval(getAllFriends, 3000)
+  },[])
+
   const getAllFriends = async () => {
+    if(token){
     const { id } = await getMyUserInfo(token);
     const myFriends = await getMyFriends(token, id);
-
-    console.log(myFriends);
-
     setFriends(myFriends.friendsLists);
-    setFriendsTrigger(!friendsTrigger);
+    }
   };
 
   const fetchPosts = async () => {
@@ -43,7 +43,8 @@ const NewsFeed = ({ token }) => {
     setAllPosts(feed);
   };
   // const helpFunction = async() => {
-  //   console.log(await getNewsFeed(token))
+  //   console.log(friendsTrigger)
+  //   console.log(token)
   // }
 
   return (
