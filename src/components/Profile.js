@@ -35,7 +35,6 @@ const Profile = () => {
   const getUserInfo = async () => {
     const userProfile = await getProfileData(token, username);
     setUserInfo(userProfile.user);
-    console.log('USER INFO', userInfo);
     setUserPosts(userProfile.posts);
     setUserFriends(userProfile.friendList);
     setReloadPostTrigger(!reloadPostTrigger);
