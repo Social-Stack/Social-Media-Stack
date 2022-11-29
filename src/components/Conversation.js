@@ -9,6 +9,7 @@ const Conversation = (props) => {
     friendInfo,
     friendId,
     selected,
+    setSelected,
     admin,
     myId,
     text,
@@ -27,7 +28,7 @@ const Conversation = (props) => {
         const _conversation = await getFriendMessages(token, friendId);
         setConversation(_conversation.messagesBetweenUsers);
         if (!_conversation.messagesBetweenUsers.length) {
-          await setFriendFound(false);
+          await setFriendFound(null);
         }
       };
       getConversation();
@@ -133,6 +134,9 @@ const Conversation = (props) => {
             onClick={() => handleSend(friendId, friendInfo)}
           >
             <FontAwesomeIcon icon="fa-solid fa-message" />
+            {friendFound ? (
+              <FontAwesomeIcon icon="fa-solid fa-message" />
+            ) : null}
           </button>
         </div>
       </div>

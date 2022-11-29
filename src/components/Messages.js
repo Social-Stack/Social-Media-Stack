@@ -53,7 +53,7 @@ const Messages = () => {
     setSelected(i);
     setFriendFound(!friendFound);
     setText("");
-    if (selected === i) {
+    if (selected) {
       return setSelected(null);
     }
   };
@@ -149,6 +149,7 @@ const Messages = () => {
                   friendInfo={friendInfo}
                   friendId={friendId}
                   selected={selected}
+                  setSelected={setSelected}
                   admin={admin}
                   myId={myId}
                   text={text}
