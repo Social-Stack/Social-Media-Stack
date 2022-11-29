@@ -27,12 +27,13 @@ const Conversation = (props) => {
       const getConversation = async () => {
         const _conversation = await getFriendMessages(token, friendId);
         setConversation(_conversation.messagesBetweenUsers);
-        if (!_conversation.messagesBetweenUsers.length) {
-          await setFriendFound(null);
-        }
+        // if (!_conversation.messagesBetweenUsers.length && friendFound) {
+        //   await setFriendFound(null);
+        // }
       };
       getConversation();
     }
+    console.log("CONVERSATION", conversation);
   }, [friendId, loadingTrigger]);
 
   const handleSend = async (friendId, friendInfo) => {
@@ -49,6 +50,9 @@ const Conversation = (props) => {
 
   const handleDelete = async (messageId) => {
     await deleteMessage(token, messageId);
+    if (conversation.length <= 1) {
+      await setFriendFound(false);
+    }
     setLoadingTrigger(!loadingTrigger);
   };
 
@@ -134,9 +138,6 @@ const Conversation = (props) => {
             onClick={() => handleSend(friendId, friendInfo)}
           >
             <FontAwesomeIcon icon="fa-solid fa-message" />
-            {friendFound ? (
-              <FontAwesomeIcon icon="fa-solid fa-message" />
-            ) : null}
           </button>
         </div>
       </div>
