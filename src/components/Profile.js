@@ -1,31 +1,31 @@
-import { useEffect, useState } from "react";
-import { getFriendStatus, getProfileData, requestFriend } from "../api";
-import SinglePost from "./SinglePost";
-import NewPost from "./NewPost";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import "../stylesheets/Profile.css";
-import ProfileFriendButton from "./ProfileFriendButton";
-import ProfileMessage from "./ProfileMessage";
+import { useEffect, useState } from 'react';
+import { getFriendStatus, getProfileData } from '../api';
+import SinglePost from './SinglePost';
+import NewPost from './NewPost';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import '../stylesheets/Profile.css';
+import ProfileFriendButton from './ProfileFriendButton';
+import ProfileMessage from './ProfileMessage';
 
-const Profile = ({ token }) => {
+const Profile = () => {
   const [userInfo, setUserInfo] = useState({});
   const [userPosts, setUserPosts] = useState([]);
   const [userFriends, setUserFriends] = useState([]);
   const [loadingTrigger, setLoadingTrigger] = useState(true);
   const [profileReloadTrigger, setProfileReloadTrigger] = useState(false);
   const [reloadPostTrigger, setReloadPostTrigger] = useState(false);
-  const [friendStatus, setFriendStatus] = useState("");
-  // const token = localStorage.getItem("token");
-  const loggedInUsername = localStorage.getItem("username");
-
+  const [friendStatus, setFriendStatus] = useState('');
+  const [currentUsername, setCurrentUsername] = useState('');
+  const [width, setWidth] = useState('');
   const [sendingMessage, setSendingMessage] = useState(false);
 
-  const [width, setWidth] = useState("");
+  const token = localStorage.getItem('token');
 
   const { username } = useParams();
 
   useEffect(() => {
-    setWidth("profile-NewPostBox");
+    setCurrentUsername(localStorage.getItem('username'));
+    setWidth('profile-NewPostBox');
     setSendingMessage(false);
     if (token) {
       getUserInfo();
@@ -35,6 +35,7 @@ const Profile = ({ token }) => {
   const getUserInfo = async () => {
     const userProfile = await getProfileData(token, username);
     setUserInfo(userProfile.user);
+    console.log('USER INFO', userInfo);
     setUserPosts(userProfile.posts);
     setUserFriends(userProfile.friendList);
     setReloadPostTrigger(!reloadPostTrigger);
@@ -43,15 +44,15 @@ const Profile = ({ token }) => {
   };
 
   return (
-    <div id="profile-container">
-      <div id="userinfo-container">
-        <div id="profile-info">
-          <img id="user-image" height="150px" src={userInfo.picUrl} />
-          <div id="user">
-            <h1 id="user-fullname">
+    <div id='profile-container'>
+      <div id='userinfo-container'>
+        <div id='profile-info'>
+          <img id='user-image' height='150px' src={userInfo.picUrl} />
+          <div id='user'>
+            <h1 id='user-fullname'>
               {userInfo.firstname} {userInfo.lastname}
             </h1>
-            <p id="friend-num">{String(userFriends.length)} friends</p>
+            <p id='friend-num'>{String(userFriends.length)} friends</p>
             <ProfileFriendButton
               token={token}
               status={friendStatus}
@@ -61,11 +62,11 @@ const Profile = ({ token }) => {
             />
           </div>
         </div>
-        <div id="profile-btns">
-          <Link id="link-friends" to={`/friendslists/${userInfo.username}`}>
-            <button id="friends-btn">friends</button>
+        <div id='profile-btns'>
+          <Link id='link-friends' to={`/friendslists/${userInfo.username}`}>
+            <button id='friends-btn'>friends</button>
           </Link>
-          {userInfo.username !== loggedInUsername ? (
+          {userInfo.username && userInfo.username !== currentUsername ? (
             sendingMessage ? (
               <ProfileMessage
                 userInfo={userInfo}
@@ -74,7 +75,7 @@ const Profile = ({ token }) => {
               />
             ) : (
               <button
-                id="message-btn"
+                id='message-btn'
                 onClick={() => {
                   setSendingMessage(true);
                   // messageHandler();
@@ -86,16 +87,16 @@ const Profile = ({ token }) => {
           ) : null}
         </div>
       </div>
-      <div id="profile-main-wrapper">
+      <div id='profile-main-wrapper'>
         {userFriends.length === 1 ? (
-          <div id="friends-profile-container-single">
-            <h2 id="friends-profile-title">Friends</h2>
-            <div id="test-123">
+          <div id='friends-profile-container-single'>
+            <h2 id='friends-profile-title'>Friends</h2>
+            <div id='test-123'>
               {userFriends.map((friend, i) => {
                 return (
-                  <div key={i} id="friend-wrapper-single">
+                  <div key={i} id='friend-wrapper-single'>
                     <Link to={`/profile/${friend.username}`}>
-                      <img height="80px" src={friend.picUrl} />
+                      <img height='80px' src={friend.picUrl} />
                     </Link>
                     <h3>
                       {friend.firstname} {friend.lastname}
@@ -106,14 +107,14 @@ const Profile = ({ token }) => {
             </div>
           </div>
         ) : (
-          <div id="friends-profile-container">
-            <h2 id="friends-profile-title">Friends</h2>
-            <div id="test-123">
+          <div id='friends-profile-container'>
+            <h2 id='friends-profile-title'>Friends</h2>
+            <div id='test-123'>
               {userFriends.map((friend, i) => {
                 return (
-                  <div key={i} id="friend-wrapper">
+                  <div key={i} id='friend-wrapper'>
                     <Link to={`/profile/${friend.username}`}>
-                      <img height="80px" src={friend.picUrl} />
+                      <img height='80px' src={friend.picUrl} />
                     </Link>
                     <h3>
                       {friend.firstname} {friend.lastname}
@@ -124,8 +125,8 @@ const Profile = ({ token }) => {
             </div>
           </div>
         )}
-        <div id="wrapper-posts">
-          <div id="profile-newPostBox-container">
+        <div id='wrapper-posts'>
+          <div id='profile-newPostBox-container'>
             <NewPost
               token={token}
               loadingTrigger={loadingTrigger}
@@ -133,7 +134,7 @@ const Profile = ({ token }) => {
               width={width}
             />
           </div>
-          <div id="profile-posts-container">
+          <div id='profile-posts-container'>
             {userPosts[0] &&
               userPosts.map((post, i) => {
                 return (

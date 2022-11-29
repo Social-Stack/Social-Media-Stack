@@ -41,7 +41,6 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
       </Link>
       {loggedIn ? (
         <div>
-          {console.log(userInfo)}
           <nav id='header-links'>
             <Link to={`/profile/${username}`}>
               <img id='profile-pic' src={userInfo.picUrl} />
