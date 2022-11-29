@@ -16,7 +16,7 @@ const Messages = () => {
   const [friendId, setFriendId] = useState("");
   const [friendInfo, setFriendInfo] = useState({});
   const [loadingTrigger, setLoadingTrigger] = useState(true);
-  const [friendFound, setFriendFound] = useState(true);
+  const [friendFound, setFriendFound] = useState(false);
 
   useEffect(() => {
     const getChatlist = async () => {
@@ -50,11 +50,12 @@ const Messages = () => {
     setFriendId(friendUserId);
     const friend = await getAFriend(token, friendUserId);
     setFriendInfo(friend);
+    setSelected(i);
+    setFriendFound(!friendFound);
+    setText("");
     if (selected === i) {
       return setSelected(null);
     }
-    setSelected(i);
-    setText("");
   };
 
   return (
@@ -133,7 +134,7 @@ const Messages = () => {
           ) : (
             <div id="message-body">
               <div id="friend-header">
-                {(selected && conversation.length) || !friendFound ? (
+                {(selected && conversation.length) || friendFound ? (
                   <>
                     <img className="friend" src={friendInfo.picUrl} />
                     <strong>

@@ -17,7 +17,8 @@ const NewsFeed = () => {
   const [loadingTrigger, setLoadingTrigger] = useState(true);
   const [friends, setFriends] = useState([]);
   const [width, setWidth] = useState('');
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token')
+
 
   useEffect(() => {
     setWidth('newsfeed-NewPostBox');
