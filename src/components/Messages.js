@@ -24,7 +24,6 @@ const Messages = () => {
       setMyId(id);
       setAdmin(isAdmin);
       const myMessages = await getAllMyMessages(token, id);
-      console.log("MESSAGES", myMessages);
       setAllMessages(myMessages.allMyMessages);
     };
 
@@ -46,8 +45,6 @@ const Messages = () => {
     }
     return groupedMessages;
   }, []);
-
-  console.log("RESULT", result);
 
   const handleClick = async (friendUserId, i) => {
     setFriendId(friendUserId);
