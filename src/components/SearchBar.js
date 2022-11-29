@@ -34,7 +34,7 @@ const SearchBar = (props) => {
     setFriendInfo(_friend);
     const _conversation = await getFriendMessages(token, friendUserId);
     setConversation(_conversation.messagesBetweenUsers);
-    setSelected(friendUserId);
+    // setSelected(friendUserId);
     setFriendFound(friendUserId);
     setSearchTerm("");
   };
