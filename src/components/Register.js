@@ -121,7 +121,7 @@ const Register = ({ setUsername, setLoggedIn, loggedIn, setToken }) => {
                 name="picUrl"
                 className="form-input"
                 onChange={handleChange}
-                placeholder="Profile Picture URL"
+                placeholder="Profile Picture URL (Optional)"
               />
             </div>
           </div>
