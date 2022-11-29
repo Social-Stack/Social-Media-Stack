@@ -12,14 +12,14 @@ import { NewsFeedLeftPanel } from './NewsFeedLeftPanel';
 import FriendPanel from './NewsFeedFriendPanel';
 import '../stylesheets/NewsFeed.css';
 
-const NewsFeed = ({ token }) => {
+const NewsFeed = () => {
   const [allPosts, setAllPosts] = useState([]);
   const [loadingTrigger, setLoadingTrigger] = useState(true);
   const [friends, setFriends] = useState([]);
   const [width, setWidth] = useState('');
   const [friendsTrigger, setFriendsTrigger] = useState(false);
 
-  const navigate = useNavigate();
+  const token = localStorage.getItem('token')
 
   useEffect(() => {
     setWidth('newsfeed-NewPostBox');
