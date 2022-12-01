@@ -4,10 +4,11 @@ import { getMyUserInfo } from '../api';
 import '../stylesheets/Header.css';
 import NotificationIcon from './Notifications/NotificationIcon';
 
-const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
-  // const navigate = useNavigate();
+const Header = ({ setLoggedIn, loggedIn, setUsername, username }) => {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [userInfo, setUserInfo] = useState({});
+
+  const navigate = useNavigate();
 
   const token = localStorage.getItem('token');
 
@@ -16,10 +17,10 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
     localStorage.removeItem('username');
     localStorage.removeItem('profile pic');
     localStorage.removeItem('userId');
-    setToken('');
+    setUserInfo({})
     setLoggedIn(false);
     setUsername('');
-    // navigate("/login");
+    navigate('/login');
   };
 
   const toggleHamburger = () => {
@@ -29,17 +30,17 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username, setToken }) => {
   useEffect(() => {
     const fetchData = async () => {
       const _userInfo = await getMyUserInfo(token);
-      setUserInfo(await _userInfo);
+      setUserInfo(_userInfo);
     };
     fetchData();
-  }, []);
+  }, [loggedIn]);
 
   return (
     <div className='header'>
       <Link id='logo' to={loggedIn ? '/newsfeed' : '/'}>
         Social Stack
       </Link>
-      {loggedIn ? (
+      {loggedIn && userInfo.picUrl ? (
         <div>
           <nav id='header-links'>
             <Link to={`/profile/${username}`}>
