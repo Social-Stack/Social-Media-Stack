@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { getMyUserInfo } from '../api';
-import '../stylesheets/Header.css';
-import NotificationIcon from './Notifications/NotificationIcon';
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { getMyUserInfo } from "../api";
+import "../stylesheets/Header.css";
+import NotificationIcon from "./Notifications/NotificationIcon";
 
 const Header = ({ setLoggedIn, loggedIn, setUsername, username }) => {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
@@ -10,17 +10,17 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username }) => {
 
   const navigate = useNavigate();
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('profile pic');
-    localStorage.removeItem('userId');
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("profile pic");
+    localStorage.removeItem("userId");
     setUserInfo({});
     setLoggedIn(false);
-    setUsername('');
-    navigate('/login');
+    setUsername("");
+    navigate("/login");
   };
 
   const toggleHamburger = () => {
@@ -36,39 +36,39 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username }) => {
   }, [loggedIn]);
 
   return (
-    <div className='header'>
-      <Link id='logo' to={loggedIn ? '/newsfeed' : '/'}>
-        Social Stack
+    <div className="header">
+      <Link id="logo" to={loggedIn ? "/newsfeed" : "/"}>
+        Social Dev Stack
       </Link>
       {loggedIn && userInfo.picUrl ? (
         <div>
-          <nav id='header-links'>
+          <nav id="header-links">
             <Link to={`/profile/${username}`}>
-              <img id='profile-pic' src={userInfo.picUrl} />
+              <img id="profile-pic" src={userInfo.picUrl} />
             </Link>
-            <Link to='/messages'>Messages </Link>
-            <Link to='/notifications'>
+            <Link to="/messages">Messages </Link>
+            <Link to="/notifications">
               <NotificationIcon token={token} />
             </Link>
-            <Link to='/login' onClick={logout}>
+            <Link to="/login" onClick={logout}>
               Logout
             </Link>
           </nav>
         </div>
       ) : (
         <div>
-          <nav id='header-links'>
+          <nav id="header-links">
             <Link>Login/Register</Link>
           </nav>
         </div>
       )}
-      <div onClick={toggleHamburger} className='hamburger'>
-        <div className='burger burger1' />
-        <div className='burger burger2' />
-        <div className='burger burger3' />
+      <div onClick={toggleHamburger} className="hamburger">
+        <div className="burger burger1" />
+        <div className="burger burger2" />
+        <div className="burger burger3" />
       </div>
 
-      <style jsx='true'>
+      <style jsx="true">
         {`
           @import url("https://fonts.googleapis.com/css2?family=Barlow&family=Poppins:wght@600&display=swap");
 
@@ -144,16 +144,16 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username }) => {
           }
 
           .burger1 {
-            transform: ${hamburgerOpen ? 'rotate(45deg)' : 'rotate(0)'};
+            transform: ${hamburgerOpen ? "rotate(45deg)" : "rotate(0)"};
           }
 
           .burger2 {
-            transform: ${hamburgerOpen ? 'translateX(100%)' : 'translateX(0)'};
+            transform: ${hamburgerOpen ? "translateX(100%)" : "translateX(0)"};
             opacity: ${hamburgerOpen ? 0 : 1};
           }
           
           .burger3 {
-            transform: ${hamburgerOpen ? 'rotate(-45deg)' : 'rotate(0)'};
+            transform: ${hamburgerOpen ? "rotate(-45deg)" : "rotate(0)"};
           }
 
           @media (max-width: 768px) {
@@ -171,7 +171,7 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username }) => {
             }
             
             #header-links {
-              display: ${hamburgerOpen ? 'inline-flex;' : 'none;'}
+              display: ${hamburgerOpen ? "inline-flex;" : "none;"}
               background-color: rgb(245, 244, 244);
               height: 55vh;
               width: 55vw;
