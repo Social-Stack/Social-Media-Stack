@@ -93,8 +93,22 @@
   font-weight: bold;
 }
 
-@media (max-width: 768px) {
-  #side-panel-container {
+@media (max-width: 819px) {
+  #side-panel-container,
+  #left-panel-container {
     display: none;
+  }
+}
+
+@media (max-width: 880px) {
+  #post-wrapper {
+    /* width: 360px; */
+    min-width: 360px;
+  }
+  #newPostBox {
+    min-width: 360px;
+  }
+  #newsfeed-container {
+    width: 90%;
   }
 }
