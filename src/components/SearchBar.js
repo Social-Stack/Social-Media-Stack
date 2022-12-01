@@ -37,7 +37,7 @@ const SearchBar = (props) => {
     console.log("_CONVERSATION ", _conversation);
     setConversation(_conversation.messagesBetweenUsers);
     setSelected(friendUserId);
-    await setFriendFound(true);
+    setFriendFound(true);
     console.log("HERE", friendFound);
     setSearchTerm("");
   };
