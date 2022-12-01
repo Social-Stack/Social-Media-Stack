@@ -1,14 +1,14 @@
-const client = require("./client");
+const client = require('./client');
 
 const createMessage = async ({
   sendingUserId,
   recipientUserId,
   time,
-  text,
+  text
 }) => {
   try {
     const {
-      rows: [message],
+      rows: [message]
     } = await client.query(
       `
         INSERT INTO messages ("sendingUserId", "recipientUserId", time, text)
@@ -20,7 +20,7 @@ const createMessage = async ({
     return message;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 const getMessagesBetweenUsers = async (loggedInUserId, friendUserId) => {
@@ -39,13 +39,13 @@ const getMessagesBetweenUsers = async (loggedInUserId, friendUserId) => {
     return messages;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 const deleteMessageById = async (messageId) => {
   try {
     const {
-      rows: [deletedMessage],
+      rows: [deletedMessage]
     } = await client.query(`
         DELETE FROM messages
         WHERE id = ${messageId}
@@ -54,7 +54,7 @@ const deleteMessageById = async (messageId) => {
     return deletedMessage;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 
@@ -80,7 +80,7 @@ const getAllMessages = async (userId) => {
     return rows;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 
@@ -96,7 +96,7 @@ const getMessageById = async (messageId) => {
     return rows;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 
@@ -105,5 +105,5 @@ module.exports = {
   getMessagesBetweenUsers,
   deleteMessageById,
   getAllMessages,
-  getMessageById,
+  getMessageById
 };

@@ -1,5 +1,5 @@
-const client = require("./client");
-const bcrypt = require("bcrypt");
+const client = require('./client');
+const bcrypt = require('bcrypt');
 
 const createUser = async ({
   firstname,
@@ -7,8 +7,8 @@ const createUser = async ({
   username,
   password,
   email,
-  picUrl = "https://i.ibb.co/LY0hMGq/person-icon-red-3-edit.jpg",
-  isAdmin = false,
+  picUrl = 'https://i.ibb.co/LY0hMGq/person-icon-red-3-edit.jpg',
+  isAdmin = false
 }) => {
   try {
     const SALT_COUNT = 10;
@@ -16,7 +16,7 @@ const createUser = async ({
     const time = new Date();
 
     const {
-      rows: [user],
+      rows: [user]
     } = await client.query(
       `
         INSERT INTO users (firstname, lastname, username, password, email, "picUrl", "lastActive", "isAdmin")
@@ -24,12 +24,21 @@ const createUser = async ({
         ON CONFLICT (email) DO NOTHING
         RETURNING *;
       `,
-      [firstname, lastname, username, hashedPassword, email, picUrl, time, isAdmin]
+      [
+        firstname,
+        lastname,
+        username,
+        hashedPassword,
+        email,
+        picUrl,
+        time,
+        isAdmin
+      ]
     );
     return user;
   } catch (error) {
     console.error(error);
-    throw error;
+    // //throw error;ror;
   }
 };
 
@@ -40,7 +49,7 @@ const updateUser = async ({ id, ...fields }) => {
   }
   const columns = Object.keys(fields)
     .map((key, idx) => `"${key}" = $${idx + 1}`)
-    .join(", ");
+    .join(', ');
 
   if (!columns || !columns.length) {
     return;
@@ -48,7 +57,7 @@ const updateUser = async ({ id, ...fields }) => {
 
   try {
     const {
-      rows: [user],
+      rows: [user]
     } = await client.query(
       `
         UPDATE users
@@ -63,14 +72,14 @@ const updateUser = async ({ id, ...fields }) => {
     return user;
   } catch (error) {
     console.error(error);
-    throw error;
+    // //throw error;ror;
   }
 };
 
 const getUserByUsername = async (username) => {
   try {
     const {
-      rows: [user],
+      rows: [user]
     } = await client.query(
       `
         SELECT *
@@ -87,14 +96,14 @@ const getUserByUsername = async (username) => {
     }
   } catch (error) {
     console.error(error);
-    throw error;
+    // //throw error;ror;
   }
 };
 
 const getUserById = async (id) => {
   try {
     const {
-      rows: [user],
+      rows: [user]
     } = await client.query(
       `
         SELECT *
@@ -111,14 +120,14 @@ const getUserById = async (id) => {
     }
   } catch (error) {
     console.error(error);
-    throw error;
+    // //throw error;ror;
   }
 };
 
 const getUserByEmail = async (email) => {
   try {
     const {
-      rows: [user],
+      rows: [user]
     } = await client.query(
       `
         SELECT *
@@ -135,23 +144,28 @@ const getUserByEmail = async (email) => {
     }
   } catch (error) {
     console.error(error);
-    throw error;
+    ror;
   }
 };
 
-const updateActive = async(id) => {
+const updateActive = async (id) => {
   const time = new Date();
-  try{
-    const { rows: [user] } = await client.query(`
+  try {
+    const {
+      rows: [user]
+    } = await client.query(
+      `
     UPDATE users
     SET "lastActive" = $1
     WHERE id=${id}
     RETURNING *;
-    `, [time]);
+    `,
+      [time]
+    );
     return user;
   } catch (error) {
     console.error(error);
-    throw error;
+    // //throw error;ror;
   }
 };
 
@@ -161,7 +175,7 @@ const authenticateUser = async ({ username, password }) => {
   }
   try {
     const {
-      rows: [user],
+      rows: [user]
     } = await client.query(
       `
         SELECT *
@@ -179,7 +193,7 @@ const authenticateUser = async ({ username, password }) => {
     }
   } catch (error) {
     console.error(error);
-    throw error;
+    // //throw error;ror;
   }
 };
 
@@ -190,5 +204,5 @@ module.exports = {
   getUserById,
   getUserByEmail,
   updateActive,
-  authenticateUser,
+  authenticateUser
 };
