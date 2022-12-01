@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
-  getAllPublicPosts,
   getMyUserInfo,
   getMyFriends,
   getNewsFeed
@@ -43,10 +41,6 @@ const NewsFeed = () => {
     const feed = await getNewsFeed(token);
     setAllPosts(feed);
   };
-  // const helpFunction = async() => {
-  //   console.log(friendsTrigger)
-  //   console.log(token)
-  // }
 
   return (
     <>
@@ -73,15 +67,6 @@ const NewsFeed = () => {
             <div id='side-panel-friends'>
               {friends
                 ? friends.map(friend => {
-                    // return (
-                    //   <div id="side-panel-friend" key={i}>
-                    //     <img id="friend-img" height="50px" src={friend.picUrl} />
-                    //     <div>
-                    //       <p>{friend.username}</p>
-                    //       <p>{timeAgo(friend.lastActive)}</p>
-                    //     </div>
-                    //   </div>
-                    // );
                     return (
                       <FriendPanel
                         key={friend.id}
