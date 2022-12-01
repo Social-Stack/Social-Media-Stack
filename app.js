@@ -30,6 +30,7 @@ app.use((req, res, next) => {
 });
 
 const apiRouter = require("./api");
+const { rebuildDB } = require("./db/seedData");
 app.use("/api", apiRouter);
 
 app.get("*", async (req, res, next) => {
@@ -47,16 +48,21 @@ app.use((error, req, res, next) => {
   });
 });
 
-client.connect();
-const PORT = process.env["PORT"] ?? 4000;
-const server = http.createServer(app);
+const init = async () => {
+  await client.connect();
+  const PORT = process.env["PORT"] ?? 4000;
+  const server = http.createServer(app);
+  await rebuildDB();
 
-server.listen(PORT, () => {
-  console.log(
-    chalk.blueBright("Server is listening on"),
-    chalk.bold.yellowBright("PORT :", PORT),
-    chalk.blueBright(".Concat with Social Stack!")
-  );
-});
+  server.listen(PORT, () => {
+    console.log(
+      chalk.blueBright("Server is listening on"),
+      chalk.bold.yellowBright("PORT :", PORT),
+      chalk.blueBright(".Concat with Social Stack!")
+    );
+  });
+};
+
+init();
 
 module.exports = app;
