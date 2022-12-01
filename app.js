@@ -57,7 +57,7 @@ const init = async () => {
   await client.connect();
   const PORT = process.env["PORT"] ?? 4000;
   const server = http.createServer(app);
-  await rebuildDB();
+  // await rebuildDB();
 
   server.listen(PORT, () => {
     console.log(
