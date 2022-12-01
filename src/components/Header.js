@@ -17,7 +17,7 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username }) => {
     localStorage.removeItem('username');
     localStorage.removeItem('profile pic');
     localStorage.removeItem('userId');
-    setUserInfo({})
+    setUserInfo({});
     setLoggedIn(false);
     setUsername('');
     navigate('/login');
@@ -58,7 +58,7 @@ const Header = ({ setLoggedIn, loggedIn, setUsername, username }) => {
       ) : (
         <div>
           <nav id='header-links'>
-            <Link to='/login'>Login/Register</Link>
+            <Link>Login/Register</Link>
           </nav>
         </div>
       )}
