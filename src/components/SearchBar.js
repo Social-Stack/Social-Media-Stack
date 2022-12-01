@@ -31,14 +31,11 @@ const SearchBar = (props) => {
   const handleClick = async (friendUserId) => {
     setFriendId(friendUserId);
     const _friend = await getAFriend(token, friendUserId);
-    console.log("_FRIEND", _friend);
     setFriendInfo(_friend);
     const _conversation = await getFriendMessages(token, friendUserId);
-    console.log("_CONVERSATION ", _conversation);
     setConversation(_conversation.messagesBetweenUsers);
     setSelected(friendUserId);
     setFriendFound(true);
-    console.log("HERE", friendFound);
     setSearchTerm("");
   };
 
