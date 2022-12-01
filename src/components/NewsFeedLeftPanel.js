@@ -15,7 +15,6 @@ export const NewsFeedLeftPanel = () => {
 
   const getThisUser = async () => {
     const _user = await getMyUserInfo(token);
-    console.log(_user);
     setUser(_user);
   };
 

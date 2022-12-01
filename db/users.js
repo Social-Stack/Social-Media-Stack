@@ -140,7 +140,6 @@ const getUserByEmail = async (email) => {
 };
 
 const updateActive = async(id) => {
-  console.log('update time', id)
   const time = new Date();
   try{
     const { rows: [user] } = await client.query(`
@@ -149,7 +148,6 @@ const updateActive = async(id) => {
     WHERE id=${id}
     RETURNING *;
     `, [time]);
-    console.log('users return', user)
     return user;
   } catch (error) {
     console.error(error);

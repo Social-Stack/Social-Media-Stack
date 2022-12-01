@@ -47,7 +47,6 @@ const NewPost = ({ token, loadingTrigger, setLoadingTrigger, width }) => {
         new Date(),
         commentText
       );
-      console.log(newCommentTest);
       setLoadingTrigger(!loadingTrigger);
       location.reload(true);
     }
