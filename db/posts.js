@@ -1,9 +1,9 @@
-const client = require("./client");
+const client = require('./client');
 
 const createPost = async ({ userId, text, time, isPublic = false }) => {
   try {
     const {
-      rows: [post],
+      rows: [post]
     } = await client.query(
       `
         INSERT INTO posts ("userId", text, time, "isPublic")
@@ -15,7 +15,7 @@ const createPost = async ({ userId, text, time, isPublic = false }) => {
     return post;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 
@@ -31,7 +31,7 @@ const getPostsByUserId = async (id) => {
     return posts;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 
@@ -39,7 +39,7 @@ const getPostsByUsername = async (username) => {
   //optimize this later
   try {
     const {
-      rows: [{ id }],
+      rows: [{ id }]
     } = await client.query(`
     SELECT *
     FROM users
@@ -55,14 +55,14 @@ const getPostsByUsername = async (username) => {
     return posts;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 
 const getPostById = async (id) => {
   try {
     const {
-      rows: [post],
+      rows: [post]
     } = await client.query(`
     SELECT posts.*, U.firstname, U.lastname, U.username, U."picUrl" as "profilePic"
     FROM posts
@@ -73,7 +73,7 @@ const getPostById = async (id) => {
     return post;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 
@@ -89,7 +89,7 @@ const getAllPublicPosts = async () => {
     return posts;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 
@@ -97,10 +97,10 @@ const editPostById = async ({ id, ...fields }) => {
   try {
     const setString = Object.keys(fields)
       .map((key, idx) => `"${key}" = $${idx + 1}`)
-      .join(", ");
+      .join(', ');
 
     const {
-      rows: [post],
+      rows: [post]
     } = await client.query(
       `
     UPDATE posts
@@ -113,14 +113,14 @@ const editPostById = async ({ id, ...fields }) => {
     return post;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 
 const removePostById = async (id) => {
   try {
     const {
-      rows: [post],
+      rows: [post]
     } = await client.query(`
       DELETE FROM posts
       WHERE id = ${id}
@@ -129,7 +129,7 @@ const removePostById = async (id) => {
     return post;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 
@@ -140,5 +140,5 @@ module.exports = {
   getPostById,
   getAllPublicPosts,
   editPostById,
-  removePostById,
+  removePostById
 };

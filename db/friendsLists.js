@@ -1,4 +1,4 @@
-const client = require("./client");
+const client = require('./client');
 
 const addFriends = async (id1, id2) => {
   try {
@@ -30,7 +30,7 @@ const removeFriend = async (id1, id2) => {
     return deletedfriends;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 
@@ -43,13 +43,13 @@ const getFriendsByUserId = async (id) => {
         ON friendslists."friendId" = users.id
         WHERE "userId"=${id};
         `);
-      for(let i = 0; i< friends.length; i++){
-        delete friends[i].password
-      }
+    for (let i = 0; i < friends.length; i++) {
+      delete friends[i].password;
+    }
     return friends;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 
@@ -68,7 +68,7 @@ const getFriendsListByUserId = async (id) => {
     return friendsIdArr;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 
@@ -89,7 +89,7 @@ const isMyFriend = async (id, username) => {
     return false;
   } catch (error) {
     console.error(error);
-    throw error;
+    //throw error;ror;
   }
 };
 
@@ -98,5 +98,5 @@ module.exports = {
   removeFriend,
   getFriendsByUserId,
   getFriendsListByUserId,
-  isMyFriend,
+  isMyFriend
 };
