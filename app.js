@@ -42,6 +42,10 @@ app.get("*", async (req, res, next) => {
   });
 });
 
+app.get("/", (req, res) =>
+  res.sendFile(path.join(__dirname, "./public/index.html"))
+);
+
 app.use((error, req, res, next) => {
   res.send({
     error: error.error,
