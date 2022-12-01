@@ -33,7 +33,6 @@ const Conversation = (props) => {
       };
       getConversation();
     }
-    console.log("CONVERSATION", conversation);
   }, [friendId, loadingTrigger]);
 
   const handleSend = async (friendId, friendInfo) => {
