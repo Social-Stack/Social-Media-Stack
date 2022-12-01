@@ -53,7 +53,7 @@ const Messages = () => {
     setSelected(i);
     setFriendFound(!friendFound);
     setText("");
-    if (selected) {
+    if (selected === i) {
       return setSelected(null);
     }
   };
