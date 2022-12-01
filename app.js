@@ -9,6 +9,7 @@ const chalk = require("chalk");
 
 const express = require("express");
 const app = express();
+app.use(express.static("public"));
 
 const morgan = require("morgan");
 app.use(morgan("dev"));
