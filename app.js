@@ -54,7 +54,8 @@ app.use((error, req, res, next) => {
 });
 
 const init = async () => {
-  await client.connect();
+  const connection = await client.connect();
+  console.log("DB CONNECTION MONITOR", connection)
   const PORT = process.env["PORT"] ?? 4000;
   const server = http.createServer(app);
   // await rebuildDB();
