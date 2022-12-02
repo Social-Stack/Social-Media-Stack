@@ -1,4 +1,6 @@
-const BASE_URL = 'https://socialdevstack.onrender.com/api';
+require('dotenv').config()
+
+const BASE_URL = process.env.API_URL;
 
 //Register
 export const registerUser = async (user) => {
