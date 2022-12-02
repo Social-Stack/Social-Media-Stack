@@ -1,15 +1,17 @@
-const { Pool } = require("pg");
+require('dotenv').config();
 
-const connectionString =
-  process.env.DATABASE_URL || "http://localhost:5432/stack-social";
+const { Pool } = require('pg');
+
+const DATABASE_URL = process.env.DB_URL;
+const PASSWORD = process.env.DB_PW;
 
 const client = new Pool({
-  connectionString,
-  ssl:
-    process.env.NODE_ENV === "production"
-      ? { rejectUnauthorized: false }
-      : undefined ,
+  user: 'user',
+  host: 'db.bit.io',
+  database: DATABASE_URL,
+  password: PASSWORD, // key from bit.io database page connect menu
+  port: 5432,
+  ssl: true
 });
 
 module.exports = client;
-
