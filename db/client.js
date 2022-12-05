@@ -14,7 +14,7 @@ const client = new Pool({
   ssl: true,
 });
 
-// const connectionString = 'https://localhost:5432/pokestop';
+// const connectionString = 'https://localhost:5432/stack-social';
 
 // const client = new Pool({
 //   connectionString,
