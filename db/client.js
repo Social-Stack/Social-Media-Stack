@@ -14,4 +14,11 @@ const client = new Pool({
   ssl: true,
 });
 
+// const connectionString = 'https://localhost:5432/pokestop';
+
+// const client = new Pool({
+//   connectionString,
+//   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
+// });
+
 module.exports = client;
