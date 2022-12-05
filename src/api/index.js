@@ -1,6 +1,11 @@
-// const BASE_URL = process.env.REACT_APP_API_URL;
+const DEV_MODE = process.env.REACT_APP_DEV_MODE;
+let BASE_URL = '';
 
-const BASE_URL = 'http://localhost:4000/api'
+if (DEV_MODE) {
+  BASE_URL = 'http://localhost:4000/api';
+} else {
+  BASE_URL = process.env.REACT_APP_API_URL;
+}
 
 //Register
 export const registerUser = async (user) => {
