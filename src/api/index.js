@@ -1,8 +1,6 @@
-// require('dotenv').config()
+// const BASE_URL = process.env.REACT_APP_API_URL;
 
-const BASE_URL = process.env.REACT_APP_API_URL;
-
-// const BASE_URL = 'http://localhost:4000/api'
+const BASE_URL = 'http://localhost:4000/api'
 
 //Register
 export const registerUser = async (user) => {
