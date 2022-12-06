@@ -8,7 +8,7 @@ import '../stylesheets/NewsFeed.css';
 
 const NewsFeed = () => {
   const [allPosts, setAllPosts] = useState([]);
-  const [friends, setFriends] = useState([]);
+  const [friends, setFriends] = useState();
   const [width, setWidth] = useState('');
   const token = localStorage.getItem('token');
 
@@ -55,16 +55,17 @@ const NewsFeed = () => {
           <div id='side-panel'>
             <h3 id='side-panel-title'>Friends</h3>
             <div id='side-panel-friends'>
-              {friends && friends[0]
-                ? friends.map((friend) => {
-                    return (
-                      <FriendPanel
-                        key={friend.id}
-                        friend={friend}
-                      ></FriendPanel>
-                    );
-                  })
-                : <div id='fl-loading' className='loading'></div>}
+              {friends && friends[0] ? (
+                friends.map((friend) => {
+                  return (
+                    <FriendPanel key={friend.id} friend={friend}></FriendPanel>
+                  );
+                })
+              ) : friends && !friends[0] ? (
+                <h4 id='no-friends'>No Friends Yet</h4>
+              ) : (
+                <div id='fl-loading' className='loading'></div>
+              )}
             </div>
           </div>
         </div>

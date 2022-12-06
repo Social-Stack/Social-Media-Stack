@@ -46,6 +46,11 @@
   display: flex;
 }
 
+#no-friends {
+  margin-top: 25px;
+  text-align: center;
+}
+
 #newsfeed-container {
   display: flex;
   flex-wrap: wrap;
