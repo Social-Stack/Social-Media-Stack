@@ -1,4 +1,4 @@
-const DEV_MODE = true;
+const DEV_MODE = false;
 let BASE_URL = process.env.REACT_APP_API_URL
 
 if (DEV_MODE) {
