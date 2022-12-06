@@ -17,8 +17,8 @@
   margin-top: 50px;
   height: 50px;
   width: 50px;
-  border: 10px solid #fff;
-  border-top: 10px solid #e5383b;
+  border: 4px dotted #FFF;
+  border-top: 4px dotted #e5383b;
 }
 
 .msg-view-loading {
