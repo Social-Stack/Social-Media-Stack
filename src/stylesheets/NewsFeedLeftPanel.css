@@ -10,7 +10,7 @@
   padding: 5.61px 0px;
 }
 
-#left-panel-container {
+.left-panel-container {
   display: flex;
   flex-direction: column;
   width: 350px;
