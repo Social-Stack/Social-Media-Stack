@@ -9,7 +9,6 @@ const FriendPanel = ({ friend }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(friend)
     setSeen()
     setInterval(setSeen,30000);
   }, [friend]);

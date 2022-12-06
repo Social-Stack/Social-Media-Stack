@@ -1,6 +1,6 @@
 .loading {
-  border: 16px solid #FFF;
-  border-top: 16px solid #E5383B;
+  border: 16px solid #fff;
+  border-top: 16px solid #e5383b;
   border-radius: 50%;
   width: 100px;
   height: 100px;
@@ -9,13 +9,36 @@
 }
 
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#loading2 {
+  background: linear-gradient(100deg, #e4e4e4 30%, #f6f7f8 50%, #eceff1 70%);
+  background-size: 500%;
+  animation: loading 1.5s linear infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
 }
 
 #nf-loading {
@@ -70,7 +93,7 @@
   width: 100%;
 }
 
-#side-panel-container {
+.side-panel-container {
   display: flex;
   min-height: 500px;
   height: fit-content;
@@ -81,7 +104,7 @@
   flex-wrap: wrap;
   border-radius: 5px;
   box-shadow: -3.5px 0px 7.5px -7px black;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   position: sticky;
   top: 40px;
 }
@@ -97,7 +120,7 @@
   margin-top: 8px;
   align-self: center;
   margin-bottom: 10px;
-  border-bottom: 1px solid #E5383B;
+  border-bottom: 1px solid #e5383b;
   font-size: 28px;
 }
 
@@ -123,14 +146,14 @@
 #side-panel-friend {
   display: flex;
   margin-bottom: 12px;
-  background-color: #F5F3F4;
+  background-color: #f5f3f4;
   border-radius: 5px;
   padding: 12px 8px;
 }
 
 #side-panel-friend:hover {
   cursor: pointer;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border: 1px solid rgba(128, 128, 128, 0.5);
   margin-bottom: 11px;
   padding-bottom: 11px;
@@ -144,7 +167,7 @@
 
 @media (max-width: 819px) {
   #side-panel-container,
-  #left-panel-container {
+  #side-panel-container-loading #left-panel-container {
     display: none;
   }
 }

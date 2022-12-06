@@ -51,24 +51,42 @@ const NewsFeed = () => {
             )}
           </div>
         </div>
-        <div id='side-panel-container'>
-          <div id='side-panel'>
-            <h3 id='side-panel-title'>Friends</h3>
-            <div id='side-panel-friends'>
-              {friends && friends[0] ? (
-                friends.map((friend) => {
-                  return (
-                    <FriendPanel key={friend.id} friend={friend}></FriendPanel>
-                  );
-                })
-              ) : friends && !friends[0] ? (
-                <h4 id='no-friends'>No Friends Yet</h4>
-              ) : (
-                <div id='fl-loading' className='loading'></div>
-              )}
+        <>
+          {friends && friends[0] ? (
+            <div className='side-panel-container'>
+              <div id='side-panel'>
+                <h3 id='side-panel-title'>Friends</h3>
+                <div id='side-panel-friends'>
+                  {friends.map((friend) => {
+                    return (
+                      <FriendPanel
+                        key={friend.id}
+                        friend={friend}
+                      ></FriendPanel>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          ) : friends && !friends[0] ? (
+            <div className='side-panel-container'>
+              <div id='side-panel'>
+                <h5 id='side-panel-title'>Friends</h5>
+                  <div id='side-panel-friends'>
+                    <h4 id='no-friends'>No Friends Yet</h4>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div id='loading2'className='side-panel-container'>
+              <div id='side-panel'>
+                <h5 id='side-panel-title'>Friends</h5>
+                  <div id='side-panel-friends'>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
       </div>
     </>
   );
