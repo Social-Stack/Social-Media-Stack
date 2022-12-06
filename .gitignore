@@ -2,3 +2,5 @@
 node_modules
 *.icloud
 .VSCodeCounter/
+# Local Netlify folder
+.netlify
