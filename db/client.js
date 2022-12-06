@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { Pool } = require('pg');
 
 const DEV_MODE = process.env.DEV_MODE;
