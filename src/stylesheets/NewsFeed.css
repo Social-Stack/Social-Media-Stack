@@ -1,11 +1,12 @@
 .loading {
-  border: 16px solid #fff;
-  border-top: 16px solid #e5383b;
+  border: 5px transparent;
+  border-top: 5px #e5383b;
+  border-style: dotted;
   border-radius: 50%;
   width: 100px;
   height: 100px;
   -webkit-animation: spin 2s linear infinite;
-  animation: spin 1.5s linear infinite;
+  animation: spin 2s ease-in-out infinite;
 }
 
 @-webkit-keyframes spin {
@@ -20,6 +21,11 @@
 @keyframes spin {
   0% {
     transform: rotate(0deg);
+  }
+  50% {
+    border-top: 8px transparent;
+    border: 8px #e5383b;
+    border-style: dotted;
   }
   100% {
     transform: rotate(360deg);
