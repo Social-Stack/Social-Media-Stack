@@ -12,22 +12,9 @@ import '../stylesheets/NewsFeed.css';
 
 const NewsFeed = () => {
   const [allPosts, setAllPosts] = useState([]);
-  const [loadingTrigger, setLoadingTrigger] = useState(true);
   const [friends, setFriends] = useState([]);
   const [width, setWidth] = useState('');
   const token = localStorage.getItem('token')
-
-
-  useEffect(() => {
-    setWidth('newsfeed-NewPostBox');
-    fetchPosts();
-    getAllFriends();
-  }, [loadingTrigger, token]);
-
-
-  useEffect(()=>{
-    setInterval(getAllFriends, 3000)
-  },[])
 
   const getAllFriends = async () => {
     if(token){
@@ -42,6 +29,14 @@ const NewsFeed = () => {
     setAllPosts(feed);
   };
 
+  
+  useEffect(() => {
+    setWidth('newsfeed-NewPostBox');
+    fetchPosts();
+    getAllFriends();
+    setInterval(getAllFriends, 30000)
+  }, []);
+
   return (
     <>
       {/* <button onClick={() => helpFunction()}>helper</button> */}
@@ -50,8 +45,6 @@ const NewsFeed = () => {
         <div id='newsfeed-container'>
           <NewPost
             token={token}
-            loadingTrigger={loadingTrigger}
-            setLoadingTrigger={setLoadingTrigger}
           />
           <div id='posts-container'>
             {allPosts[0]

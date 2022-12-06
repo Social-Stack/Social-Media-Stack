@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import * as API from '../api';
 
 import '../stylesheets/NewPost.css';
-const NewPost = ({ token, loadingTrigger, setLoadingTrigger, width }) => {
+const NewPost = ({ token, width }) => {
   const [text, setText] = useState('');
   const [commentText, setCommentText] = useState('');
   const [visibility, setVisibility] = useState('friends');
@@ -32,7 +32,6 @@ const NewPost = ({ token, loadingTrigger, setLoadingTrigger, width }) => {
       });
       setText('');
       setSuccessMsg('Post created!');
-      setLoadingTrigger(!loadingTrigger);
     } else {
       setErrorMsg('Post Creation Failed. Try again.');
     }
@@ -41,13 +40,12 @@ const NewPost = ({ token, loadingTrigger, setLoadingTrigger, width }) => {
   const postComment = async (event) => {
     event.preventDefault();
     if (commentText) {
-      const newCommentTest = await API.newComment(
+      await API.newComment(
         token,
         postIdRef.current,
         new Date(),
         commentText
       );
-      setLoadingTrigger(!loadingTrigger);
       location.reload(true);
     }
     setCommentText('');
