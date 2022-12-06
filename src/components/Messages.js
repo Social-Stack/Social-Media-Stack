@@ -1,22 +1,23 @@
-import { useEffect, useState } from "react";
-import { getAllMyMessages, getMyUserInfo, getAFriend } from "../api";
-import Conversation from "./Conversation";
-import "../stylesheets/Messages.css";
-import timeAgo from "node-time-ago";
-import SearchBar from "./SearchBar";
+import { useEffect, useState } from 'react';
+import { getAllMyMessages, getMyUserInfo, getAFriend } from '../api';
+import Conversation from './Conversation';
+import '../stylesheets/Messages.css';
+import timeAgo from 'node-time-ago';
+import SearchBar from './SearchBar';
 
 const Messages = () => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const [allMessages, setAllMessages] = useState([]);
   const [admin, setAdmin] = useState(false);
-  const [myId, setMyId] = useState("");
+  const [myId, setMyId] = useState('');
   const [conversation, setConversation] = useState([]);
   const [selected, setSelected] = useState(null);
-  const [text, setText] = useState("");
-  const [friendId, setFriendId] = useState("");
+  const [text, setText] = useState('');
+  const [friendId, setFriendId] = useState('');
   const [friendInfo, setFriendInfo] = useState({});
   const [loadingTrigger, setLoadingTrigger] = useState(true);
   const [friendFound, setFriendFound] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getChatlist = async () => {
@@ -25,6 +26,9 @@ const Messages = () => {
       setAdmin(isAdmin);
       const myMessages = await getAllMyMessages(token, id);
       setAllMessages(myMessages.allMyMessages);
+      if (myMessages) {
+        setLoading(false);
+      }
     };
 
     getChatlist();
@@ -52,121 +56,137 @@ const Messages = () => {
     setFriendInfo(friend);
     setSelected(i);
     setFriendFound(!friendFound);
-    setText("");
+    setText('');
     if (selected === i) {
       return setSelected(null);
     }
   };
 
   return (
-    <div id="chat-container">
-      <div id="outer">
-        <div id="chatbox">
-          <h1 id="messages-heading">Chats</h1>
-          <div id="search">
-            <SearchBar
-              myId={myId}
-              setFriendInfo={setFriendInfo}
-              setConversation={setConversation}
-              conversation={conversation}
-              setSelected={setSelected}
-              setFriendId={setFriendId}
-              loadingTrigger={loadingTrigger}
-              setLoadingTrigger={setLoadingTrigger}
-              setFriendFound={setFriendFound}
-              friendFound={friendFound}
-              selected={selected}
-            />
+    <>
+      {loading ? (
+        <div id='chat-container'>
+          <div id='outer'>
+            <div id='chatbox'>
+              <h1 id='messages-heading'>Chats</h1>
+              <div id='chat-load' className='loading'></div>
+            </div>
+            <div className='msg-view-loading' id='loading2'></div>
           </div>
-          {!result.length && friendInfo ? ( //switch if needed
-            <h2>Search for a friend and start chatting!</h2>
-          ) : (
-            result.map((groupedMessage, i) => {
-              const activeStatus = timeAgo(groupedMessage[0].active);
-              let friendUserId;
-              {
-                groupedMessage[0].sendingUserId === myId
-                  ? (friendUserId = groupedMessage[0].recipientUserId)
-                  : (friendUserId = groupedMessage[0].sendingUserId);
-              }
-              return (
-                <div key={i} className="single-message">
-                  <div
-                    className="friend"
-                    onClick={() => handleClick(friendUserId, i)}
-                  >
-                    <img src={groupedMessage[0].sendingprofilepic} />
-
-                    <p>
-                      <strong className="single-message-sender">
-                        {groupedMessage[0].sendingfirstname}{" "}
-                        {groupedMessage[0].sendinglastname}{" "}
-                      </strong>
-                    </p>
-                    <p id="recent-message">
-                      {groupedMessage[groupedMessage.length - 1].text
-                        .slice(0, 12)
-                        .concat("...")}{" "}
-                      {timeAgo(groupedMessage[groupedMessage.length - 1].time)}
-                    </p>
-                    <div
-                      className={
-                        activeStatus.includes("just now") ||
-                        activeStatus.includes("second") ||
-                        activeStatus.includes("a minute ago") ||
-                        activeStatus.includes("2 minutes ago") ||
-                        activeStatus.includes("3 minutes ago") ||
-                        activeStatus.includes("4 minutes ago") ||
-                        activeStatus.includes("5 minutes ago")
-                          ? "status available"
-                          : "status away"
-                      }
-                    ></div>
-                  </div>
-                </div>
-              );
-            })
-          )}
         </div>
-        <>
-          {!result.length && !selected ? (
-            <h2 id="no-message">You have no messages</h2>
-          ) : (
-            <div id="message-body">
-              <div id="friend-header">
-                {(selected && conversation.length) || friendFound ? (
-                  <>
-                    <img className="friend" src={friendInfo.picUrl} />
-                    <strong>
-                      <span>{friendInfo.firstname} </span>
-                      <span>{friendInfo.lastname}</span>
-                    </strong>
-                  </>
-                ) : null}
-              </div>
-              <div id="message-container">
-                <Conversation
-                  friendInfo={friendInfo}
-                  friendId={friendId}
-                  selected={selected}
-                  setSelected={setSelected}
-                  admin={admin}
+      ) : (
+        <div id='chat-container'>
+          <div id='outer'>
+            <div id='chatbox'>
+              <h1 id='messages-heading'>Chats</h1>
+              <div id='search'>
+                <SearchBar
                   myId={myId}
-                  text={text}
-                  setText={setText}
+                  setFriendInfo={setFriendInfo}
+                  setConversation={setConversation}
+                  conversation={conversation}
+                  setSelected={setSelected}
+                  setFriendId={setFriendId}
                   loadingTrigger={loadingTrigger}
                   setLoadingTrigger={setLoadingTrigger}
-                  conversation={conversation}
-                  setConversation={setConversation}
-                  friendFound={friendFound}
                   setFriendFound={setFriendFound}
+                  friendFound={friendFound}
+                  selected={selected}
                 />
               </div>
+              {!result.length && friendInfo ? ( //switch if needed
+                <h2>Search for a friend and start chatting!</h2>
+              ) : (
+                result.map((groupedMessage, i) => {
+                  const activeStatus = timeAgo(groupedMessage[0].active);
+                  let friendUserId;
+                  {
+                    groupedMessage[0].sendingUserId === myId
+                      ? (friendUserId = groupedMessage[0].recipientUserId)
+                      : (friendUserId = groupedMessage[0].sendingUserId);
+                  }
+                  return (
+                    <div key={i} className='single-message'>
+                      <div
+                        className='friend'
+                        onClick={() => handleClick(friendUserId, i)}
+                      >
+                        <img src={groupedMessage[0].sendingprofilepic} />
+
+                        <p>
+                          <strong className='single-message-sender'>
+                            {groupedMessage[0].sendingfirstname}{' '}
+                            {groupedMessage[0].sendinglastname}{' '}
+                          </strong>
+                        </p>
+                        <p id='recent-message'>
+                          {groupedMessage[groupedMessage.length - 1].text
+                            .slice(0, 12)
+                            .concat('...')}{' '}
+                          {timeAgo(
+                            groupedMessage[groupedMessage.length - 1].time
+                          )}
+                        </p>
+                        <div
+                          className={
+                            activeStatus.includes('just now') ||
+                            activeStatus.includes('second') ||
+                            activeStatus.includes('a minute ago') ||
+                            activeStatus.includes('2 minutes ago') ||
+                            activeStatus.includes('3 minutes ago') ||
+                            activeStatus.includes('4 minutes ago') ||
+                            activeStatus.includes('5 minutes ago')
+                              ? 'status available'
+                              : 'status away'
+                          }
+                        ></div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
             </div>
-          )}
-        </>
-      </div>
-    </div>
+            <>
+              {!result.length && !selected ? (
+                <h2 id='no-message'>You have no messages</h2>
+              ) : (
+                <div id='message-body'>
+                  <div id='friend-header'>
+                    {(selected && conversation.length) || friendFound ? (
+                      <>
+                        <img className='friend' src={friendInfo.picUrl} />
+                        <strong>
+                          <span>{friendInfo.firstname} </span>
+                          <span>{friendInfo.lastname}</span>
+                        </strong>
+                      </>
+                    ) : null}
+                  </div>
+                  <div id='message-container'>
+                    <Conversation
+                      friendInfo={friendInfo}
+                      friendId={friendId}
+                      selected={selected}
+                      setSelected={setSelected}
+                      admin={admin}
+                      myId={myId}
+                      text={text}
+                      setText={setText}
+                      loadingTrigger={loadingTrigger}
+                      setLoadingTrigger={setLoadingTrigger}
+                      conversation={conversation}
+                      setConversation={setConversation}
+                      friendFound={friendFound}
+                      setFriendFound={setFriendFound}
+                    />
+                  </div>
+                </div>
+              )}
+            </>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

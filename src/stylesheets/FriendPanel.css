@@ -1,21 +1,20 @@
 #side-panel-friends {
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  flex-direction: column;
+}
 
-  .Online {
-    min-width: 9px;
-    width: 9px;
-    height: 9px;
+.Online {
+  min-width: 9px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #26c281;
+}
 
-    border-radius: 50%;
-    background-color: #26c281;
-  }
-
-  .Offline {
-    min-width: 9px;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background-color: #fd9014;
-  }
+.Offline {
+  min-width: 9px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #fd9014;
+}

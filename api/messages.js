@@ -91,7 +91,6 @@ messagesRouter.get("/chatlist", requireUser, async (req, res, next) => {
   try {
     const user = await getUserById(userId);
     const allMyMessages = await getAllMessages(userId);
-
     res.send({
       allMyMessages,
       success: `Chat history for ${user.username}`,
