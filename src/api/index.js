@@ -1,10 +1,8 @@
-const DEV_MODE = process.env.DEV_MODE;
-let BASE_URL = '';
+const DEV_MODE = false;
+let BASE_URL = process.env.REACT_APP_API_URL
 
 if (DEV_MODE) {
-  BASE_URL = 'http://localhost:4000/api';
-} else {
-  BASE_URL = process.env.REACT_APP_API_URL;
+  BASE_URL = 'http://localhost:4000/api'
 }
 
 //Register

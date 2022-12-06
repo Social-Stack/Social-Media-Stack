@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { Pool } = require('pg');
 
 const DEV_MODE = process.env.DEV_MODE;
@@ -20,7 +21,7 @@ if (DEV_MODE) {
     user: 'ndubell01',
     host: 'db.bit.io',
     database: DATABASE_URL,
-    password: PASSWORD, // key from bit.io database page connect menu
+    password: PASSWORD,
     port: 5432,
     ssl: true
   });
