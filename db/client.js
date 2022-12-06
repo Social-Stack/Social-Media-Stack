@@ -21,7 +21,7 @@ if (DEV_MODE) {
     user: 'ndubell01',
     host: 'db.bit.io',
     database: DATABASE_URL,
-    password: PASSWORD, // key from bit.io database page connect menu
+    password: PASSWORD,
     port: 5432,
     ssl: true
   });
