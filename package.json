@@ -6,32 +6,16 @@
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "bcrypt": "^5.1.0",
-    "chalk": "^4.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
     "fortawesome": "^0.0.1-security",
-    "jsonwebtoken": "^8.5.1",
-    "morgan": "^1.10.0",
     "node-time-ago": "^1.0.0",
-    "nodemon": "^2.0.20",
-    "pg": "^8.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
-    "react-scripts": "^5.0.1",
-    "serve-favicon": "^2.5.0"
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
-    "start:dev": "nodemon app.js",
-    "start": "node app.js",
-    "seed:dev": "nodemon ./db/seed.js",
-    "seed": "node ./db/seed.js",
-    "client:build": "react-scripts build",
-    "client:start": "react-scripts start",
-    "test": "jest",
-    "test:watch": "jest --watchAll"
+    "build": "react-scripts build",
+    "start": "react-scripts start"
   },
   "devDependencies": {
     "jest": "^29.2.2",

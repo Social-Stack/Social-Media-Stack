@@ -1,9 +1,5 @@
-const DEV_MODE = false;
-let BASE_URL = process.env.REACT_APP_API_URL;
-
-if (DEV_MODE) {
-  BASE_URL = 'http://localhost:4000/api';
-}
+const BASE_URL = 'https://social-stack-383719.uc.r.appspot.com/api';
+// const BASE_URL = 'http://localhost:4000/api';
 
 //Register
 export const registerUser = async (user) => {
